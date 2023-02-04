@@ -1,0 +1,29 @@
+{
+  "name": "space-tourism",
+  "version": "1.0.0",
+  "description": "![Design preview for the Space tourism website coding challenge](./preview.jpg)",
+  "main": "script.js",
+  "watch": {
+    "dev": "{src}/*.elm"
+  },
+  "scripts": {
+    "sass-start": "sass src/sass/main.scss src/css/styles.css --watch",
+    "elm-start": "elm-live src/elm/Main.elm -- --debug --output=src/js/script.js",
+    "dev": "npm run sass-start & npm run elm-start",
+    "start": "npm-watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Frontend-Mentor-Projects-Daniel/space-tourism.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Frontend-Mentor-Projects-Daniel/space-tourism/issues"
+  },
+  "homepage": "https://github.com/Frontend-Mentor-Projects-Daniel/space-tourism#readme",
+  "dependencies": {
+    "npm-watch": "^0.11.0"
+  }
+}

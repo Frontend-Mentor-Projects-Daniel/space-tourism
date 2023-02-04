@@ -15,8 +15,7 @@ style-guide.md
 /dist/
 src/**/output
 /.vscode
-/src/css
-/src/js
+
 
 # Local Netlify folder
 .netlify
