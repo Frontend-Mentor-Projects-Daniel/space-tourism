@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- used for having the correct page load on refresh -->
+    <base href="/" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -8,7 +10,7 @@
       rel="icon"
       type="image/png"
       sizes="32x32"
-      href="./assets/favicon-32x32.png"
+      href="./src/assets/favicon-32x32.png"
     />
 
     <!-- CSS -->
@@ -19,6 +21,9 @@
   <body>
     <!-- JS & ELM -->
     <script src="./src/js/script.js"></script>
+
+    <!-- un-comment for build -->
+    <!-- <script src="./src/js/script.min.js"></script> -->
     <script>
       var app = Elm.Main.init();
     </script>
