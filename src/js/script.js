@@ -10649,6 +10649,175 @@ var $author$project$Main$update = F2(
 					$elm$core$Platform$Cmd$none);
 		}
 	});
+var $elm$html$Html$Attributes$alt = $elm$html$Html$Attributes$stringProperty('alt');
+var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
+var $fapian$elm_html_aria$Html$Attributes$Aria$ariaExpanded = $elm$html$Html$Attributes$attribute('aria-expanded');
+var $elm$json$Json$Encode$bool = _Json_wrap;
+var $fapian$elm_html_aria$Html$Attributes$Aria$boolAttribute = F2(
+	function (name, val) {
+		return A2(
+			$elm$html$Html$Attributes$attribute,
+			name,
+			A2(
+				$elm$json$Json$Encode$encode,
+				0,
+				$elm$json$Json$Encode$bool(val)));
+	});
+var $fapian$elm_html_aria$Html$Attributes$Aria$ariaHidden = $fapian$elm_html_aria$Html$Attributes$Aria$boolAttribute('aria-hidden');
+var $fapian$elm_html_aria$Html$Attributes$Aria$ariaLabel = $elm$html$Html$Attributes$attribute('aria-label');
+var $elm$html$Html$header = _VirtualDom_node('header');
+var $elm$html$Html$img = _VirtualDom_node('img');
+var $elm$html$Html$nav = _VirtualDom_node('nav');
+var $fapian$elm_html_aria$Html$Attributes$Aria$role = $elm$html$Html$Attributes$attribute('role');
+var $elm$html$Html$Attributes$src = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'src',
+		_VirtualDom_noJavaScriptOrHtmlUri(url));
+};
+var $author$project$Main$viewHeader = A2(
+	$elm$html$Html$header,
+	_List_fromArray(
+		[
+			$elm$html$Html$Attributes$class('main-header')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('logo')
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$img,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$src('./src/assets/shared/logo.svg'),
+							$elm$html$Html$Attributes$alt('Space Tourism')
+						]),
+					_List_Nil)
+				])),
+			A2(
+			$elm$html$Html$nav,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('navbar'),
+					$fapian$elm_html_aria$Html$Attributes$Aria$role('navigation'),
+					$fapian$elm_html_aria$Html$Attributes$Aria$ariaLabel('Main Menu')
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$button,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('hamburger-menu'),
+							$fapian$elm_html_aria$Html$Attributes$Aria$ariaExpanded('false')
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$img,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$src('./src/assets/shared/icon-hamburger.svg'),
+									$elm$html$Html$Attributes$alt(''),
+									$fapian$elm_html_aria$Html$Attributes$Aria$ariaHidden(true)
+								]),
+							_List_Nil),
+							A2(
+							$elm$html$Html$span,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('sr-only')
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text('Menu')
+								]))
+						])),
+					A2(
+					$elm$html$Html$ul,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('nav-items hidden')
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$li,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('nav-item')
+								]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$span,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$elm$html$Html$text('00')
+										])),
+									$elm$html$Html$text('home')
+								])),
+							A2(
+							$elm$html$Html$li,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('nav-item')
+								]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$span,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$elm$html$Html$text('01')
+										])),
+									$elm$html$Html$text('destination')
+								])),
+							A2(
+							$elm$html$Html$li,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('nav-item')
+								]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$span,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$elm$html$Html$text('02')
+										])),
+									$elm$html$Html$text('crew')
+								])),
+							A2(
+							$elm$html$Html$li,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('nav-item')
+								]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$span,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$elm$html$Html$text('03')
+										])),
+									$elm$html$Html$text('technology')
+								]))
+						]))
+				]))
+		]));
 var $author$project$Main$view = function (model) {
 	return {
 		body: _List_fromArray(
@@ -10659,7 +10828,8 @@ var $author$project$Main$view = function (model) {
 					[
 						$elm$html$Html$Attributes$id('root')
 					]),
-				_List_Nil)
+				_List_fromArray(
+					[$author$project$Main$viewHeader]))
 			]),
 		title: model.property
 	};

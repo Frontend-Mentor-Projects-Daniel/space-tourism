@@ -4,6 +4,7 @@ import Browser
 import Browser.Navigation as Nav
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Attributes.Aria exposing (..)
 import Html.Events exposing (..)
 import Url
 
@@ -79,7 +80,9 @@ view : Model -> Browser.Document Msg
 view model =
     { title = model.property
     , body =
-        [ div [ id "root" ] []
+        [ div [ id "root" ]
+            [ viewHeader
+            ]
         ]
     }
 
@@ -87,4 +90,34 @@ view model =
 
 -- TYPES
 -- VIEW FUNCTIONS
+-- <img src="./src/assets/shared/logo.svg" />
+-- <img src="./src/assets/shared/icon-hamburger.svg">
+-- <img src="./src/assets/shared/icon-close.svg">
+
+
+viewHeader : Html msg
+viewHeader =
+    header [ class "main-header" ]
+        [ div [ class "logo" ]
+            [ img [ src "./src/assets/shared/logo.svg", alt "Space Tourism" ] []
+            ]
+        , nav [ class "navbar", role "navigation", ariaLabel "Main Menu" ]
+            [ button [ class "hamburger-menu", ariaExpanded "false" ]
+                [ img [ src "./src/assets/shared/icon-hamburger.svg", alt "", ariaHidden True ] []
+                , span [ class "sr-only" ] [ text "Menu" ]
+                ]
+            , ul [ class "nav-items hidden" ]
+                [ li [ class "nav-item" ] [ span [] [ text "00" ], text "home" ]
+                , li [ class "nav-item" ] [ span [] [ text "01" ], text "destination" ]
+                , li [ class "nav-item" ] [ span [] [ text "02" ], text "crew" ]
+                , li [ class "nav-item" ] [ span [] [ text "03" ], text "technology" ]
+                ]
+            ]
+        ]
+
+
+
+-- viewHomePage : Html msg
+-- viewHomePage =
+--     div [] []
 -- HELPER FUNCTIONS
