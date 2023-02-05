@@ -20,6 +20,10 @@ main =
         }
 
 
+
+-- MODEL
+
+
 type alias Model =
     { key : Nav.Key
     , url : Url.Url
@@ -30,6 +34,10 @@ type alias Model =
 init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
 init _ url key =
     ( { key = key, url = url, property = "Space Tourism" }, Cmd.none )
+
+
+
+-- UPDATE
 
 
 type Msg
@@ -71,7 +79,12 @@ view : Model -> Browser.Document Msg
 view model =
     { title = model.property
     , body =
-        [ div []
-            [ text "Hello Space Tourism" ]
+        [ div [ id "root" ] []
         ]
     }
+
+
+
+-- TYPES
+-- VIEW FUNCTIONS
+-- HELPER FUNCTIONS
