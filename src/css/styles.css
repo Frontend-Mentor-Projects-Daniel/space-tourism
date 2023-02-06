@@ -270,7 +270,7 @@ body {
   .header .nav-item.active {
     border-bottom: 3px solid var(--clr-nav-underline);
   }
-  .header .nav-item a:hover:not(.active) {
+  .header .nav-item:hover:not(.active) {
     border-bottom: 3px solid var(--clr-nav-underline-hover);
   }
   .header .nav-item a {

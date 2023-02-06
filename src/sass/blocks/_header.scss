@@ -103,7 +103,7 @@ body {
         border-bottom: 3px solid var(--clr-nav-underline);
       }
 
-      .nav-item a:hover:not(.active) {
+      .nav-item:hover:not(.active) {
         border-bottom: 3px solid var(--clr-nav-underline-hover);
       }
 
