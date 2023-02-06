@@ -6,6 +6,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Attributes.Aria exposing (..)
 import Html.Events exposing (..)
+import Pages.HomePage as HomePage
 import Url
 
 
@@ -22,26 +23,30 @@ main =
 
 
 
+-- SUBSCRIPTIONS
+
+
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    Sub.batch
+        [ Sub.map HomePageMsg (HomePage.subscriptions model.homePageModel)
+        ]
+
+
+
 -- MODEL
 
 
 type alias Model =
     { key : Nav.Key
     , url : Url.Url
-    , headerModel : HeaderModel
-    }
-
-
-headerModel : HeaderModel
-headerModel =
-    { menuIsExpanded = "false"
-    , imageSrc = "./src/assets/shared/icon-hamburger.svg"
+    , homePageModel : HomePage.Model
     }
 
 
 init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
 init _ url key =
-    ( { key = key, url = url, headerModel = headerModel }, Cmd.none )
+    ( { key = key, url = url, homePageModel = HomePage.init }, Cmd.none )
 
 
 
@@ -49,7 +54,7 @@ init _ url key =
 
 
 type Msg
-    = HamburgerMenuClicked
+    = HomePageMsg HomePage.Msg
     | Msg2
     | UrlRequested Browser.UrlRequest
     | UrlChanged Url.Url
@@ -58,8 +63,12 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        HamburgerMenuClicked ->
-            ( { model | headerModel = { menuIsExpanded = toggleMenu model, imageSrc = toggleImage model } }, Cmd.none )
+        HomePageMsg msgHomePage ->
+            let
+                ( newHomePageModel, cmdHomePage ) =
+                    HomePage.update msgHomePage model.homePageModel
+            in
+            ( { model | homePageModel = newHomePageModel }, Cmd.map HomePageMsg cmdHomePage )
 
         Msg2 ->
             ( model, Cmd.none )
@@ -78,69 +87,51 @@ update msg model =
             )
 
 
-subscriptions : Model -> Sub Msg
-subscriptions _ =
-    Sub.none
-
-
 view : Model -> Browser.Document Msg
 view model =
-    { title = "Space Tourism"
+    { title = viewTitle model
     , body =
         [ div [ id "root" ]
-            [ viewHeader model
+            [ viewPage model
             ]
         ]
     }
 
 
+viewPage : Model -> Html Msg
+viewPage model =
+    if model.url.path == "/" then
+        Html.map HomePageMsg (HomePage.view model.homePageModel)
 
---& VIEW HEADER
+    else if model.url.path == "/destination" then
+        Html.map HomePageMsg (HomePage.view model.homePageModel)
 
+    else if model.url.path == "/crew" then
+        Html.map HomePageMsg (HomePage.view model.homePageModel)
 
-type alias HeaderModel =
-    { menuIsExpanded : String
-    , imageSrc : String
-    }
-
-
-viewHeader : Model -> Html Msg
-viewHeader model =
-    header [ class "header center" ]
-        [ div [ class "logo" ]
-            [ img [ src "./src/assets/shared/logo.svg", alt "Space Tourism" ] []
-            ]
-        , nav [ class "navbar", role "navigation", ariaLabel "Main Menu" ]
-            [ button [ onClick HamburgerMenuClicked, class "hamburger-menu", ariaExpanded model.headerModel.menuIsExpanded ]
-                [ img [ src model.headerModel.imageSrc, alt "", ariaHidden True ] []
-                , span [ class "sr-only" ] [ text "Menu" ]
-                ]
-            , ul [ class "nav-items" ]
-                [ li [ class "nav-item active" ] [ a [ href "/" ] [ span [] [ text "00" ], text "home" ] ]
-                , li [ class "nav-item" ] [ a [ href "/" ] [ span [] [ text "01" ], text "destination" ] ]
-                , li [ class "nav-item" ] [ a [ href "/" ] [ span [] [ text "02" ], text "crew" ] ]
-                , li [ class "nav-item" ] [ a [ href "/" ] [ span [] [ text "03" ], text "technology" ] ]
-                ]
-            ]
-        ]
-
-
-toggleMenu : Model -> String
-toggleMenu model =
-    if model.headerModel.menuIsExpanded == "false" then
-        "true"
+    else if model.url.path == "/technology" then
+        Html.map HomePageMsg (HomePage.view model.homePageModel)
 
     else
-        "false"
+        Html.map HomePageMsg (HomePage.view model.homePageModel)
 
 
-toggleImage : Model -> String
-toggleImage model =
-    if model.headerModel.imageSrc == "./src/assets/shared/icon-hamburger.svg" then
-        "./src/assets/shared/icon-close.svg"
+viewTitle : Model -> String
+viewTitle model =
+    if String.startsWith "/destination" model.url.path then
+        "Destination Page"
+
+    else if String.startsWith "/crew" model.url.path then
+        "Crew Page"
+
+    else if String.startsWith "/technology" model.url.path then
+        "Technology Page"
+
+    else if String.startsWith "/" model.url.path then
+        "Home Page"
 
     else
-        "./src/assets/shared/icon-hamburger.svg"
+        "404 - Page Not Found"
 
 
 

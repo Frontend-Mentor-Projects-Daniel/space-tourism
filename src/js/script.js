@@ -10560,17 +10560,30 @@ var $elm$core$Basics$never = function (_v0) {
 	}
 };
 var $elm$browser$Browser$application = _Browser_application;
-var $author$project$Main$headerModel = {imageSrc: './src/assets/shared/icon-hamburger.svg', menuIsExpanded: 'false'};
+var $author$project$Pages$HomePage$init = {imageSrc: './src/assets/shared/icon-hamburger.svg', menuIsExpanded: 'false'};
 var $author$project$Main$init = F3(
 	function (_v0, url, key) {
 		return _Utils_Tuple2(
-			{headerModel: $author$project$Main$headerModel, key: key, url: url},
+			{homePageModel: $author$project$Pages$HomePage$init, key: key, url: url},
 			$elm$core$Platform$Cmd$none);
 	});
+var $author$project$Main$HomePageMsg = function (a) {
+	return {$: 'HomePageMsg', a: a};
+};
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
-var $author$project$Main$subscriptions = function (_v0) {
+var $author$project$Pages$HomePage$subscriptions = function (_v0) {
 	return $elm$core$Platform$Sub$none;
+};
+var $author$project$Main$subscriptions = function (model) {
+	return $elm$core$Platform$Sub$batch(
+		_List_fromArray(
+			[
+				A2(
+				$elm$core$Platform$Sub$map,
+				$author$project$Main$HomePageMsg,
+				$author$project$Pages$HomePage$subscriptions(model.homePageModel))
+			]));
 };
 var $elm$browser$Browser$Navigation$load = _Browser_load;
 var $elm$browser$Browser$Navigation$pushUrl = _Browser_pushUrl;
@@ -10618,26 +10631,36 @@ var $elm$url$Url$toString = function (url) {
 					_Utils_ap(http, url.host)),
 				url.path)));
 };
-var $author$project$Main$toggleImage = function (model) {
-	return (model.headerModel.imageSrc === './src/assets/shared/icon-hamburger.svg') ? './src/assets/shared/icon-close.svg' : './src/assets/shared/icon-hamburger.svg';
+var $author$project$Pages$HomePage$toggleImage = function (model) {
+	return (model.imageSrc === './src/assets/shared/icon-hamburger.svg') ? './src/assets/shared/icon-close.svg' : './src/assets/shared/icon-hamburger.svg';
 };
-var $author$project$Main$toggleMenu = function (model) {
-	return (model.headerModel.menuIsExpanded === 'false') ? 'true' : 'false';
+var $author$project$Pages$HomePage$toggleMenu = function (model) {
+	return (model.menuIsExpanded === 'false') ? 'true' : 'false';
 };
+var $author$project$Pages$HomePage$update = F2(
+	function (msg, model) {
+		return _Utils_Tuple2(
+			_Utils_update(
+				model,
+				{
+					imageSrc: $author$project$Pages$HomePage$toggleImage(model),
+					menuIsExpanded: $author$project$Pages$HomePage$toggleMenu(model)
+				}),
+			$elm$core$Platform$Cmd$none);
+	});
 var $author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
-			case 'HamburgerMenuClicked':
+			case 'HomePageMsg':
+				var msgHomePage = msg.a;
+				var _v1 = A2($author$project$Pages$HomePage$update, msgHomePage, model.homePageModel);
+				var newHomePageModel = _v1.a;
+				var cmdHomePage = _v1.b;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{
-							headerModel: {
-								imageSrc: $author$project$Main$toggleImage(model),
-								menuIsExpanded: $author$project$Main$toggleMenu(model)
-							}
-						}),
-					$elm$core$Platform$Cmd$none);
+						{homePageModel: newHomePageModel}),
+					A2($elm$core$Platform$Cmd$map, $author$project$Main$HomePageMsg, cmdHomePage));
 			case 'Msg2':
 				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 			case 'UrlRequested':
@@ -10665,7 +10688,7 @@ var $author$project$Main$update = F2(
 					$elm$core$Platform$Cmd$none);
 		}
 	});
-var $author$project$Main$HamburgerMenuClicked = {$: 'HamburgerMenuClicked'};
+var $author$project$Pages$HomePage$HamburgerMenuClicked = {$: 'HamburgerMenuClicked'};
 var $elm$html$Html$Attributes$alt = $elm$html$Html$Attributes$stringProperty('alt');
 var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
 var $fapian$elm_html_aria$Html$Attributes$Aria$ariaExpanded = $elm$html$Html$Attributes$attribute('aria-expanded');
@@ -10692,7 +10715,7 @@ var $elm$html$Html$Attributes$src = function (url) {
 		'src',
 		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
-var $author$project$Main$viewHeader = function (model) {
+var $author$project$Pages$HomePage$view = function (model) {
 	return A2(
 		$elm$html$Html$header,
 		_List_fromArray(
@@ -10732,9 +10755,9 @@ var $author$project$Main$viewHeader = function (model) {
 						$elm$html$Html$button,
 						_List_fromArray(
 							[
-								$elm$html$Html$Events$onClick($author$project$Main$HamburgerMenuClicked),
+								$elm$html$Html$Events$onClick($author$project$Pages$HomePage$HamburgerMenuClicked),
 								$elm$html$Html$Attributes$class('hamburger-menu'),
-								$fapian$elm_html_aria$Html$Attributes$Aria$ariaExpanded(model.headerModel.menuIsExpanded)
+								$fapian$elm_html_aria$Html$Attributes$Aria$ariaExpanded(model.menuIsExpanded)
 							]),
 						_List_fromArray(
 							[
@@ -10742,7 +10765,7 @@ var $author$project$Main$viewHeader = function (model) {
 								$elm$html$Html$img,
 								_List_fromArray(
 									[
-										$elm$html$Html$Attributes$src(model.headerModel.imageSrc),
+										$elm$html$Html$Attributes$src(model.imageSrc),
 										$elm$html$Html$Attributes$alt(''),
 										$fapian$elm_html_aria$Html$Attributes$Aria$ariaHidden(true)
 									]),
@@ -10804,7 +10827,7 @@ var $author$project$Main$viewHeader = function (model) {
 										$elm$html$Html$a,
 										_List_fromArray(
 											[
-												$elm$html$Html$Attributes$href('/')
+												$elm$html$Html$Attributes$href('/destination')
 											]),
 										_List_fromArray(
 											[
@@ -10830,7 +10853,7 @@ var $author$project$Main$viewHeader = function (model) {
 										$elm$html$Html$a,
 										_List_fromArray(
 											[
-												$elm$html$Html$Attributes$href('/')
+												$elm$html$Html$Attributes$href('/crew')
 											]),
 										_List_fromArray(
 											[
@@ -10856,7 +10879,7 @@ var $author$project$Main$viewHeader = function (model) {
 										$elm$html$Html$a,
 										_List_fromArray(
 											[
-												$elm$html$Html$Attributes$href('/')
+												$elm$html$Html$Attributes$href('/technology')
 											]),
 										_List_fromArray(
 											[
@@ -10874,6 +10897,27 @@ var $author$project$Main$viewHeader = function (model) {
 					]))
 			]));
 };
+var $author$project$Main$viewPage = function (model) {
+	return (model.url.path === '/') ? A2(
+		$elm$html$Html$map,
+		$author$project$Main$HomePageMsg,
+		$author$project$Pages$HomePage$view(model.homePageModel)) : ((model.url.path === '/destination') ? A2(
+		$elm$html$Html$map,
+		$author$project$Main$HomePageMsg,
+		$author$project$Pages$HomePage$view(model.homePageModel)) : ((model.url.path === '/crew') ? A2(
+		$elm$html$Html$map,
+		$author$project$Main$HomePageMsg,
+		$author$project$Pages$HomePage$view(model.homePageModel)) : ((model.url.path === '/technology') ? A2(
+		$elm$html$Html$map,
+		$author$project$Main$HomePageMsg,
+		$author$project$Pages$HomePage$view(model.homePageModel)) : A2(
+		$elm$html$Html$map,
+		$author$project$Main$HomePageMsg,
+		$author$project$Pages$HomePage$view(model.homePageModel)))));
+};
+var $author$project$Main$viewTitle = function (model) {
+	return A2($elm$core$String$startsWith, '/destination', model.url.path) ? 'Destination Page' : (A2($elm$core$String$startsWith, '/crew', model.url.path) ? 'Crew Page' : (A2($elm$core$String$startsWith, '/technology', model.url.path) ? 'Technology Page' : (A2($elm$core$String$startsWith, '/', model.url.path) ? 'Home Page' : '404 - Page Not Found')));
+};
 var $author$project$Main$view = function (model) {
 	return {
 		body: _List_fromArray(
@@ -10886,13 +10930,13 @@ var $author$project$Main$view = function (model) {
 					]),
 				_List_fromArray(
 					[
-						$author$project$Main$viewHeader(model)
+						$author$project$Main$viewPage(model)
 					]))
 			]),
-		title: 'Space Tourism'
+		title: $author$project$Main$viewTitle(model)
 	};
 };
 var $author$project$Main$main = $elm$browser$Browser$application(
 	{init: $author$project$Main$init, onUrlChange: $author$project$Main$UrlChanged, onUrlRequest: $author$project$Main$UrlRequested, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
-	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"Main.Msg":{"args":[],"tags":{"HamburgerMenuClicked":[],"Msg2":[],"UrlRequested":["Browser.UrlRequest"],"UrlChanged":["Url.Url"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));
+	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"Main.Msg":{"args":[],"tags":{"HomePageMsg":["Pages.HomePage.Msg"],"Msg2":[],"UrlRequested":["Browser.UrlRequest"],"UrlChanged":["Url.Url"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Pages.HomePage.Msg":{"args":[],"tags":{"HamburgerMenuClicked":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));
