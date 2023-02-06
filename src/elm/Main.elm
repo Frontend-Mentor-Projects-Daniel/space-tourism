@@ -116,7 +116,7 @@ viewHeader model =
                 , span [ class "sr-only" ] [ text "Menu" ]
                 ]
             , ul [ class "nav-items" ]
-                [ li [ class "nav-item" ] [ a [ href "/" ] [ span [] [ text "00" ], text "home" ] ]
+                [ li [ class "nav-item active" ] [ a [ href "/" ] [ span [] [ text "00" ], text "home" ] ]
                 , li [ class "nav-item" ] [ a [ href "/" ] [ span [] [ text "01" ], text "destination" ] ]
                 , li [ class "nav-item" ] [ a [ href "/" ] [ span [] [ text "02" ], text "crew" ] ]
                 , li [ class "nav-item" ] [ a [ href "/" ] [ span [] [ text "03" ], text "technology" ] ]

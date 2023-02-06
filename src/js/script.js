@@ -10770,7 +10770,7 @@ var $author$project$Main$viewHeader = function (model) {
 								$elm$html$Html$li,
 								_List_fromArray(
 									[
-										$elm$html$Html$Attributes$class('nav-item')
+										$elm$html$Html$Attributes$class('nav-item active')
 									]),
 								_List_fromArray(
 									[

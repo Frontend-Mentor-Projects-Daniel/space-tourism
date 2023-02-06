@@ -122,7 +122,6 @@ body {
   color: var(--clr-body-text);
   font-family: var(--ff-barlow-condensed);
   font-size: var(--fs-step-0);
-  padding-inline: 24px;
 }
 @media (min-width: 550px) {
   body {
@@ -130,7 +129,6 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center bottom;
-    padding-inline: 39px;
   }
 }
 @media (min-width: 1100px) {
@@ -138,7 +136,6 @@ body {
     background: url("../assets/home/background-home-desktop.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    padding-inline: 55px;
   }
 }
 
@@ -200,6 +197,10 @@ body {
   align-items: center;
   justify-content: space-between;
   padding-block: 1.5rem;
+  padding-inline: 24px;
+}
+.header .logo {
+  flex-shrink: 0;
 }
 .header .hamburger-menu {
   background: transparent;
@@ -240,9 +241,82 @@ body {
   padding-inline: 32px;
   z-index: -1;
 }
+@media (min-width: 550px) {
+  .header {
+    padding-block-start: 0;
+    padding-inline: 0;
+    padding-inline-start: 24px;
+  }
+  .header .navbar {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(40.7742px);
+    padding: 48px 39px;
+    padding: 0 39px;
+    padding-top: 48px;
+  }
+  .header .hamburger-menu {
+    display: none;
+  }
+  .header .nav-items {
+    flex-wrap: wrap;
+    flex-direction: row;
+    background: transparent;
+    backdrop-filter: unset;
+    position: static;
+  }
+  .header .nav-item {
+    position: relative;
+  }
+  .header .nav-item.active {
+    border-bottom: 3px solid var(--clr-nav-underline);
+  }
+  .header .nav-item a:hover:not(.active) {
+    border-bottom: 3px solid var(--clr-nav-underline-hover);
+  }
+  .header .nav-item a {
+    padding-bottom: 48px;
+  }
+  .header .nav-item span {
+    display: none;
+  }
+  .header .navbar .hamburger-menu ~ .nav-items {
+    display: flex;
+  }
+  .header .hamburger-menu[aria-expanded=true] ~ .nav-items {
+    display: flex;
+    background: transparent;
+    position: static;
+    height: auto;
+    padding-block-start: 0;
+    padding-inline: 0;
+    z-index: auto;
+  }
+}
 @media (min-width: 1100px) {
   .header {
     padding-block: 4rem;
+    padding-inline-start: 55px;
+  }
+  .header .navbar {
+    padding-inline: 123px;
+    position: relative;
+  }
+  .header .navbar::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    background-color: hsl(var(--clr-white)/0.25);
+    height: 1px;
+    transform: translateX(-90%);
+    width: 473px;
+    z-index: 10;
+  }
+  .header .nav-items {
+    gap: 48px;
+  }
+  .header .nav-item span {
+    display: block;
   }
 }
 

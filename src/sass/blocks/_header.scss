@@ -11,6 +11,11 @@ body {
   justify-content: space-between;
 
   padding-block: 1.5rem;
+  padding-inline: 24px;
+
+  .logo {
+    flex-shrink: 0;
+  }
 
   .hamburger-menu {
     background: transparent;
@@ -63,9 +68,102 @@ body {
     z-index: -1;
   }
 
+  @include tablets {
+    & {
+      padding-block-start: 0;
+      padding-inline: 0;
+      padding-inline-start: 24px;
+
+      .navbar {
+        background: rgba(255, 255, 255, 0.04);
+        backdrop-filter: blur(40.7742px);
+        padding: 48px 39px;
+        padding: 0 39px;
+        padding-top: 48px;
+      }
+
+      .hamburger-menu {
+        display: none;
+      }
+
+      .nav-items {
+        flex-wrap: wrap;
+        flex-direction: row;
+
+        background: transparent;
+        backdrop-filter: unset;
+        position: static;
+      }
+
+      .nav-item {
+        position: relative;
+      }
+
+      .nav-item.active {
+        border-bottom: 3px solid var(--clr-nav-underline);
+      }
+
+      .nav-item a:hover:not(.active) {
+        border-bottom: 3px solid var(--clr-nav-underline-hover);
+      }
+
+      .nav-item a {
+        padding-bottom: 48px;
+      }
+
+      .nav-item span {
+        display: none;
+      }
+
+      // extra specificity is required in order to match the above aria-expanded selector
+      & .navbar .hamburger-menu ~ .nav-items {
+        display: flex;
+      }
+
+      // reset the navbar in case user decides to resize the screen while keeping the navbar open
+      .hamburger-menu[aria-expanded='true'] ~ .nav-items {
+        display: flex;
+
+        background: transparent;
+        position: static;
+        height: auto;
+        padding-block-start: 0;
+        padding-inline: 0;
+        z-index: auto;
+      }
+    }
+  }
+
   @include laptops {
     & {
       padding-block: 4rem;
+      padding-inline-start: 55px;
+
+      .navbar {
+        padding-inline: 123px;
+        position: relative;
+      }
+
+      .navbar::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0%;
+
+        background-color: hsl(var(--clr-white) / 0.25);
+        height: 1px;
+        transform: translateX(-90%);
+        width: 473px;
+        z-index: 10;
+      }
+
+      .nav-items {
+        gap: 48px;
+      }
+
+      .nav-item span {
+        display: block;
+      }
     }
   }
 }
