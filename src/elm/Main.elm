@@ -6,7 +6,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Attributes.Aria exposing (..)
 import Html.Events exposing (..)
-import Pages.HomePage as HomePage
+import Partials.Header as Header
 import Url
 
 
@@ -29,7 +29,7 @@ main =
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
-        [ Sub.map HomePageMsg (HomePage.subscriptions model.homePageModel)
+        [ Sub.map HeaderMsg (Header.subscriptions model.headerModel)
         ]
 
 
@@ -40,13 +40,13 @@ subscriptions model =
 type alias Model =
     { key : Nav.Key
     , url : Url.Url
-    , homePageModel : HomePage.Model
+    , headerModel : Header.Model
     }
 
 
 init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
 init _ url key =
-    ( { key = key, url = url, homePageModel = HomePage.init }, Cmd.none )
+    ( { key = key, url = url, headerModel = Header.init }, Cmd.none )
 
 
 
@@ -54,7 +54,7 @@ init _ url key =
 
 
 type Msg
-    = HomePageMsg HomePage.Msg
+    = HeaderMsg Header.Msg
     | Msg2
     | UrlRequested Browser.UrlRequest
     | UrlChanged Url.Url
@@ -63,12 +63,12 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        HomePageMsg msgHomePage ->
+        HeaderMsg msgHeader ->
             let
-                ( newHomePageModel, cmdHomePage ) =
-                    HomePage.update msgHomePage model.homePageModel
+                ( newHeaderModel, cmdHeader ) =
+                    Header.update msgHeader model.headerModel
             in
-            ( { model | homePageModel = newHomePageModel }, Cmd.map HomePageMsg cmdHomePage )
+            ( { model | headerModel = newHeaderModel }, Cmd.map HeaderMsg cmdHeader )
 
         Msg2 ->
             ( model, Cmd.none )
@@ -92,7 +92,8 @@ view model =
     { title = viewTitle model
     , body =
         [ div [ id "root" ]
-            [ viewPage model
+            [ Html.map HeaderMsg (Header.view model.headerModel)
+            , viewPage model
             ]
         ]
     }
@@ -101,19 +102,19 @@ view model =
 viewPage : Model -> Html Msg
 viewPage model =
     if model.url.path == "/" then
-        Html.map HomePageMsg (HomePage.view model.homePageModel)
+        text "Home Page"
 
     else if model.url.path == "/destination" then
-        Html.map HomePageMsg (HomePage.view model.homePageModel)
+        text "Destination Page"
 
     else if model.url.path == "/crew" then
-        Html.map HomePageMsg (HomePage.view model.homePageModel)
+        text "Crew Page"
 
     else if model.url.path == "/technology" then
-        Html.map HomePageMsg (HomePage.view model.homePageModel)
+        text "Technology Page"
 
     else
-        Html.map HomePageMsg (HomePage.view model.homePageModel)
+        text "Not Found Page"
 
 
 viewTitle : Model -> String

@@ -10560,19 +10560,19 @@ var $elm$core$Basics$never = function (_v0) {
 	}
 };
 var $elm$browser$Browser$application = _Browser_application;
-var $author$project$Pages$HomePage$init = {imageSrc: './src/assets/shared/icon-hamburger.svg', menuIsExpanded: 'false'};
+var $author$project$Partials$Header$init = {imageSrc: './src/assets/shared/icon-hamburger.svg', menuIsExpanded: 'false'};
 var $author$project$Main$init = F3(
 	function (_v0, url, key) {
 		return _Utils_Tuple2(
-			{homePageModel: $author$project$Pages$HomePage$init, key: key, url: url},
+			{headerModel: $author$project$Partials$Header$init, key: key, url: url},
 			$elm$core$Platform$Cmd$none);
 	});
-var $author$project$Main$HomePageMsg = function (a) {
-	return {$: 'HomePageMsg', a: a};
+var $author$project$Main$HeaderMsg = function (a) {
+	return {$: 'HeaderMsg', a: a};
 };
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
-var $author$project$Pages$HomePage$subscriptions = function (_v0) {
+var $author$project$Partials$Header$subscriptions = function (_v0) {
 	return $elm$core$Platform$Sub$none;
 };
 var $author$project$Main$subscriptions = function (model) {
@@ -10581,8 +10581,8 @@ var $author$project$Main$subscriptions = function (model) {
 			[
 				A2(
 				$elm$core$Platform$Sub$map,
-				$author$project$Main$HomePageMsg,
-				$author$project$Pages$HomePage$subscriptions(model.homePageModel))
+				$author$project$Main$HeaderMsg,
+				$author$project$Partials$Header$subscriptions(model.headerModel))
 			]));
 };
 var $elm$browser$Browser$Navigation$load = _Browser_load;
@@ -10631,36 +10631,36 @@ var $elm$url$Url$toString = function (url) {
 					_Utils_ap(http, url.host)),
 				url.path)));
 };
-var $author$project$Pages$HomePage$toggleImage = function (model) {
+var $author$project$Partials$Header$toggleImage = function (model) {
 	return (model.imageSrc === './src/assets/shared/icon-hamburger.svg') ? './src/assets/shared/icon-close.svg' : './src/assets/shared/icon-hamburger.svg';
 };
-var $author$project$Pages$HomePage$toggleMenu = function (model) {
+var $author$project$Partials$Header$toggleMenu = function (model) {
 	return (model.menuIsExpanded === 'false') ? 'true' : 'false';
 };
-var $author$project$Pages$HomePage$update = F2(
+var $author$project$Partials$Header$update = F2(
 	function (msg, model) {
 		return _Utils_Tuple2(
 			_Utils_update(
 				model,
 				{
-					imageSrc: $author$project$Pages$HomePage$toggleImage(model),
-					menuIsExpanded: $author$project$Pages$HomePage$toggleMenu(model)
+					imageSrc: $author$project$Partials$Header$toggleImage(model),
+					menuIsExpanded: $author$project$Partials$Header$toggleMenu(model)
 				}),
 			$elm$core$Platform$Cmd$none);
 	});
 var $author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
-			case 'HomePageMsg':
-				var msgHomePage = msg.a;
-				var _v1 = A2($author$project$Pages$HomePage$update, msgHomePage, model.homePageModel);
-				var newHomePageModel = _v1.a;
-				var cmdHomePage = _v1.b;
+			case 'HeaderMsg':
+				var msgHeader = msg.a;
+				var _v1 = A2($author$project$Partials$Header$update, msgHeader, model.headerModel);
+				var newHeaderModel = _v1.a;
+				var cmdHeader = _v1.b;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{homePageModel: newHomePageModel}),
-					A2($elm$core$Platform$Cmd$map, $author$project$Main$HomePageMsg, cmdHomePage));
+						{headerModel: newHeaderModel}),
+					A2($elm$core$Platform$Cmd$map, $author$project$Main$HeaderMsg, cmdHeader));
 			case 'Msg2':
 				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 			case 'UrlRequested':
@@ -10688,7 +10688,7 @@ var $author$project$Main$update = F2(
 					$elm$core$Platform$Cmd$none);
 		}
 	});
-var $author$project$Pages$HomePage$HamburgerMenuClicked = {$: 'HamburgerMenuClicked'};
+var $author$project$Partials$Header$HamburgerMenuClicked = {$: 'HamburgerMenuClicked'};
 var $elm$html$Html$Attributes$alt = $elm$html$Html$Attributes$stringProperty('alt');
 var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
 var $fapian$elm_html_aria$Html$Attributes$Aria$ariaExpanded = $elm$html$Html$Attributes$attribute('aria-expanded');
@@ -10715,7 +10715,7 @@ var $elm$html$Html$Attributes$src = function (url) {
 		'src',
 		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
-var $author$project$Pages$HomePage$view = function (model) {
+var $author$project$Partials$Header$view = function (model) {
 	return A2(
 		$elm$html$Html$header,
 		_List_fromArray(
@@ -10755,7 +10755,7 @@ var $author$project$Pages$HomePage$view = function (model) {
 						$elm$html$Html$button,
 						_List_fromArray(
 							[
-								$elm$html$Html$Events$onClick($author$project$Pages$HomePage$HamburgerMenuClicked),
+								$elm$html$Html$Events$onClick($author$project$Partials$Header$HamburgerMenuClicked),
 								$elm$html$Html$Attributes$class('hamburger-menu'),
 								$fapian$elm_html_aria$Html$Attributes$Aria$ariaExpanded(model.menuIsExpanded)
 							]),
@@ -10898,22 +10898,7 @@ var $author$project$Pages$HomePage$view = function (model) {
 			]));
 };
 var $author$project$Main$viewPage = function (model) {
-	return (model.url.path === '/') ? A2(
-		$elm$html$Html$map,
-		$author$project$Main$HomePageMsg,
-		$author$project$Pages$HomePage$view(model.homePageModel)) : ((model.url.path === '/destination') ? A2(
-		$elm$html$Html$map,
-		$author$project$Main$HomePageMsg,
-		$author$project$Pages$HomePage$view(model.homePageModel)) : ((model.url.path === '/crew') ? A2(
-		$elm$html$Html$map,
-		$author$project$Main$HomePageMsg,
-		$author$project$Pages$HomePage$view(model.homePageModel)) : ((model.url.path === '/technology') ? A2(
-		$elm$html$Html$map,
-		$author$project$Main$HomePageMsg,
-		$author$project$Pages$HomePage$view(model.homePageModel)) : A2(
-		$elm$html$Html$map,
-		$author$project$Main$HomePageMsg,
-		$author$project$Pages$HomePage$view(model.homePageModel)))));
+	return (model.url.path === '/') ? $elm$html$Html$text('Home Page') : ((model.url.path === '/destination') ? $elm$html$Html$text('Destination Page') : ((model.url.path === '/crew') ? $elm$html$Html$text('Crew Page') : ((model.url.path === '/technology') ? $elm$html$Html$text('Technology Page') : $elm$html$Html$text('Not Found Page'))));
 };
 var $author$project$Main$viewTitle = function (model) {
 	return A2($elm$core$String$startsWith, '/destination', model.url.path) ? 'Destination Page' : (A2($elm$core$String$startsWith, '/crew', model.url.path) ? 'Crew Page' : (A2($elm$core$String$startsWith, '/technology', model.url.path) ? 'Technology Page' : (A2($elm$core$String$startsWith, '/', model.url.path) ? 'Home Page' : '404 - Page Not Found')));
@@ -10930,6 +10915,10 @@ var $author$project$Main$view = function (model) {
 					]),
 				_List_fromArray(
 					[
+						A2(
+						$elm$html$Html$map,
+						$author$project$Main$HeaderMsg,
+						$author$project$Partials$Header$view(model.headerModel)),
 						$author$project$Main$viewPage(model)
 					]))
 			]),
@@ -10939,4 +10928,4 @@ var $author$project$Main$view = function (model) {
 var $author$project$Main$main = $elm$browser$Browser$application(
 	{init: $author$project$Main$init, onUrlChange: $author$project$Main$UrlChanged, onUrlRequest: $author$project$Main$UrlRequested, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
-	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"Main.Msg":{"args":[],"tags":{"HomePageMsg":["Pages.HomePage.Msg"],"Msg2":[],"UrlRequested":["Browser.UrlRequest"],"UrlChanged":["Url.Url"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Pages.HomePage.Msg":{"args":[],"tags":{"HamburgerMenuClicked":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));
+	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"Main.Msg":{"args":[],"tags":{"HeaderMsg":["Partials.Header.Msg"],"Msg2":[],"UrlRequested":["Browser.UrlRequest"],"UrlChanged":["Url.Url"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Partials.Header.Msg":{"args":[],"tags":{"HamburgerMenuClicked":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));
