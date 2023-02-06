@@ -10,16 +10,21 @@
   --hsla: 1;
 
   // COLOUR SCHEME
-  // home page
+  // body
   --clr-body-bg: hsl(var(--clr-space-black));
   --clr-body-text: hsl(var(--clr-fog));
 
+  // header
   --clr-header-text: hsl(var(--clr-white));
 
   --clr-nav-text: hsl(var(--clr-white));
   --clr-nav-underline: hsl(var(--clr-white));
   --clr-nav-underline-hover: hsl(var(--clr-white) / 0.5);
   --clr-nav-number: hsl(var(--clr-white));
+
+  // home page
+  --clr-homepage-body-text: hsl(var(--clr-fog));
+  --clr-homepage-header-text: hsl(var(--clr-white));
 
   // FONT SIZES
 
@@ -37,6 +42,9 @@
   // FONT WEIGHTS
   --fw-regular: 400;
   --fw-bold: 700;
+
+  // LETTER SPACING
+  --ls-27: 2.7px;
 }
 
 body {

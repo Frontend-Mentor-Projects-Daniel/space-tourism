@@ -6,6 +6,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Attributes.Aria exposing (..)
 import Html.Events exposing (..)
+import Pages.HomePage as HomePage
 import Partials.Header as Header
 import Url
 
@@ -41,12 +42,19 @@ type alias Model =
     { key : Nav.Key
     , url : Url.Url
     , headerModel : Header.Model
+    , homePageModel : HomePage.Model
     }
 
 
 init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
 init _ url key =
-    ( { key = key, url = url, headerModel = Header.init }, Cmd.none )
+    ( { key = key
+      , url = url
+      , headerModel = Header.init
+      , homePageModel = HomePage.init
+      }
+    , Cmd.none
+    )
 
 
 
@@ -55,7 +63,7 @@ init _ url key =
 
 type Msg
     = HeaderMsg Header.Msg
-    | Msg2
+    | HomePageMsg HomePage.Msg
     | UrlRequested Browser.UrlRequest
     | UrlChanged Url.Url
 
@@ -63,14 +71,14 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        HeaderMsg msgHeader ->
+        HeaderMsg headerMsg ->
             let
                 ( newHeaderModel, cmdHeader ) =
-                    Header.update msgHeader model.headerModel
+                    Header.update headerMsg model.headerModel
             in
             ( { model | headerModel = newHeaderModel }, Cmd.map HeaderMsg cmdHeader )
 
-        Msg2 ->
+        HomePageMsg _ ->
             ( model, Cmd.none )
 
         UrlRequested urlRequest ->
@@ -102,7 +110,7 @@ view model =
 viewPage : Model -> Html Msg
 viewPage model =
     if model.url.path == "/" then
-        text "Home Page"
+        Html.map HomePageMsg (HomePage.view model.homePageModel)
 
     else if model.url.path == "/destination" then
         text "Destination Page"

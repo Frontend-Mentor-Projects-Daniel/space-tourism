@@ -10560,11 +10560,12 @@ var $elm$core$Basics$never = function (_v0) {
 	}
 };
 var $elm$browser$Browser$application = _Browser_application;
+var $author$project$Pages$HomePage$init = {};
 var $author$project$Partials$Header$init = {imageSrc: './src/assets/shared/icon-hamburger.svg', menuIsExpanded: 'false'};
 var $author$project$Main$init = F3(
 	function (_v0, url, key) {
 		return _Utils_Tuple2(
-			{headerModel: $author$project$Partials$Header$init, key: key, url: url},
+			{headerModel: $author$project$Partials$Header$init, homePageModel: $author$project$Pages$HomePage$init, key: key, url: url},
 			$elm$core$Platform$Cmd$none);
 	});
 var $author$project$Main$HeaderMsg = function (a) {
@@ -10652,8 +10653,8 @@ var $author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
 			case 'HeaderMsg':
-				var msgHeader = msg.a;
-				var _v1 = A2($author$project$Partials$Header$update, msgHeader, model.headerModel);
+				var headerMsg = msg.a;
+				var _v1 = A2($author$project$Partials$Header$update, headerMsg, model.headerModel);
 				var newHeaderModel = _v1.a;
 				var cmdHeader = _v1.b;
 				return _Utils_Tuple2(
@@ -10661,7 +10662,7 @@ var $author$project$Main$update = F2(
 						model,
 						{headerModel: newHeaderModel}),
 					A2($elm$core$Platform$Cmd$map, $author$project$Main$HeaderMsg, cmdHeader));
-			case 'Msg2':
+			case 'HomePageMsg':
 				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 			case 'UrlRequested':
 				var urlRequest = msg.a;
@@ -10897,8 +10898,82 @@ var $author$project$Partials$Header$view = function (model) {
 					]))
 			]));
 };
+var $author$project$Main$HomePageMsg = function (a) {
+	return {$: 'HomePageMsg', a: a};
+};
+var $elm$html$Html$h1 = _VirtualDom_node('h1');
+var $elm$html$Html$main_ = _VirtualDom_node('main');
+var $author$project$Pages$HomePage$view = function (_v0) {
+	return A2(
+		$elm$html$Html$main_,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('main main--homepage')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('homepage center')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('text-content')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$h1,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('primary-heading')
+									]),
+								_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$span,
+										_List_Nil,
+										_List_fromArray(
+											[
+												$elm$html$Html$text('so, you want to travel to')
+											])),
+										$elm$html$Html$text('space')
+									])),
+								A2(
+								$elm$html$Html$p,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('primary-text')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Let\'s face it; if you want to go to space, you might as well genuinely go to outer space and not hover kind of on the edge of it. Well sit back, and relax because we’ll give you a truly out of this world experience!')
+									]))
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('homepage-button')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('explore')
+							]))
+					]))
+			]));
+};
 var $author$project$Main$viewPage = function (model) {
-	return (model.url.path === '/') ? $elm$html$Html$text('Home Page') : ((model.url.path === '/destination') ? $elm$html$Html$text('Destination Page') : ((model.url.path === '/crew') ? $elm$html$Html$text('Crew Page') : ((model.url.path === '/technology') ? $elm$html$Html$text('Technology Page') : $elm$html$Html$text('Not Found Page'))));
+	return (model.url.path === '/') ? A2(
+		$elm$html$Html$map,
+		$author$project$Main$HomePageMsg,
+		$author$project$Pages$HomePage$view(model.homePageModel)) : ((model.url.path === '/destination') ? $elm$html$Html$text('Destination Page') : ((model.url.path === '/crew') ? $elm$html$Html$text('Crew Page') : ((model.url.path === '/technology') ? $elm$html$Html$text('Technology Page') : $elm$html$Html$text('Not Found Page'))));
 };
 var $author$project$Main$viewTitle = function (model) {
 	return A2($elm$core$String$startsWith, '/destination', model.url.path) ? 'Destination Page' : (A2($elm$core$String$startsWith, '/crew', model.url.path) ? 'Crew Page' : (A2($elm$core$String$startsWith, '/technology', model.url.path) ? 'Technology Page' : (A2($elm$core$String$startsWith, '/', model.url.path) ? 'Home Page' : '404 - Page Not Found')));
@@ -10928,4 +11003,4 @@ var $author$project$Main$view = function (model) {
 var $author$project$Main$main = $elm$browser$Browser$application(
 	{init: $author$project$Main$init, onUrlChange: $author$project$Main$UrlChanged, onUrlRequest: $author$project$Main$UrlRequested, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
-	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"Main.Msg":{"args":[],"tags":{"HeaderMsg":["Partials.Header.Msg"],"Msg2":[],"UrlRequested":["Browser.UrlRequest"],"UrlChanged":["Url.Url"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Partials.Header.Msg":{"args":[],"tags":{"HamburgerMenuClicked":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));
+	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"Main.Msg":{"args":[],"tags":{"HeaderMsg":["Partials.Header.Msg"],"HomePageMsg":["Pages.HomePage.Msg"],"UrlRequested":["Browser.UrlRequest"],"UrlChanged":["Url.Url"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Pages.HomePage.Msg":{"args":[],"tags":{"NoOp":[]}},"Partials.Header.Msg":{"args":[],"tags":{"HamburgerMenuClicked":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));

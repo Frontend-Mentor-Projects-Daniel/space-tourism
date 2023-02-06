@@ -1,0 +1,6 @@
+// for any shared styles between the main element for each page
+.main {
+  // to prevent main and its children from covering up the abs positioned navbar on mobile
+  position: relative;
+  z-index: -10;
+}

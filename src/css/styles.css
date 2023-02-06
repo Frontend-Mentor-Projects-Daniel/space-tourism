@@ -101,6 +101,8 @@ select {
   --clr-nav-underline: hsl(var(--clr-white));
   --clr-nav-underline-hover: hsl(var(--clr-white) / 0.5);
   --clr-nav-number: hsl(var(--clr-white));
+  --clr-homepage-body-text: hsl(var(--clr-fog));
+  --clr-homepage-header-text: hsl(var(--clr-white));
   --fs-step--1: clamp(0.88rem, calc(0.83rem + 0.19vw), 1rem);
   --fs-step-0: clamp(0.94rem, calc(0.87rem + 0.28vw), 1.13rem);
   --fs-step-1: clamp(1rem, calc(0.74rem + 1.13vw), 1.75rem);
@@ -111,6 +113,7 @@ select {
   --ff-barlow-condensed: "Barlow Condensed", sans-serif;
   --fw-regular: 400;
   --fw-bold: 700;
+  --ls-27: 2.7px;
 }
 
 body {
@@ -198,6 +201,7 @@ body {
   justify-content: space-between;
   padding-block: 1.5rem;
   padding-inline: 24px;
+  position: relative;
 }
 .header .logo {
   flex-shrink: 0;
@@ -222,7 +226,7 @@ body {
 .header .nav-item a {
   display: flex;
   gap: 11px;
-  letter-spacing: 2.7px;
+  letter-spacing: var(--ls-27);
   text-decoration: none;
   text-transform: uppercase;
 }
@@ -318,6 +322,62 @@ body {
   .header .nav-item span {
     display: block;
   }
+}
+
+.main {
+  position: relative;
+  z-index: -10;
+}
+
+.homepage {
+  --measure: 450px;
+  display: flex;
+  flex-direction: column;
+  gap: 81px;
+}
+.homepage .text-content {
+  text-transform: uppercase;
+}
+.homepage .primary-heading {
+  color: var(--clr-homepage-header-text);
+  text-align: center;
+}
+.homepage .primary-heading span {
+  color: var(--clr-homepage-body-text);
+  display: block;
+  font-size: var(--fs-step-1);
+  letter-spacing: var(--ls-27);
+}
+.homepage .primary-text {
+  margin-inline: auto;
+  max-width: 40ch;
+  text-align: center;
+  text-transform: none;
+}
+.homepage .homepage-button {
+  cursor: pointer;
+}
+@media (min-width: 550px) {
+  .homepage .primary-heading span {
+    letter-spacing: 3.38px;
+  }
+  .homepage .primary-text {
+    max-width: 50ch;
+  }
+}
+@media (min-width: 1100px) {
+  .homepage .primary-heading span {
+    letter-spacing: 4.72px;
+  }
+  .homepage .primary-text {
+    max-width: 45ch;
+  }
+}
+
+.main--homepage {
+  display: grid;
+  place-items: center;
+  margin-block-start: 48px;
 }
 
 /*# sourceMappingURL=styles.css.map */

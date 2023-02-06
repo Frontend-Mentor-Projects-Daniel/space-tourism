@@ -1,0 +1,61 @@
+@use '../mixins/breakpoints' as *;
+@use '../mixins/homepage-button' as *;
+
+.homepage {
+  --measure: 450px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 81px;
+
+  .text-content {
+    text-transform: uppercase;
+  }
+
+  .primary-heading {
+    color: var(--clr-homepage-header-text);
+    text-align: center;
+  }
+
+  .primary-heading span {
+    color: var(--clr-homepage-body-text);
+    display: block;
+    font-size: var(--fs-step-1);
+    letter-spacing: var(--ls-27);
+  }
+
+  .primary-text {
+    margin-inline: auto;
+    max-width: 40ch;
+    text-align: center;
+    text-transform: none;
+  }
+
+  .homepage-button {
+    @include homepage-button();
+  }
+
+  @include tablets {
+    & {
+      .primary-heading span {
+        letter-spacing: 3.38px;
+      }
+
+      .primary-text {
+        max-width: 50ch;
+      }
+    }
+  }
+
+  @include laptops {
+    & {
+      .primary-heading span {
+        letter-spacing: 4.72px;
+      }
+
+      .primary-text {
+        max-width: 45ch;
+      }
+    }
+  }
+}
