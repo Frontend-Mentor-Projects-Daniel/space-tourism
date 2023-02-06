@@ -1,0 +1,19 @@
+/* Default: Phones from 0px to 549px */
+
+@mixin tablets() {
+  @media (min-width: 550px) {
+    @content;
+  }
+}
+
+@mixin laptops() {
+  @media (min-width: 1100px) {
+    @content;
+  }
+}
+
+@mixin desktops() {
+  @media (min-width: 1500px) {
+    @content;
+  }
+}

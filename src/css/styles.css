@@ -84,6 +84,11 @@ select {
     scroll-behavior: auto !important;
   }
 }
+#root {
+  min-height: 100%;
+}
+
+/* Default: Phones from 0px to 549px */
 :root {
   --clr-space-black: 230 35% 7%;
   --clr-white: 0 0% 100%;
@@ -109,10 +114,32 @@ select {
 }
 
 body {
+  background: url("../assets/home/background-home-mobile.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center bottom;
   background-color: var(--clr-body-bg);
   color: var(--clr-body-text);
   font-family: var(--ff-barlow-condensed);
   font-size: var(--fs-step-0);
+  padding-inline: 24px;
+}
+@media (min-width: 550px) {
+  body {
+    background: url("../assets/home/background-home-tablet.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center bottom;
+    padding-inline: 39px;
+  }
+}
+@media (min-width: 1100px) {
+  body {
+    background: url("../assets/home/background-home-desktop.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-inline: 55px;
+  }
 }
 
 h1,
@@ -137,6 +164,17 @@ li > * {
   color: inherit;
 }
 
+li a {
+  font-size: 1rem;
+}
+
+.center {
+  --measure: 1385px;
+  box-sizing: content-box;
+  margin-inline: auto;
+  max-inline-size: var(--measure);
+}
+
 .hidden {
   display: none;
 }
@@ -151,6 +189,53 @@ li > * {
   clip: rect(0, 0, 0, 0) !important;
   white-space: nowrap !important;
   border: 0 !important;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 1.5rem;
+}
+.header .navbar {
+  position: relative;
+}
+.header .hamburger-menu {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+.header .nav-items {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  position: absolute;
+  backdrop-filter: blur(40.7742px);
+  background: rgba(255, 255, 255, 0.04);
+  list-style: none;
+  text-decoration: none;
+}
+.header .nav-item a {
+  display: flex;
+  gap: 11px;
+  letter-spacing: 2.7px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.header .nav-item span {
+  font-weight: var(--fw-bold);
+}
+.header .hamburger-menu[aria-expanded=false] ~ .nav-items {
+  display: none;
+}
+.header .hamburger-menu[aria-expanded=true] ~ .nav-items {
+  display: flex;
+}
+@media (min-width: 1100px) {
+  .header {
+    padding-block: 4rem;
+  }
 }
 
 /*# sourceMappingURL=styles.css.map */

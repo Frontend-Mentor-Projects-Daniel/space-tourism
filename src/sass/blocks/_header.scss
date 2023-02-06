@@ -1,0 +1,60 @@
+@use '../mixins/breakpoints' as *;
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding-block: 1.5rem;
+
+  .navbar {
+    position: relative;
+  }
+
+  .hamburger-menu {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .nav-items {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    position: absolute;
+
+    backdrop-filter: blur(40.7742px);
+    background: rgba(255, 255, 255, 0.04);
+    list-style: none;
+    text-decoration: none;
+  }
+
+  .nav-item a {
+    display: flex;
+    gap: 11px;
+
+    letter-spacing: 2.7px;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .nav-item span {
+    font-weight: var(--fw-bold);
+  }
+
+  .hamburger-menu[aria-expanded='false'] ~ .nav-items {
+    display: none;
+  }
+
+  .hamburger-menu[aria-expanded='true'] ~ .nav-items {
+    display: flex;
+  }
+
+  @include laptops {
+    & {
+      padding-block: 4rem;
+    }
+  }
+}

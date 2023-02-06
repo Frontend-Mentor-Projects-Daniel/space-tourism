@@ -28,13 +28,20 @@ main =
 type alias Model =
     { key : Nav.Key
     , url : Url.Url
-    , property : String
+    , headerModel : HeaderModel
+    }
+
+
+headerModel : HeaderModel
+headerModel =
+    { menuIsExpanded = "false"
+    , imageSrc = "./src/assets/shared/icon-hamburger.svg"
     }
 
 
 init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
 init _ url key =
-    ( { key = key, url = url, property = "Space Tourism" }, Cmd.none )
+    ( { key = key, url = url, headerModel = headerModel }, Cmd.none )
 
 
 
@@ -42,7 +49,7 @@ init _ url key =
 
 
 type Msg
-    = Msg1
+    = HamburgerMenuClicked
     | Msg2
     | UrlRequested Browser.UrlRequest
     | UrlChanged Url.Url
@@ -51,8 +58,8 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Msg1 ->
-            ( model, Cmd.none )
+        HamburgerMenuClicked ->
+            ( { model | headerModel = { menuIsExpanded = toggleMenu model, imageSrc = toggleImage model } }, Cmd.none )
 
         Msg2 ->
             ( model, Cmd.none )
@@ -78,46 +85,63 @@ subscriptions _ =
 
 view : Model -> Browser.Document Msg
 view model =
-    { title = model.property
+    { title = "Space Tourism"
     , body =
         [ div [ id "root" ]
-            [ viewHeader
+            [ viewHeader model
             ]
         ]
     }
 
 
 
--- TYPES
--- VIEW FUNCTIONS
--- <img src="./src/assets/shared/logo.svg" />
--- <img src="./src/assets/shared/icon-hamburger.svg">
--- <img src="./src/assets/shared/icon-close.svg">
+--& VIEW HEADER
 
 
-viewHeader : Html msg
-viewHeader =
-    header [ class "main-header" ]
+type alias HeaderModel =
+    { menuIsExpanded : String
+    , imageSrc : String
+    }
+
+
+viewHeader : Model -> Html Msg
+viewHeader model =
+    header [ class "header center" ]
         [ div [ class "logo" ]
             [ img [ src "./src/assets/shared/logo.svg", alt "Space Tourism" ] []
             ]
         , nav [ class "navbar", role "navigation", ariaLabel "Main Menu" ]
-            [ button [ class "hamburger-menu", ariaExpanded "false" ]
-                [ img [ src "./src/assets/shared/icon-hamburger.svg", alt "", ariaHidden True ] []
+            [ button [ onClick HamburgerMenuClicked, class "hamburger-menu", ariaExpanded model.headerModel.menuIsExpanded ]
+                [ img [ src model.headerModel.imageSrc, alt "", ariaHidden True ] []
                 , span [ class "sr-only" ] [ text "Menu" ]
                 ]
-            , ul [ class "nav-items hidden" ]
-                [ li [ class "nav-item" ] [ span [] [ text "00" ], text "home" ]
-                , li [ class "nav-item" ] [ span [] [ text "01" ], text "destination" ]
-                , li [ class "nav-item" ] [ span [] [ text "02" ], text "crew" ]
-                , li [ class "nav-item" ] [ span [] [ text "03" ], text "technology" ]
+            , ul [ class "nav-items" ]
+                [ li [ class "nav-item" ] [ a [ href "/" ] [ span [] [ text "00" ], text "home" ] ]
+                , li [ class "nav-item" ] [ a [ href "/" ] [ span [] [ text "01" ], text "destination" ] ]
+                , li [ class "nav-item" ] [ a [ href "/" ] [ span [] [ text "02" ], text "crew" ] ]
+                , li [ class "nav-item" ] [ a [ href "/" ] [ span [] [ text "03" ], text "technology" ] ]
                 ]
             ]
         ]
 
 
+toggleMenu : Model -> String
+toggleMenu model =
+    if model.headerModel.menuIsExpanded == "false" then
+        "true"
 
--- viewHomePage : Html msg
--- viewHomePage =
---     div [] []
--- HELPER FUNCTIONS
+    else
+        "false"
+
+
+toggleImage : Model -> String
+toggleImage model =
+    if model.headerModel.imageSrc == "./src/assets/shared/icon-hamburger.svg" then
+        "./src/assets/shared/icon-close.svg"
+
+    else
+        "./src/assets/shared/icon-hamburger.svg"
+
+
+
+--* HELPER FUNCTIONS
