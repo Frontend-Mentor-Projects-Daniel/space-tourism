@@ -1,15 +1,16 @@
 @use '../mixins/breakpoints' as *;
 
+// in order to position the navbar on mobile
+body {
+  position: relative;
+}
+
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   padding-block: 1.5rem;
-
-  .navbar {
-    position: relative;
-  }
 
   .hamburger-menu {
     background: transparent;
@@ -24,6 +25,8 @@
     gap: 32px;
 
     position: absolute;
+
+    -webkit-backdrop-filter: blur(40.7742px);
 
     backdrop-filter: blur(40.7742px);
     background: rgba(255, 255, 255, 0.04);
@@ -50,6 +53,14 @@
 
   .hamburger-menu[aria-expanded='true'] ~ .nav-items {
     display: flex;
+
+    right: 0%;
+    top: 0%;
+
+    height: 100vh;
+    padding-block-start: 118px;
+    padding-inline: 32px;
+    z-index: -1;
   }
 
   @include laptops {
