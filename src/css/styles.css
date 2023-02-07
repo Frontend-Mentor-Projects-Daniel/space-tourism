@@ -381,6 +381,7 @@ body {
   letter-spacing: 1.25px;
   padding: 27px;
   text-transform: uppercase;
+  position: relative;
 }
 @media (min-width: 550px) {
   .homepage .homepage-button {
@@ -393,6 +394,22 @@ body {
   .homepage .homepage-button {
     padding: 89px;
   }
+}
+.homepage .homepage-button::after {
+  content: "";
+  background-color: hsl(var(--clr-white)/0.2);
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: scale(0);
+  transition: all 300ms ease;
+  z-index: -1;
+}
+.homepage .homepage-button:hover::after {
+  transform: scale(1.5);
 }
 @media (min-width: 550px) {
   .homepage .primary-heading span {
