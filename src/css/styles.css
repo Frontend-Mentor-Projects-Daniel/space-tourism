@@ -270,13 +270,25 @@ body {
     position: static;
   }
   .header .nav-item {
+    display: flex;
+    flex-direction: column;
     position: relative;
   }
-  .header .nav-item.active {
-    border-bottom: 3px solid var(--clr-nav-underline);
+  .header .nav-item.active::after {
+    content: "";
+    background-color: var(--clr-nav-underline);
+    height: 3px;
+    width: 100%;
   }
-  .header .nav-item:hover:not(.active) {
-    border-bottom: 3px solid var(--clr-nav-underline-hover);
+  .header .nav-item:not(.active)::after {
+    content: "";
+    background-color: var(--clr-nav-underline-hover);
+    height: 3px;
+    transition: all 300ms ease;
+    width: 0%;
+  }
+  .header .nav-item:hover:not(.active)::after {
+    width: 100%;
   }
   .header .nav-item a {
     padding-bottom: 48px;
