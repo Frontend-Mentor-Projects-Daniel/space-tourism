@@ -107,8 +107,9 @@ select {
   --fs-step-0: clamp(0.94rem, calc(0.87rem + 0.28vw), 1.13rem);
   --fs-step-1: clamp(1rem, calc(0.74rem + 1.13vw), 1.75rem);
   --fs-step-2: clamp(1rem, calc(0.65rem + 1.5vw), 2rem);
-  --fs-step-3: clamp(1.5rem, calc(0.8rem + 3vw), 3.5rem);
-  --fs-step-4: clamp(5rem, calc(0.83rem + 17.81vw), 9.38rem);
+  --fs-step-3: clamp(1.25rem, calc(0.99rem + 1.3vw), 2rem);
+  --fs-step-4: clamp(1.5rem, calc(0.8rem + 3vw), 3.5rem);
+  --fs-step-5: clamp(5rem, calc(0.83rem + 17.81vw), 9.38rem);
   --ff-bellefair: "Bellefair", serif;
   --ff-barlow-condensed: "Barlow Condensed", sans-serif;
   --fw-regular: 400;
@@ -153,7 +154,7 @@ h6 {
 }
 
 h1 {
-  font-size: var(--fs-step-4);
+  font-size: var(--fs-step-5);
 }
 
 li {
@@ -333,7 +334,8 @@ body {
   --measure: 450px;
   display: flex;
   flex-direction: column;
-  gap: 81px;
+  align-items: center;
+  gap: 28px;
 }
 .homepage .text-content {
   text-transform: uppercase;
@@ -355,7 +357,30 @@ body {
   text-transform: none;
 }
 .homepage .homepage-button {
+  align-self: center;
+  aspect-ratio: 1;
+  background-color: hsl(var(--clr-white));
+  border: none;
+  border-radius: 50%;
+  color: hsl(var(--clr-space-black));
   cursor: pointer;
+  font-size: var(--fs-step-3);
+  font-family: var(--ff-bellefair);
+  letter-spacing: 1.25px;
+  padding: 27px;
+  text-transform: uppercase;
+}
+@media (min-width: 550px) {
+  .homepage .homepage-button {
+    letter-spacing: 2px;
+    padding: 73px;
+    padding: 49px;
+  }
+}
+@media (min-width: 1100px) {
+  .homepage .homepage-button {
+    padding: 89px;
+  }
 }
 @media (min-width: 550px) {
   .homepage .primary-heading span {
@@ -366,6 +391,10 @@ body {
   }
 }
 @media (min-width: 1100px) {
+  .homepage {
+    flex-direction: row;
+    justify-content: space-around;
+  }
   .homepage .primary-heading span {
     letter-spacing: 4.72px;
   }
@@ -374,10 +403,10 @@ body {
   }
 }
 
-.main--homepage {
-  display: grid;
-  place-items: center;
-  margin-block-start: 48px;
+@media (min-width: 550px) {
+  .main--homepage {
+    margin: 0;
+  }
 }
 
 /*# sourceMappingURL=styles.css.map */

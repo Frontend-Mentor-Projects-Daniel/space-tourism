@@ -10916,7 +10916,7 @@ var $author$project$Pages$HomePage$view = function (_v0) {
 				$elm$html$Html$div,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$class('homepage center')
+						$elm$html$Html$Attributes$class('homepage')
 					]),
 				_List_fromArray(
 					[

@@ -41,7 +41,7 @@ update msg model =
 view : Model -> Html Msg
 view _ =
     main_ [ class "main main--homepage" ]
-        [ div [ class "homepage center" ]
+        [ div [ class "homepage" ]
             [ div [ class "text-content" ]
                 [ h1 [ class "primary-heading" ]
                     [ span [] [ text "so, you want to travel to" ]

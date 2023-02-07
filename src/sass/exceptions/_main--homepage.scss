@@ -1,6 +1,13 @@
-.main--homepage {
-  display: grid;
-  place-items: center;
+@use '../mixins/breakpoints' as *;
 
-  margin-block-start: 48px;
+.main--homepage {
+  // margin-block-start: 62px;
+
+  @include tablets() {
+    margin: 0;
+  }
+
+  @include laptops() {
+    // margin-block-start: 124px;
+  }
 }

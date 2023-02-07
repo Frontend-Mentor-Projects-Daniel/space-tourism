@@ -1,3 +1,26 @@
+@use '../mixins/breakpoints' as *;
+
 @mixin homepage-button {
+  align-self: center;
+  aspect-ratio: 1;
+  background-color: hsl(var(--clr-white));
+  border: none;
+  border-radius: 50%;
+  color: hsl(var(--clr-space-black));
   cursor: pointer;
+  font-size: var(--fs-step-3);
+  font-family: var(--ff-bellefair);
+  letter-spacing: 1.25px;
+  padding: 27px;
+  text-transform: uppercase;
+
+  @include tablets() {
+    letter-spacing: 2px;
+    padding: 73px;
+    padding: 49px;
+  }
+
+  @include laptops() {
+    padding: 89px;
+  }
 }
