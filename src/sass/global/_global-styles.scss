@@ -56,6 +56,8 @@ body {
 
   // incase, for what ever reason, the bg-image doesn't show up, at the very least the we will have white & white-ish text on a black background rather than on a white one
   background-color: var(--clr-body-bg);
+  // TODO: Remove this
+  background-color: white;
   color: var(--clr-body-text);
   font-family: var(--ff-barlow-condensed);
   font-size: var(--fs-step-0);

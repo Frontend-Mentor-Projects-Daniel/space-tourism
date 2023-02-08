@@ -16,8 +16,7 @@
 
   @include tablets() {
     letter-spacing: 2px;
-    padding: 73px;
-    padding: 49px;
+    padding: 20px;
   }
 
   @include laptops() {

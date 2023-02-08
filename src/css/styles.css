@@ -22,6 +22,7 @@ picture {
 /* Allow percentage-based heights in the application */
 html,
 body {
+  height: 100%;
   height: 100vh;
 }
 
@@ -123,6 +124,7 @@ body {
   background-size: cover;
   background-position: center bottom;
   background-color: var(--clr-body-bg);
+  background-color: white;
   color: var(--clr-body-text);
   font-family: var(--ff-barlow-condensed);
   font-size: var(--fs-step-0);
@@ -174,6 +176,29 @@ li a {
   box-sizing: content-box;
   margin-inline: auto;
   max-inline-size: var(--measure);
+}
+
+.cover {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 100vh;
+  padding: 1rem;
+}
+
+.cover > * {
+  margin-block: 1rem;
+}
+
+.cover > :first-child:not(.centered) {
+  margin-block-start: 0;
+}
+
+.cover > :last-child:not(.centered) {
+  margin-block-end: 0;
+}
+
+.cover > .centered {
+  margin-block: auto;
 }
 
 .hidden {
@@ -386,8 +411,7 @@ body {
 @media (min-width: 550px) {
   .homepage .homepage-button {
     letter-spacing: 2px;
-    padding: 73px;
-    padding: 49px;
+    padding: 20px;
   }
 }
 @media (min-width: 1100px) {
