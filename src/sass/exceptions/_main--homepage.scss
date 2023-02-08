@@ -1,13 +1,7 @@
 @use '../mixins/breakpoints' as *;
 
 .main--homepage {
-  // margin-block-start: 62px;
-
-  @include tablets() {
-    margin: 0;
-  }
-
   @include laptops() {
-    // margin-block-start: 124px;
+    margin-block-start: 124px;
   }
 }
