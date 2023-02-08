@@ -6,6 +6,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Attributes.Aria exposing (..)
 import Html.Events exposing (..)
+import Pages.DestinationPage as Destination
 import Pages.HomePage as HomePage
 import Partials.Header as Header
 import Url
@@ -31,6 +32,8 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
         [ Sub.map HeaderMsg (Header.subscriptions model.headerModel)
+        , Sub.map HomePageMsg (HomePage.subscriptions model.homePageModel)
+        , Sub.map DestinationPageMsg (Destination.subscriptions model.destinationPageModel)
         ]
 
 
@@ -43,6 +46,7 @@ type alias Model =
     , url : Url.Url
     , headerModel : Header.Model
     , homePageModel : HomePage.Model
+    , destinationPageModel : Destination.Model
     }
 
 
@@ -52,6 +56,7 @@ init _ url key =
       , url = url
       , headerModel = Header.init
       , homePageModel = HomePage.init
+      , destinationPageModel = Destination.init
       }
     , Cmd.none
     )
@@ -64,6 +69,7 @@ init _ url key =
 type Msg
     = HeaderMsg Header.Msg
     | HomePageMsg HomePage.Msg
+    | DestinationPageMsg Destination.Msg
     | UrlRequested Browser.UrlRequest
     | UrlChanged Url.Url
 
@@ -79,6 +85,9 @@ update msg model =
             ( { model | headerModel = newHeaderModel }, Cmd.map HeaderMsg cmdHeader )
 
         HomePageMsg _ ->
+            ( model, Cmd.none )
+
+        DestinationPageMsg _ ->
             ( model, Cmd.none )
 
         UrlRequested urlRequest ->
@@ -113,7 +122,7 @@ viewPage model =
         Html.map HomePageMsg (HomePage.view model.homePageModel)
 
     else if model.url.path == "/destination" then
-        text "Destination Page"
+        Html.map DestinationPageMsg (Destination.view model.destinationPageModel)
 
     else if model.url.path == "/crew" then
         text "Crew Page"

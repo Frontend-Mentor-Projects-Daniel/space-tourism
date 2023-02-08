@@ -10560,19 +10560,32 @@ var $elm$core$Basics$never = function (_v0) {
 	}
 };
 var $elm$browser$Browser$application = _Browser_application;
+var $author$project$Pages$DestinationPage$init = {};
 var $author$project$Pages$HomePage$init = {};
 var $author$project$Partials$Header$init = {imageSrc: './src/assets/shared/icon-hamburger.svg', menuIsExpanded: 'false'};
 var $author$project$Main$init = F3(
 	function (_v0, url, key) {
 		return _Utils_Tuple2(
-			{headerModel: $author$project$Partials$Header$init, homePageModel: $author$project$Pages$HomePage$init, key: key, url: url},
+			{destinationPageModel: $author$project$Pages$DestinationPage$init, headerModel: $author$project$Partials$Header$init, homePageModel: $author$project$Pages$HomePage$init, key: key, url: url},
 			$elm$core$Platform$Cmd$none);
 	});
+var $author$project$Main$DestinationPageMsg = function (a) {
+	return {$: 'DestinationPageMsg', a: a};
+};
 var $author$project$Main$HeaderMsg = function (a) {
 	return {$: 'HeaderMsg', a: a};
 };
+var $author$project$Main$HomePageMsg = function (a) {
+	return {$: 'HomePageMsg', a: a};
+};
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
+var $author$project$Pages$DestinationPage$subscriptions = function (_v0) {
+	return $elm$core$Platform$Sub$none;
+};
+var $author$project$Pages$HomePage$subscriptions = function (_v0) {
+	return $elm$core$Platform$Sub$none;
+};
 var $author$project$Partials$Header$subscriptions = function (_v0) {
 	return $elm$core$Platform$Sub$none;
 };
@@ -10583,7 +10596,15 @@ var $author$project$Main$subscriptions = function (model) {
 				A2(
 				$elm$core$Platform$Sub$map,
 				$author$project$Main$HeaderMsg,
-				$author$project$Partials$Header$subscriptions(model.headerModel))
+				$author$project$Partials$Header$subscriptions(model.headerModel)),
+				A2(
+				$elm$core$Platform$Sub$map,
+				$author$project$Main$HomePageMsg,
+				$author$project$Pages$HomePage$subscriptions(model.homePageModel)),
+				A2(
+				$elm$core$Platform$Sub$map,
+				$author$project$Main$DestinationPageMsg,
+				$author$project$Pages$DestinationPage$subscriptions(model.destinationPageModel))
 			]));
 };
 var $elm$browser$Browser$Navigation$load = _Browser_load;
@@ -10663,6 +10684,8 @@ var $author$project$Main$update = F2(
 						{headerModel: newHeaderModel}),
 					A2($elm$core$Platform$Cmd$map, $author$project$Main$HeaderMsg, cmdHeader));
 			case 'HomePageMsg':
+				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+			case 'DestinationPageMsg':
 				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 			case 'UrlRequested':
 				var urlRequest = msg.a;
@@ -10898,11 +10921,199 @@ var $author$project$Partials$Header$view = function (model) {
 					]))
 			]));
 };
-var $author$project$Main$HomePageMsg = function (a) {
-	return {$: 'HomePageMsg', a: a};
-};
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
+var $elm$html$Html$h2 = _VirtualDom_node('h2');
 var $elm$html$Html$main_ = _VirtualDom_node('main');
+var $author$project$Pages$DestinationPage$view = function (_v0) {
+	return A2(
+		$elm$html$Html$main_,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('main main--destination')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$h1,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('primary-heading')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$span,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('01')
+							])),
+						$elm$html$Html$text('Pick your destination')
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('planet-image')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$img,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$src('./src/assets/destination/image-moon.png'),
+								$elm$html$Html$Attributes$alt('The moon')
+							]),
+						_List_Nil)
+					])),
+				A2(
+				$elm$html$Html$ul,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('planets-list')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$li,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('planet')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$button,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text('moon')
+									]))
+							])),
+						A2(
+						$elm$html$Html$li,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('planet')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$button,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text('mars')
+									]))
+							])),
+						A2(
+						$elm$html$Html$li,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('planet')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$button,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text('europa')
+									]))
+							])),
+						A2(
+						$elm$html$Html$li,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('planet')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$button,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text('titan')
+									]))
+							]))
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('planet-info')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$h2,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('chosen-planet')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('moon')
+							])),
+						A2(
+						$elm$html$Html$p,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('planet-description')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('See our planet as you\'ve never seen it before. A perfect relaxing trip away to help regain perspective and come back refreshed. While you\'re there, take in some history by visiting the Luna 2 and Apollo 11 landing sites.')
+							]))
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('planet-stats')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$p,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('distance')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('avg. distance'),
+								A2(
+								$elm$html$Html$span,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text('384,400')
+									]))
+							])),
+						A2(
+						$elm$html$Html$p,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('travel-time')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('est. travel time'),
+								A2(
+								$elm$html$Html$span,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text('3 days')
+									]))
+							]))
+					]))
+			]));
+};
 var $author$project$Pages$HomePage$view = function (_v0) {
 	return A2(
 		$elm$html$Html$main_,
@@ -10973,7 +11184,10 @@ var $author$project$Main$viewPage = function (model) {
 	return (model.url.path === '/') ? A2(
 		$elm$html$Html$map,
 		$author$project$Main$HomePageMsg,
-		$author$project$Pages$HomePage$view(model.homePageModel)) : ((model.url.path === '/destination') ? $elm$html$Html$text('Destination Page') : ((model.url.path === '/crew') ? $elm$html$Html$text('Crew Page') : ((model.url.path === '/technology') ? $elm$html$Html$text('Technology Page') : $elm$html$Html$text('Not Found Page'))));
+		$author$project$Pages$HomePage$view(model.homePageModel)) : ((model.url.path === '/destination') ? A2(
+		$elm$html$Html$map,
+		$author$project$Main$DestinationPageMsg,
+		$author$project$Pages$DestinationPage$view(model.destinationPageModel)) : ((model.url.path === '/crew') ? $elm$html$Html$text('Crew Page') : ((model.url.path === '/technology') ? $elm$html$Html$text('Technology Page') : $elm$html$Html$text('Not Found Page'))));
 };
 var $author$project$Main$viewTitle = function (model) {
 	return A2($elm$core$String$startsWith, '/destination', model.url.path) ? 'Destination Page' : (A2($elm$core$String$startsWith, '/crew', model.url.path) ? 'Crew Page' : (A2($elm$core$String$startsWith, '/technology', model.url.path) ? 'Technology Page' : (A2($elm$core$String$startsWith, '/', model.url.path) ? 'Home Page' : '404 - Page Not Found')));
@@ -11003,4 +11217,4 @@ var $author$project$Main$view = function (model) {
 var $author$project$Main$main = $elm$browser$Browser$application(
 	{init: $author$project$Main$init, onUrlChange: $author$project$Main$UrlChanged, onUrlRequest: $author$project$Main$UrlRequested, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
-	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"Main.Msg":{"args":[],"tags":{"HeaderMsg":["Partials.Header.Msg"],"HomePageMsg":["Pages.HomePage.Msg"],"UrlRequested":["Browser.UrlRequest"],"UrlChanged":["Url.Url"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Pages.HomePage.Msg":{"args":[],"tags":{"NoOp":[]}},"Partials.Header.Msg":{"args":[],"tags":{"HamburgerMenuClicked":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));
+	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"Main.Msg":{"args":[],"tags":{"HeaderMsg":["Partials.Header.Msg"],"HomePageMsg":["Pages.HomePage.Msg"],"DestinationPageMsg":["Pages.DestinationPage.Msg"],"UrlRequested":["Browser.UrlRequest"],"UrlChanged":["Url.Url"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Pages.DestinationPage.Msg":{"args":[],"tags":{"NoOp":[]}},"Pages.HomePage.Msg":{"args":[],"tags":{"NoOp":[]}},"Partials.Header.Msg":{"args":[],"tags":{"HamburgerMenuClicked":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));
