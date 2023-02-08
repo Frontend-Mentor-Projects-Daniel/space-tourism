@@ -10562,7 +10562,7 @@ var $elm$core$Basics$never = function (_v0) {
 var $elm$browser$Browser$application = _Browser_application;
 var $author$project$Pages$DestinationPage$init = {};
 var $author$project$Pages$HomePage$init = {};
-var $author$project$Partials$Header$init = {imageSrc: './src/assets/shared/icon-hamburger.svg', menuIsExpanded: 'false'};
+var $author$project$Partials$Header$init = {imageSrc: './src/assets/shared/icon-hamburger.svg', isCrewPage: false, isDestinationPage: false, isHomePage: true, isTechnologyPage: false, menuIsExpanded: 'false'};
 var $author$project$Main$init = F3(
 	function (_v0, url, key) {
 		return _Utils_Tuple2(
@@ -10661,14 +10661,41 @@ var $author$project$Partials$Header$toggleMenu = function (model) {
 };
 var $author$project$Partials$Header$update = F2(
 	function (msg, model) {
-		return _Utils_Tuple2(
-			_Utils_update(
-				model,
-				{
-					imageSrc: $author$project$Partials$Header$toggleImage(model),
-					menuIsExpanded: $author$project$Partials$Header$toggleMenu(model)
-				}),
-			$elm$core$Platform$Cmd$none);
+		switch (msg.$) {
+			case 'HamburgerMenuClicked':
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							imageSrc: $author$project$Partials$Header$toggleImage(model),
+							menuIsExpanded: $author$project$Partials$Header$toggleMenu(model)
+						}),
+					$elm$core$Platform$Cmd$none);
+			case 'HomePageClicked':
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{isCrewPage: false, isDestinationPage: false, isHomePage: true, isTechnologyPage: false}),
+					$elm$core$Platform$Cmd$none);
+			case 'DestinationPageClicked':
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{isCrewPage: false, isDestinationPage: true, isHomePage: false, isTechnologyPage: false}),
+					$elm$core$Platform$Cmd$none);
+			case 'CrewPageClicked':
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{isCrewPage: true, isDestinationPage: false, isHomePage: false, isTechnologyPage: false}),
+					$elm$core$Platform$Cmd$none);
+			default:
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{isCrewPage: false, isDestinationPage: false, isHomePage: false, isTechnologyPage: true}),
+					$elm$core$Platform$Cmd$none);
+		}
 	});
 var $author$project$Main$update = F2(
 	function (msg, model) {
@@ -10712,7 +10739,11 @@ var $author$project$Main$update = F2(
 					$elm$core$Platform$Cmd$none);
 		}
 	});
+var $author$project$Partials$Header$CrewPageClicked = {$: 'CrewPageClicked'};
+var $author$project$Partials$Header$DestinationPageClicked = {$: 'DestinationPageClicked'};
 var $author$project$Partials$Header$HamburgerMenuClicked = {$: 'HamburgerMenuClicked'};
+var $author$project$Partials$Header$HomePageClicked = {$: 'HomePageClicked'};
+var $author$project$Partials$Header$TechnologyPageClicked = {$: 'TechnologyPageClicked'};
 var $elm$html$Html$Attributes$alt = $elm$html$Html$Attributes$stringProperty('alt');
 var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
 var $fapian$elm_html_aria$Html$Attributes$Aria$ariaExpanded = $elm$html$Html$Attributes$attribute('aria-expanded');
@@ -10733,6 +10764,18 @@ var $elm$html$Html$header = _VirtualDom_node('header');
 var $elm$html$Html$img = _VirtualDom_node('img');
 var $elm$html$Html$nav = _VirtualDom_node('nav');
 var $fapian$elm_html_aria$Html$Attributes$Aria$role = $elm$html$Html$Attributes$attribute('role');
+var $author$project$Partials$Header$setCrewPage = function (model) {
+	return model.isCrewPage ? 'active' : '';
+};
+var $author$project$Partials$Header$setDestinationPage = function (model) {
+	return model.isDestinationPage ? 'active' : '';
+};
+var $author$project$Partials$Header$setHomePage = function (model) {
+	return model.isHomePage ? 'active' : '';
+};
+var $author$project$Partials$Header$setTechnologyPage = function (model) {
+	return model.isTechnologyPage ? 'active' : '';
+};
 var $elm$html$Html$Attributes$src = function (url) {
 	return A2(
 		$elm$html$Html$Attributes$stringProperty,
@@ -10817,7 +10860,9 @@ var $author$project$Partials$Header$view = function (model) {
 								$elm$html$Html$li,
 								_List_fromArray(
 									[
-										$elm$html$Html$Attributes$class('nav-item active')
+										$elm$html$Html$Attributes$class('nav-item'),
+										$elm$html$Html$Attributes$class(
+										$author$project$Partials$Header$setHomePage(model))
 									]),
 								_List_fromArray(
 									[
@@ -10825,7 +10870,8 @@ var $author$project$Partials$Header$view = function (model) {
 										$elm$html$Html$a,
 										_List_fromArray(
 											[
-												$elm$html$Html$Attributes$href('/')
+												$elm$html$Html$Attributes$href('/'),
+												$elm$html$Html$Events$onClick($author$project$Partials$Header$HomePageClicked)
 											]),
 										_List_fromArray(
 											[
@@ -10843,7 +10889,9 @@ var $author$project$Partials$Header$view = function (model) {
 								$elm$html$Html$li,
 								_List_fromArray(
 									[
-										$elm$html$Html$Attributes$class('nav-item')
+										$elm$html$Html$Attributes$class('nav-item'),
+										$elm$html$Html$Attributes$class(
+										$author$project$Partials$Header$setDestinationPage(model))
 									]),
 								_List_fromArray(
 									[
@@ -10851,7 +10899,8 @@ var $author$project$Partials$Header$view = function (model) {
 										$elm$html$Html$a,
 										_List_fromArray(
 											[
-												$elm$html$Html$Attributes$href('/destination')
+												$elm$html$Html$Attributes$href('/destination'),
+												$elm$html$Html$Events$onClick($author$project$Partials$Header$DestinationPageClicked)
 											]),
 										_List_fromArray(
 											[
@@ -10869,7 +10918,9 @@ var $author$project$Partials$Header$view = function (model) {
 								$elm$html$Html$li,
 								_List_fromArray(
 									[
-										$elm$html$Html$Attributes$class('nav-item')
+										$elm$html$Html$Attributes$class('nav-item'),
+										$elm$html$Html$Attributes$class(
+										$author$project$Partials$Header$setCrewPage(model))
 									]),
 								_List_fromArray(
 									[
@@ -10877,7 +10928,8 @@ var $author$project$Partials$Header$view = function (model) {
 										$elm$html$Html$a,
 										_List_fromArray(
 											[
-												$elm$html$Html$Attributes$href('/crew')
+												$elm$html$Html$Attributes$href('/crew'),
+												$elm$html$Html$Events$onClick($author$project$Partials$Header$CrewPageClicked)
 											]),
 										_List_fromArray(
 											[
@@ -10895,7 +10947,9 @@ var $author$project$Partials$Header$view = function (model) {
 								$elm$html$Html$li,
 								_List_fromArray(
 									[
-										$elm$html$Html$Attributes$class('nav-item')
+										$elm$html$Html$Attributes$class('nav-item'),
+										$elm$html$Html$Attributes$class(
+										$author$project$Partials$Header$setTechnologyPage(model))
 									]),
 								_List_fromArray(
 									[
@@ -10903,7 +10957,8 @@ var $author$project$Partials$Header$view = function (model) {
 										$elm$html$Html$a,
 										_List_fromArray(
 											[
-												$elm$html$Html$Attributes$href('/technology')
+												$elm$html$Html$Attributes$href('/technology'),
+												$elm$html$Html$Events$onClick($author$project$Partials$Header$TechnologyPageClicked)
 											]),
 										_List_fromArray(
 											[
@@ -11217,4 +11272,4 @@ var $author$project$Main$view = function (model) {
 var $author$project$Main$main = $elm$browser$Browser$application(
 	{init: $author$project$Main$init, onUrlChange: $author$project$Main$UrlChanged, onUrlRequest: $author$project$Main$UrlRequested, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
-	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"Main.Msg":{"args":[],"tags":{"HeaderMsg":["Partials.Header.Msg"],"HomePageMsg":["Pages.HomePage.Msg"],"DestinationPageMsg":["Pages.DestinationPage.Msg"],"UrlRequested":["Browser.UrlRequest"],"UrlChanged":["Url.Url"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Pages.DestinationPage.Msg":{"args":[],"tags":{"NoOp":[]}},"Pages.HomePage.Msg":{"args":[],"tags":{"NoOp":[]}},"Partials.Header.Msg":{"args":[],"tags":{"HamburgerMenuClicked":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));
+	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"Main.Msg":{"args":[],"tags":{"HeaderMsg":["Partials.Header.Msg"],"HomePageMsg":["Pages.HomePage.Msg"],"DestinationPageMsg":["Pages.DestinationPage.Msg"],"UrlRequested":["Browser.UrlRequest"],"UrlChanged":["Url.Url"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Pages.DestinationPage.Msg":{"args":[],"tags":{"NoOp":[]}},"Pages.HomePage.Msg":{"args":[],"tags":{"NoOp":[]}},"Partials.Header.Msg":{"args":[],"tags":{"HamburgerMenuClicked":[],"HomePageClicked":[],"DestinationPageClicked":[],"CrewPageClicked":[],"TechnologyPageClicked":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));

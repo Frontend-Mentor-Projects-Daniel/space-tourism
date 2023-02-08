@@ -13,6 +13,10 @@ import Html.Events exposing (..)
 type alias Model =
     { menuIsExpanded : String
     , imageSrc : String
+    , isHomePage : Bool
+    , isDestinationPage : Bool
+    , isCrewPage : Bool
+    , isTechnologyPage : Bool
     }
 
 
@@ -20,6 +24,10 @@ init : Model
 init =
     { menuIsExpanded = "false"
     , imageSrc = "./src/assets/shared/icon-hamburger.svg"
+    , isHomePage = True
+    , isDestinationPage = False
+    , isCrewPage = False
+    , isTechnologyPage = False
     }
 
 
@@ -29,6 +37,10 @@ init =
 
 type Msg
     = HamburgerMenuClicked
+    | HomePageClicked
+    | DestinationPageClicked
+    | CrewPageClicked
+    | TechnologyPageClicked
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -36,6 +48,18 @@ update msg model =
     case msg of
         HamburgerMenuClicked ->
             ( { model | menuIsExpanded = toggleMenu model, imageSrc = toggleImage model }, Cmd.none )
+
+        HomePageClicked ->
+            ( { model | isHomePage = True, isDestinationPage = False, isCrewPage = False, isTechnologyPage = False }, Cmd.none )
+
+        DestinationPageClicked ->
+            ( { model | isHomePage = False, isDestinationPage = True, isCrewPage = False, isTechnologyPage = False }, Cmd.none )
+
+        CrewPageClicked ->
+            ( { model | isHomePage = False, isDestinationPage = False, isCrewPage = True, isTechnologyPage = False }, Cmd.none )
+
+        TechnologyPageClicked ->
+            ( { model | isHomePage = False, isDestinationPage = False, isCrewPage = False, isTechnologyPage = True }, Cmd.none )
 
 
 
@@ -54,10 +78,10 @@ view model =
                 , span [ class "sr-only" ] [ text "Menu" ]
                 ]
             , ul [ class "nav-items" ]
-                [ li [ class "nav-item active" ] [ a [ href "/" ] [ span [] [ text "00" ], text "home" ] ]
-                , li [ class "nav-item" ] [ a [ href "/destination" ] [ span [] [ text "01" ], text "destination" ] ]
-                , li [ class "nav-item" ] [ a [ href "/crew" ] [ span [] [ text "02" ], text "crew" ] ]
-                , li [ class "nav-item" ] [ a [ href "/technology" ] [ span [] [ text "03" ], text "technology" ] ]
+                [ li [ class "nav-item", class (setHomePage model) ] [ a [ href "/", onClick HomePageClicked ] [ span [] [ text "00" ], text "home" ] ]
+                , li [ class "nav-item", class (setDestinationPage model) ] [ a [ href "/destination", onClick DestinationPageClicked ] [ span [] [ text "01" ], text "destination" ] ]
+                , li [ class "nav-item", class (setCrewPage model) ] [ a [ href "/crew", onClick CrewPageClicked ] [ span [] [ text "02" ], text "crew" ] ]
+                , li [ class "nav-item", class (setTechnologyPage model) ] [ a [ href "/technology", onClick TechnologyPageClicked ] [ span [] [ text "03" ], text "technology" ] ]
                 ]
             ]
         ]
@@ -79,6 +103,42 @@ toggleImage model =
 
     else
         "./src/assets/shared/icon-hamburger.svg"
+
+
+setHomePage : Model -> String
+setHomePage model =
+    if model.isHomePage == True then
+        "active"
+
+    else
+        ""
+
+
+setDestinationPage : Model -> String
+setDestinationPage model =
+    if model.isDestinationPage == True then
+        "active"
+
+    else
+        ""
+
+
+setCrewPage : Model -> String
+setCrewPage model =
+    if model.isCrewPage == True then
+        "active"
+
+    else
+        ""
+
+
+setTechnologyPage : Model -> String
+setTechnologyPage model =
+    if model.isTechnologyPage == True then
+        "active"
+
+    else
+        ""
 
 
 
