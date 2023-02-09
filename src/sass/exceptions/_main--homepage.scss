@@ -1,7 +1,29 @@
 @use '../mixins/breakpoints' as *;
 
 .main--homepage {
+  // background: url('../assets/home/background-home-mobile.jpg');
+  // background-repeat: no-repeat;
+  // background-size: cover;
+  // background-position: center bottom;
+
+  // @include tablets {
+  //   & {
+  //     background: url('../assets/home/background-home-tablet.jpg');
+  //     background-repeat: no-repeat;
+  //     background-size: cover;
+  //     background-position: center bottom;
+  //   }
+  // }
+
+  // @include laptops {
+  //   & {
+  //     background: url('../assets/home/background-home-desktop.jpg');
+  //     background-repeat: no-repeat;
+  //     background-size: cover;
+  //   }
+  // }
+
   @include laptops() {
-    margin-block-start: 124px;
+    margin-block-start: 89px;
   }
 }

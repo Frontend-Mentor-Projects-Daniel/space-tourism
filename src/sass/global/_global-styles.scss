@@ -26,6 +26,16 @@
   --clr-homepage-body-text: hsl(var(--clr-fog));
   --clr-homepage-header-text: hsl(var(--clr-white));
 
+  // destination page
+  --clr-destination-header-text: hsl(var(--clr-white));
+  --clr-destination-header-span-text: hsl(var(--clr-white) / 0.25);
+  --clr-destination-tab-text: hsl(var(--clr-fog));
+  --clr-destination-active-tab-text: hsl(var(--clr-white));
+  --clr-destination-tab-underline-bg: hsl(var(--clr-white));
+  --clr-destination-tab-underline-bg-hover: hsl(var(--clr-white) / 0.5);
+  --clr-destination-distance-text: hsl(var(--clr-white));
+  --clr-destination-time-text: hsl(var(--clr-white));
+
   // FONT SIZES
 
   --fs-step--1: clamp(0.88rem, calc(0.83rem + 0.19vw), 1rem);
@@ -34,7 +44,8 @@
   --fs-step-2: clamp(1rem, calc(0.65rem + 1.5vw), 2rem);
   --fs-step-3: clamp(1.25rem, calc(0.99rem + 1.3vw), 2rem);
   --fs-step-4: clamp(1.5rem, calc(0.8rem + 3vw), 3.5rem);
-  --fs-step-5: clamp(5rem, calc(0.83rem + 17.81vw), 9.38rem);
+  --fs-step-5: clamp(3.5rem, calc(2.54rem + 4.78vw), 6.25rem);
+  --fs-step-6: clamp(5rem, calc(0.83rem + 17.81vw), 9.38rem);
 
   // FONT FAMILIES
   --ff-bellefair: 'Bellefair', serif;
@@ -46,21 +57,29 @@
 
   // LETTER SPACING
   --ls-27: 2.7px;
+
+  @include tablets() {
+    --ls-27: 3.38px;
+  }
+
+  @include laptops() {
+    --ls-27: 4.72px;
+  }
 }
 
 body {
+  // incase, for what ever reason, the bg-image doesn't show up, at the very least the we will have white & white-ish text on a black background rather than on a white one
+  background-color: var(--clr-body-bg);
+  color: var(--clr-body-text);
+  font-family: var(--ff-barlow-condensed);
+  font-size: var(--fs-step-0);
+}
+
+#root {
   background: url('../assets/home/background-home-mobile.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center bottom;
-
-  // incase, for what ever reason, the bg-image doesn't show up, at the very least the we will have white & white-ish text on a black background rather than on a white one
-  background-color: var(--clr-body-bg);
-  // TODO: Remove this
-  background-color: white;
-  color: var(--clr-body-text);
-  font-family: var(--ff-barlow-condensed);
-  font-size: var(--fs-step-0);
 
   @include tablets {
     & {
@@ -91,7 +110,15 @@ h6 {
 }
 
 h1 {
+  font-size: var(--fs-step-6);
+}
+
+h2 {
   font-size: var(--fs-step-5);
+}
+
+p {
+  font-family: var(--ff-barlow-condensed);
 }
 
 li {

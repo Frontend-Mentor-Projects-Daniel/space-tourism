@@ -1,0 +1,29 @@
+@use '../mixins/breakpoints' as *;
+
+.main--destination {
+  //   background: url('../assets/destination/background-destination-mobile.jpg');
+  //   background-repeat: no-repeat;
+  //   background-size: cover;
+  //   background-position: center bottom;
+
+  //   @include tablets {
+  //     & {
+  //       background: url('../assets/destination/background-destination-tablet.jpg');
+  //       background-repeat: no-repeat;
+  //       background-size: cover;
+  //       background-position: center bottom;
+  //     }
+  //   }
+
+  //   @include laptops {
+  //     & {
+  //       background: url('../assets/destination/background-destination-desktop.jpg');
+  //       background-repeat: no-repeat;
+  //       background-size: cover;
+  //     }
+  //   }
+
+  @include laptops() {
+    margin-block-start: 89px;
+  }
+}

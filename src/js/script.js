@@ -10992,7 +10992,7 @@ var $author$project$Pages$DestinationPage$view = function (_v0) {
 				$elm$html$Html$h1,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$class('primary-heading')
+						$elm$html$Html$Attributes$class('secondary-heading')
 					]),
 				_List_fromArray(
 					[
@@ -11009,161 +11009,170 @@ var $author$project$Pages$DestinationPage$view = function (_v0) {
 				$elm$html$Html$div,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$class('planet-image')
+						$elm$html$Html$Attributes$class('destination')
 					]),
 				_List_fromArray(
 					[
 						A2(
-						$elm$html$Html$img,
+						$elm$html$Html$div,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$src('./src/assets/destination/image-moon.png'),
-								$elm$html$Html$Attributes$alt('The moon')
-							]),
-						_List_Nil)
-					])),
-				A2(
-				$elm$html$Html$ul,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('planets-list')
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$elm$html$Html$li,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('planet')
+								$elm$html$Html$Attributes$class('planet-image')
 							]),
 						_List_fromArray(
 							[
 								A2(
-								$elm$html$Html$button,
-								_List_Nil,
+								$elm$html$Html$img,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$src('./src/assets/destination/image-moon.png'),
+										$elm$html$Html$Attributes$alt('The moon')
+									]),
+								_List_Nil)
+							])),
+						A2(
+						$elm$html$Html$ul,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('planets-list')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$li,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('planet active')
+									]),
+								_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$button,
+										_List_Nil,
+										_List_fromArray(
+											[
+												$elm$html$Html$text('moon')
+											]))
+									])),
+								A2(
+								$elm$html$Html$li,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('planet')
+									]),
+								_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$button,
+										_List_Nil,
+										_List_fromArray(
+											[
+												$elm$html$Html$text('mars')
+											]))
+									])),
+								A2(
+								$elm$html$Html$li,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('planet')
+									]),
+								_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$button,
+										_List_Nil,
+										_List_fromArray(
+											[
+												$elm$html$Html$text('europa')
+											]))
+									])),
+								A2(
+								$elm$html$Html$li,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('planet')
+									]),
+								_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$button,
+										_List_Nil,
+										_List_fromArray(
+											[
+												$elm$html$Html$text('titan')
+											]))
+									]))
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('planet-info')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$h2,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('chosen-planet')
+									]),
 								_List_fromArray(
 									[
 										$elm$html$Html$text('moon')
+									])),
+								A2(
+								$elm$html$Html$p,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('planet-description')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('See our planet as you\'ve never seen it before. A perfect relaxing trip away to help regain perspective and come back refreshed. While you\'re there, take in some history by visiting the Luna 2 and Apollo 11 landing sites.')
 									]))
 							])),
 						A2(
-						$elm$html$Html$li,
+						$elm$html$Html$div,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$class('planet')
+								$elm$html$Html$Attributes$class('planet-stats')
 							]),
 						_List_fromArray(
 							[
 								A2(
-								$elm$html$Html$button,
-								_List_Nil,
+								$elm$html$Html$p,
 								_List_fromArray(
 									[
-										$elm$html$Html$text('mars')
-									]))
-							])),
-						A2(
-						$elm$html$Html$li,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('planet')
-							]),
-						_List_fromArray(
-							[
+										$elm$html$Html$Attributes$class('distance')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('avg. distance'),
+										A2(
+										$elm$html$Html$span,
+										_List_Nil,
+										_List_fromArray(
+											[
+												$elm$html$Html$text('384,400 KM')
+											]))
+									])),
 								A2(
-								$elm$html$Html$button,
-								_List_Nil,
+								$elm$html$Html$p,
 								_List_fromArray(
 									[
-										$elm$html$Html$text('europa')
-									]))
-							])),
-						A2(
-						$elm$html$Html$li,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('planet')
-							]),
-						_List_fromArray(
-							[
-								A2(
-								$elm$html$Html$button,
-								_List_Nil,
+										$elm$html$Html$Attributes$class('travel-time')
+									]),
 								_List_fromArray(
 									[
-										$elm$html$Html$text('titan')
-									]))
-							]))
-					])),
-				A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('planet-info')
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$elm$html$Html$h2,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('chosen-planet')
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('moon')
-							])),
-						A2(
-						$elm$html$Html$p,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('planet-description')
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('See our planet as you\'ve never seen it before. A perfect relaxing trip away to help regain perspective and come back refreshed. While you\'re there, take in some history by visiting the Luna 2 and Apollo 11 landing sites.')
-							]))
-					])),
-				A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('planet-stats')
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$elm$html$Html$p,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('distance')
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('avg. distance'),
-								A2(
-								$elm$html$Html$span,
-								_List_Nil,
-								_List_fromArray(
-									[
-										$elm$html$Html$text('384,400')
-									]))
-							])),
-						A2(
-						$elm$html$Html$p,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('travel-time')
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('est. travel time'),
-								A2(
-								$elm$html$Html$span,
-								_List_Nil,
-								_List_fromArray(
-									[
-										$elm$html$Html$text('3 days')
+										$elm$html$Html$text('est. travel time'),
+										A2(
+										$elm$html$Html$span,
+										_List_Nil,
+										_List_fromArray(
+											[
+												$elm$html$Html$text('3 days')
+											]))
 									]))
 							]))
 					]))

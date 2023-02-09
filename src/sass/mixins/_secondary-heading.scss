@@ -1,0 +1,20 @@
+@use '../mixins/breakpoints' as *;
+
+@mixin secondary-heading {
+  display: flex;
+  gap: 14px;
+
+  color: var(--clr-destination-header-text);
+  font-size: var(--fs-step-1);
+  letter-spacing: var(--ls-27);
+  text-transform: uppercase;
+
+  @include tablets() {
+    gap: 20px;
+  }
+}
+
+@mixin secondary-heading-span {
+  color: var(--clr-destination-header-span-text);
+  font-weight: var(--fw-bold);
+}
