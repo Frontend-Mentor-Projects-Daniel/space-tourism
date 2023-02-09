@@ -44,6 +44,7 @@ subscriptions model =
 type alias Model =
     { key : Nav.Key
     , url : Url.Url
+    , bgImage : String
     , headerModel : Header.Model
     , homePageModel : HomePage.Model
     , destinationPageModel : Destination.Model
@@ -54,6 +55,7 @@ init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
 init _ url key =
     ( { key = key
       , url = url
+      , bgImage = "homepage-bg"
       , headerModel = Header.init
       , homePageModel = HomePage.init
       , destinationPageModel = Destination.init
@@ -108,7 +110,7 @@ view : Model -> Browser.Document Msg
 view model =
     { title = viewTitle model
     , body =
-        [ div [ id "root" ]
+        [ div [ id "root", class (viewRootDivClass model) ]
             [ Html.map HeaderMsg (Header.view model.headerModel)
             , viewPage model
             ]
@@ -150,6 +152,28 @@ viewTitle model =
 
     else
         "404 - Page Not Found"
+
+
+viewRootDivClass : Model -> String
+viewRootDivClass model =
+    let
+        rootClass =
+            if String.startsWith "/destination" model.url.path then
+                "destination-bg"
+
+            else if String.startsWith "/crew" model.url.path then
+                "crew-bg"
+
+            else if String.startsWith "/technology" model.url.path then
+                "technology-bg"
+
+            else if String.startsWith "/" model.url.path then
+                "homepage-bg"
+
+            else
+                "homepage-bg"
+    in
+    rootClass
 
 
 

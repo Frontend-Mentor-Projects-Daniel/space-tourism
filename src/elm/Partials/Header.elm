@@ -148,3 +148,10 @@ setTechnologyPage model =
 subscriptions : Model -> Sub Msg
 subscriptions _ =
     Sub.none
+
+
+
+--   , isHomePage = True
+-- , isDestinationPage = False
+-- , isCrewPage = False
+-- , isTechnologyPage = False

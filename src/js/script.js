@@ -10566,7 +10566,7 @@ var $author$project$Partials$Header$init = {imageSrc: './src/assets/shared/icon-
 var $author$project$Main$init = F3(
 	function (_v0, url, key) {
 		return _Utils_Tuple2(
-			{destinationPageModel: $author$project$Pages$DestinationPage$init, headerModel: $author$project$Partials$Header$init, homePageModel: $author$project$Pages$HomePage$init, key: key, url: url},
+			{bgImage: 'homepage-bg', destinationPageModel: $author$project$Pages$DestinationPage$init, headerModel: $author$project$Partials$Header$init, homePageModel: $author$project$Pages$HomePage$init, key: key, url: url},
 			$elm$core$Platform$Cmd$none);
 	});
 var $author$project$Main$DestinationPageMsg = function (a) {
@@ -11253,6 +11253,10 @@ var $author$project$Main$viewPage = function (model) {
 		$author$project$Main$DestinationPageMsg,
 		$author$project$Pages$DestinationPage$view(model.destinationPageModel)) : ((model.url.path === '/crew') ? $elm$html$Html$text('Crew Page') : ((model.url.path === '/technology') ? $elm$html$Html$text('Technology Page') : $elm$html$Html$text('Not Found Page'))));
 };
+var $author$project$Main$viewRootDivClass = function (model) {
+	var rootClass = A2($elm$core$String$startsWith, '/destination', model.url.path) ? 'destination-bg' : (A2($elm$core$String$startsWith, '/crew', model.url.path) ? 'crew-bg' : (A2($elm$core$String$startsWith, '/technology', model.url.path) ? 'technology-bg' : (A2($elm$core$String$startsWith, '/', model.url.path) ? 'homepage-bg' : 'homepage-bg')));
+	return rootClass;
+};
 var $author$project$Main$viewTitle = function (model) {
 	return A2($elm$core$String$startsWith, '/destination', model.url.path) ? 'Destination Page' : (A2($elm$core$String$startsWith, '/crew', model.url.path) ? 'Crew Page' : (A2($elm$core$String$startsWith, '/technology', model.url.path) ? 'Technology Page' : (A2($elm$core$String$startsWith, '/', model.url.path) ? 'Home Page' : '404 - Page Not Found')));
 };
@@ -11264,7 +11268,9 @@ var $author$project$Main$view = function (model) {
 				$elm$html$Html$div,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$id('root')
+						$elm$html$Html$Attributes$id('root'),
+						$elm$html$Html$Attributes$class(
+						$author$project$Main$viewRootDivClass(model))
 					]),
 				_List_fromArray(
 					[

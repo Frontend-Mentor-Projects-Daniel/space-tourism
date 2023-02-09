@@ -75,39 +75,17 @@ body {
   color: var(--clr-body-text);
   font-family: var(--ff-barlow-condensed);
   font-size: var(--fs-step-0);
-
-  // background: url('../assets/home/background-home-mobile.jpg');
-  // background-repeat: no-repeat;
-  // background-size: cover;
-  // background-position: center bottom;
-
-  @include tablets {
-    & {
-      // background: url('../assets/home/background-home-tablet.jpg');
-      // background-repeat: no-repeat;
-      // background-size: cover;
-      // background-position: center bottom;
-    }
-  }
-
-  @include laptops {
-    & {
-      // background: url('../assets/home/background-home-desktop.jpg');
-      // background-repeat: no-repeat;
-      // background-size: cover;
-    }
-  }
 }
 
-@mixin body-bg() {
-  background: url('../assets/home/background-home-mobile.jpg');
+@mixin body-bg($page) {
+  background: url('../assets/#{$page}/background-#{$page}-mobile.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center bottom;
 
   @include tablets {
     & {
-      background: url('../assets/home/background-home-tablet.jpg');
+      background: url('../assets/#{$page}/background-#{$page}-tablet.jpg');
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center bottom;
@@ -116,24 +94,11 @@ body {
 
   @include laptops {
     & {
-      background: url('../assets/home/background-home-desktop.jpg');
+      background: url('../assets/#{$page}/background-#{$page}-desktop.jpg');
       background-repeat: no-repeat;
       background-size: cover;
     }
   }
-}
-
-body {
-  @include body-bg();
-}
-
-body.destination-bg {
-}
-
-body.crew-bg {
-}
-
-body.homepage-bg {
 }
 
 #root {
@@ -151,6 +116,22 @@ body.homepage-bg {
     grid-column: 1/-1;
     grid-row: 2/3;
   }
+}
+
+#root.homepage-bg {
+  @include body-bg(home);
+}
+
+#root.destination-bg {
+  @include body-bg(destination);
+}
+
+#root.crew-bg {
+  @include body-bg(crew);
+}
+
+#root.technology-bg {
+  @include body-bg(technology);
 }
 
 h1,
