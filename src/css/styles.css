@@ -101,6 +101,7 @@ select {
   --clr-nav-underline: hsl(var(--clr-white));
   --clr-nav-underline-hover: hsl(var(--clr-white) / 0.5);
   --clr-nav-number: hsl(var(--clr-white));
+  --bg-homepage-body: url("../assets/home/background-home-mobile.jpg");
   --clr-homepage-body-text: hsl(var(--clr-fog));
   --clr-homepage-header-text: hsl(var(--clr-white));
   --clr-destination-header-text: hsl(var(--clr-white));
@@ -121,6 +122,7 @@ select {
   --fs-step-6: clamp(5rem, calc(0.83rem + 17.81vw), 9.38rem);
   --ff-bellefair: "Bellefair", serif;
   --ff-barlow-condensed: "Barlow Condensed", sans-serif;
+  --ff-barlow: "Barlow", sans-serif;
   --fw-regular: 400;
   --fw-bold: 700;
   --ls-27: 2.7px;
@@ -142,15 +144,14 @@ body {
   font-family: var(--ff-barlow-condensed);
   font-size: var(--fs-step-0);
 }
-
-#root {
+body {
   background: url("../assets/home/background-home-mobile.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center bottom;
 }
 @media (min-width: 550px) {
-  #root {
+  body {
     background: url("../assets/home/background-home-tablet.jpg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -158,11 +159,26 @@ body {
   }
 }
 @media (min-width: 1100px) {
-  #root {
+  body {
     background: url("../assets/home/background-home-desktop.jpg");
     background-repeat: no-repeat;
     background-size: cover;
   }
+}
+
+#root {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: max-content 1fr;
+}
+#root > :first-child {
+  grid-column: 1/-1;
+  grid-row: 1/2;
+  justify-self: end;
+}
+#root > :last-child {
+  grid-column: 1/-1;
+  grid-row: 2/3;
 }
 
 h1,
@@ -184,7 +200,7 @@ h2 {
 }
 
 p {
-  font-family: var(--ff-barlow-condensed);
+  font-family: var(--ff-barlow);
 }
 
 li {
@@ -256,6 +272,7 @@ body {
   padding-block: 1.5rem;
   padding-inline: 24px;
   position: relative;
+  width: 100%;
 }
 .header .logo {
   flex-shrink: 0;
@@ -364,7 +381,7 @@ body {
 }
 @media (min-width: 1100px) {
   .header {
-    padding-block: 4rem;
+    padding-block: 2rem;
     padding-inline-start: 55px;
   }
   .header .navbar {
@@ -391,7 +408,7 @@ body {
 }
 
 .main {
-  min-height: 100vh;
+  overflow: hidden;
   position: relative;
   z-index: -10;
 }
@@ -400,7 +417,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 28px;
+  gap: 89px;
+  height: 100%;
+  overflow: hidden;
 }
 .homepage .text-content {
   text-transform: uppercase;
@@ -439,7 +458,7 @@ body {
 @media (min-width: 550px) {
   .homepage .homepage-button {
     letter-spacing: 2px;
-    padding: 20px;
+    padding: 50px;
   }
 }
 @media (min-width: 1100px) {
@@ -574,18 +593,6 @@ body {
 @media (min-width: 1100px) {
   .destination .planet-image {
     width: 445px;
-  }
-}
-
-@media (min-width: 1100px) {
-  .main--homepage {
-    margin-block-start: 89px;
-  }
-}
-
-@media (min-width: 1100px) {
-  .main--destination {
-    margin-block-start: 89px;
   }
 }
 

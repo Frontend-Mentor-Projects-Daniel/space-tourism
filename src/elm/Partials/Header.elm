@@ -68,7 +68,7 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    header [ class "header center" ]
+    header [ class "header" ]
         [ div [ class "logo" ]
             [ img [ src "./src/assets/shared/logo.svg", alt "Space Tourism" ] []
             ]

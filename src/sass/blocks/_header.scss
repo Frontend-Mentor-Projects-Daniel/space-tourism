@@ -16,6 +16,8 @@ body {
   // to position the navbar on mobile in-front of the main
   position: relative;
 
+  width: 100%;
+
   .logo {
     flex-shrink: 0;
   }
@@ -160,7 +162,7 @@ body {
 
   @include laptops {
     & {
-      padding-block: 4rem;
+      padding-block: 2rem;
       padding-inline-start: 55px;
 
       .navbar {

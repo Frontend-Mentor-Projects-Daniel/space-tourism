@@ -10787,7 +10787,7 @@ var $author$project$Partials$Header$view = function (model) {
 		$elm$html$Html$header,
 		_List_fromArray(
 			[
-				$elm$html$Html$Attributes$class('header center')
+				$elm$html$Html$Attributes$class('header')
 			]),
 		_List_fromArray(
 			[

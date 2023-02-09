@@ -23,6 +23,7 @@
   --clr-nav-number: hsl(var(--clr-white));
 
   // home page
+  --bg-homepage-body: url('../assets/home/background-home-mobile.jpg');
   --clr-homepage-body-text: hsl(var(--clr-fog));
   --clr-homepage-header-text: hsl(var(--clr-white));
 
@@ -50,6 +51,7 @@
   // FONT FAMILIES
   --ff-bellefair: 'Bellefair', serif;
   --ff-barlow-condensed: 'Barlow Condensed', sans-serif;
+  --ff-barlow: 'Barlow', sans-serif;
 
   // FONT WEIGHTS
   --fw-regular: 400;
@@ -73,9 +75,31 @@ body {
   color: var(--clr-body-text);
   font-family: var(--ff-barlow-condensed);
   font-size: var(--fs-step-0);
+
+  // background: url('../assets/home/background-home-mobile.jpg');
+  // background-repeat: no-repeat;
+  // background-size: cover;
+  // background-position: center bottom;
+
+  @include tablets {
+    & {
+      // background: url('../assets/home/background-home-tablet.jpg');
+      // background-repeat: no-repeat;
+      // background-size: cover;
+      // background-position: center bottom;
+    }
+  }
+
+  @include laptops {
+    & {
+      // background: url('../assets/home/background-home-desktop.jpg');
+      // background-repeat: no-repeat;
+      // background-size: cover;
+    }
+  }
 }
 
-#root {
+@mixin body-bg() {
   background: url('../assets/home/background-home-mobile.jpg');
   background-repeat: no-repeat;
   background-size: cover;
@@ -99,6 +123,36 @@ body {
   }
 }
 
+body {
+  @include body-bg();
+}
+
+body.destination-bg {
+}
+
+body.crew-bg {
+}
+
+body.homepage-bg {
+}
+
+#root {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: max-content 1fr;
+
+  & > :first-child {
+    grid-column: 1/-1;
+    grid-row: 1/2;
+    justify-self: end;
+  }
+
+  & > :last-child {
+    grid-column: 1/-1;
+    grid-row: 2/3;
+  }
+}
+
 h1,
 h2,
 h3,
@@ -118,7 +172,7 @@ h2 {
 }
 
 p {
-  font-family: var(--ff-barlow-condensed);
+  font-family: var(--ff-barlow);
 }
 
 li {
