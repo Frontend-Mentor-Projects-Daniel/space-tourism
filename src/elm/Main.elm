@@ -122,8 +122,8 @@ viewPage : Model -> Html Msg
 viewPage model =
     if model.url.path == "/" then
         -- TODO: Change this back
-        -- Html.map HomePageMsg (HomePage.view model.homePageModel)
-        Html.map DestinationPageMsg (Destination.view model.destinationPageModel)
+        Html.map HomePageMsg (HomePage.view model.homePageModel)
+        -- Html.map DestinationPageMsg (Destination.view model.destinationPageModel)
 
     else if model.url.path == "/destination" then
         Html.map DestinationPageMsg (Destination.view model.destinationPageModel)
@@ -170,14 +170,15 @@ viewRootDivClass model =
                 "technology-bg"
 
             else if String.startsWith "/" model.url.path then
-                -- "homepage-bg"
+                "homepage-bg"
                 -- TODO: Change this back
-                "destination-bg"
+                -- "destination-bg"
 
             else
-                -- "homepage-bg"
-                -- TODO: Change this back
-                "destination-bg"
+                "homepage-bg"
+
+        -- TODO: Change this back
+        -- "destination-bg"
     in
     rootClass
 
