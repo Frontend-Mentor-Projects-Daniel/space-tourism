@@ -571,7 +571,9 @@ body {
   font-size: var(--fs-step-1);
   letter-spacing: var(--ls-27);
   text-transform: uppercase;
-  text-align: start;
+  margin-block: 24px 32px;
+  margin-inline: auto;
+  width: max-content;
 }
 @media (min-width: 550px) {
   .secondary-heading {
@@ -596,6 +598,7 @@ body {
   display: flex;
   gap: 26px;
   list-style: none;
+  margin-block: 26px 20px;
 }
 .destination .planet {
   display: flex;
@@ -630,14 +633,33 @@ body {
 .destination .planet.active button {
   color: var(--clr-destination-active-tab-text);
 }
+.destination .planet-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 1px solid hsl(var(--clr-white)/0.25);
+  padding-block-end: 32px;
+}
 .destination .chosen-planet {
   text-transform: uppercase;
+}
+.destination .planet-description {
+  text-align: center;
+}
+.destination .planet-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-block-start: 32px;
+  margin-block-end: 58px;
 }
 .destination .planet-stats > * {
   display: flex;
   flex-direction: column;
+  gap: 12px;
   font-size: 0.875rem;
   letter-spacing: 2.37px;
+  text-align: center;
   text-transform: uppercase;
 }
 .destination .planet-stats span {
