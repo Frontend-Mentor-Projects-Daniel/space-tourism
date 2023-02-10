@@ -7,6 +7,11 @@
   margin-block: 24px 32px;
   margin-inline: auto;
   width: max-content;
+
+  @include tablets() {
+    margin-block: 40px 60px;
+    margin-inline: 38px 0;
+  }
 }
 
 .secondary-heading span {
@@ -77,6 +82,7 @@
 
     border-bottom: 1px solid hsl(var(--clr-white) / 0.25);
     padding-block-end: 32px;
+    padding-inline: 24px;
   }
 
   .chosen-planet {
@@ -84,6 +90,7 @@
   }
 
   .planet-description {
+    max-width: 36ch;
     text-align: center;
   }
 
@@ -126,12 +133,28 @@
 
     .planets-list {
       gap: 35px;
+
+      margin-block: 53px 32px;
+    }
+
+    .planet-description {
+      max-width: 61ch;
+    }
+
+    .planet-stats {
+      flex-direction: row;
+      gap: 66px;
+      justify-content: center;
     }
   }
 
   @include laptops() {
     .planet-image {
       width: 445px;
+    }
+
+    .planet-description {
+      max-width: 44ch;
     }
   }
 }

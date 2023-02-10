@@ -580,6 +580,12 @@ body {
     gap: 20px;
   }
 }
+@media (min-width: 550px) {
+  .secondary-heading {
+    margin-block: 40px 60px;
+    margin-inline: 38px 0;
+  }
+}
 
 .secondary-heading span {
   color: var(--clr-destination-header-span-text);
@@ -639,11 +645,13 @@ body {
   align-items: center;
   border-bottom: 1px solid hsl(var(--clr-white)/0.25);
   padding-block-end: 32px;
+  padding-inline: 24px;
 }
 .destination .chosen-planet {
   text-transform: uppercase;
 }
 .destination .planet-description {
+  max-width: 36ch;
   text-align: center;
 }
 .destination .planet-stats {
@@ -677,11 +685,23 @@ body {
   }
   .destination .planets-list {
     gap: 35px;
+    margin-block: 53px 32px;
+  }
+  .destination .planet-description {
+    max-width: 61ch;
+  }
+  .destination .planet-stats {
+    flex-direction: row;
+    gap: 66px;
+    justify-content: center;
   }
 }
 @media (min-width: 1100px) {
   .destination .planet-image {
     width: 445px;
+  }
+  .destination .planet-description {
+    max-width: 44ch;
   }
 }
 
