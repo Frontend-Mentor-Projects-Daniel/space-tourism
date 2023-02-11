@@ -1,5 +1,6 @@
 module Pages.DestinationPage exposing (Model, Msg, getPlanetData, init, subscriptions, update, view)
 
+import ErrorHandling exposing (buildErrorMessage)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Attributes.Aria exposing (..)
@@ -13,12 +14,17 @@ import Json.Decode as D
 
 
 type alias Model =
-    { planetData : List Planet }
+    { planetData : Data
+    , errorMessages : Maybe String
+    }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( { planetData = []
+    ( { planetData =
+            { destinations = []
+            }
+      , errorMessages = Nothing
       }
     , getPlanetData
     )
@@ -29,7 +35,7 @@ init =
 
 
 type Msg
-    = GotData (Result Http.Error (List Planet))
+    = GotData (Result Http.Error Data)
 
 
 update : Msg -> Model -> ( Model, Cmd.Cmd Msg )
@@ -38,12 +44,11 @@ update msg model =
         GotData result ->
             case result of
                 Ok data ->
-                    Debug.log (Debug.toString data)
-                        ( { model | planetData = data }, Cmd.none )
+                    ( { model | planetData = data }, Cmd.none )
 
                 Err error ->
                     Debug.log (Debug.toString error)
-                        ( model, Cmd.none )
+                        ( { model | errorMessages = Just (buildErrorMessage error) }, Cmd.none )
 
 
 
@@ -51,7 +56,7 @@ update msg model =
 
 
 view : Model -> Html Msg
-view _ =
+view model =
     main_ [ class "main main--destination" ]
         [ h1 [ class "secondary-heading" ] [ span [] [ text "01" ], text "Pick your destination" ]
         , div [ class "destination" ]
@@ -81,7 +86,33 @@ view _ =
                 , p [ class "travel-time" ] [ text "est. travel time", span [] [ text "3 days" ] ]
                 ]
             ]
+
+        -- , case model.errorMessages of
+        --     Just error ->
+        --         p [] [ text error ]
+        --     Nothing ->
+        --         div [] []
         ]
+
+
+defaultPlanet : Planet
+defaultPlanet =
+    { name = "Error"
+    , images = { png = "Error", webp = "Error" }
+    , description = "Error"
+    , distance = "Error"
+    , travel = "Error"
+    }
+
+
+getDestinationsData : Model -> Planet
+getDestinationsData model =
+    case List.head model.planetData.destinations of
+        Just data ->
+            data
+
+        Nothing ->
+            defaultPlanet
 
 
 
@@ -92,7 +123,7 @@ getPlanetData : Cmd Msg
 getPlanetData =
     Http.get
         { url = "./data.json"
-        , expect = Http.expectJson GotData (D.list planetDecoder)
+        , expect = Http.expectJson GotData dataDecoder
         }
 
 
@@ -103,6 +134,21 @@ getPlanetData =
 subscriptions : Model -> Sub Msg
 subscriptions _ =
     Sub.none
+
+
+
+-- DATA.JSON DECODER
+
+
+type alias Data =
+    { destinations : List Planet
+    }
+
+
+dataDecoder : D.Decoder Data
+dataDecoder =
+    D.map Data
+        (D.field "destinations" <| D.list <| planetDecoder)
 
 
 

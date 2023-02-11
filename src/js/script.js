@@ -10741,6 +10741,37 @@ var $author$project$Main$DestinationPageMsg = function (a) {
 var $author$project$Pages$DestinationPage$GotData = function (a) {
 	return {$: 'GotData', a: a};
 };
+var $author$project$Pages$DestinationPage$Data = function (destinations) {
+	return {destinations: destinations};
+};
+var $author$project$Pages$DestinationPage$Planet = F5(
+	function (name, images, description, distance, travel) {
+		return {description: description, distance: distance, images: images, name: name, travel: travel};
+	});
+var $author$project$Pages$DestinationPage$Images = F2(
+	function (png, webp) {
+		return {png: png, webp: webp};
+	});
+var $author$project$Pages$DestinationPage$imagesDecoder = A3(
+	$elm$json$Json$Decode$map2,
+	$author$project$Pages$DestinationPage$Images,
+	A2($elm$json$Json$Decode$field, 'png', $elm$json$Json$Decode$string),
+	A2($elm$json$Json$Decode$field, 'webp', $elm$json$Json$Decode$string));
+var $author$project$Pages$DestinationPage$planetDecoder = A6(
+	$elm$json$Json$Decode$map5,
+	$author$project$Pages$DestinationPage$Planet,
+	A2($elm$json$Json$Decode$field, 'name', $elm$json$Json$Decode$string),
+	A2($elm$json$Json$Decode$field, 'images', $author$project$Pages$DestinationPage$imagesDecoder),
+	A2($elm$json$Json$Decode$field, 'description', $elm$json$Json$Decode$string),
+	A2($elm$json$Json$Decode$field, 'distance', $elm$json$Json$Decode$string),
+	A2($elm$json$Json$Decode$field, 'travel', $elm$json$Json$Decode$string));
+var $author$project$Pages$DestinationPage$dataDecoder = A2(
+	$elm$json$Json$Decode$map,
+	$author$project$Pages$DestinationPage$Data,
+	A2(
+		$elm$json$Json$Decode$field,
+		'destinations',
+		$elm$json$Json$Decode$list($author$project$Pages$DestinationPage$planetDecoder)));
 var $elm$http$Http$BadStatus_ = F2(
 	function (a, b) {
 		return {$: 'BadStatus_', a: a, b: b};
@@ -10989,37 +11020,16 @@ var $elm$http$Http$get = function (r) {
 	return $elm$http$Http$request(
 		{body: $elm$http$Http$emptyBody, expect: r.expect, headers: _List_Nil, method: 'GET', timeout: $elm$core$Maybe$Nothing, tracker: $elm$core$Maybe$Nothing, url: r.url});
 };
-var $author$project$Pages$DestinationPage$Planet = F5(
-	function (name, images, description, distance, travel) {
-		return {description: description, distance: distance, images: images, name: name, travel: travel};
-	});
-var $author$project$Pages$DestinationPage$Images = F2(
-	function (png, webp) {
-		return {png: png, webp: webp};
-	});
-var $author$project$Pages$DestinationPage$imagesDecoder = A3(
-	$elm$json$Json$Decode$map2,
-	$author$project$Pages$DestinationPage$Images,
-	A2($elm$json$Json$Decode$field, 'png', $elm$json$Json$Decode$string),
-	A2($elm$json$Json$Decode$field, 'webp', $elm$json$Json$Decode$string));
-var $author$project$Pages$DestinationPage$planetDecoder = A6(
-	$elm$json$Json$Decode$map5,
-	$author$project$Pages$DestinationPage$Planet,
-	A2($elm$json$Json$Decode$field, 'name', $elm$json$Json$Decode$string),
-	A2($elm$json$Json$Decode$field, 'images', $author$project$Pages$DestinationPage$imagesDecoder),
-	A2($elm$json$Json$Decode$field, 'description', $elm$json$Json$Decode$string),
-	A2($elm$json$Json$Decode$field, 'distance', $elm$json$Json$Decode$string),
-	A2($elm$json$Json$Decode$field, 'travel', $elm$json$Json$Decode$string));
 var $author$project$Pages$DestinationPage$getPlanetData = $elm$http$Http$get(
 	{
-		expect: A2(
-			$elm$http$Http$expectJson,
-			$author$project$Pages$DestinationPage$GotData,
-			$elm$json$Json$Decode$list($author$project$Pages$DestinationPage$planetDecoder)),
+		expect: A2($elm$http$Http$expectJson, $author$project$Pages$DestinationPage$GotData, $author$project$Pages$DestinationPage$dataDecoder),
 		url: './data.json'
 	});
 var $author$project$Pages$DestinationPage$init = _Utils_Tuple2(
-	{planetData: _List_Nil},
+	{
+		errorMessages: $elm$core$Maybe$Nothing,
+		planetData: {destinations: _List_Nil}
+	},
 	$author$project$Pages$DestinationPage$getPlanetData);
 var $author$project$Pages$HomePage$init = {};
 var $author$project$Partials$Header$init = {imageSrc: './src/assets/shared/icon-hamburger.svg', isCrewPage: false, isDestinationPage: false, isHomePage: true, isTechnologyPage: false, menuIsExpanded: 'false'};
@@ -11118,6 +11128,23 @@ var $elm$url$Url$toString = function (url) {
 					_Utils_ap(http, url.host)),
 				url.path)));
 };
+var $author$project$ErrorHandling$buildErrorMessage = function (httpError) {
+	switch (httpError.$) {
+		case 'BadUrl':
+			var message = httpError.a;
+			return message;
+		case 'Timeout':
+			return 'Server is taking too long to respond. Please try again later.';
+		case 'NetworkError':
+			return 'Unable to reach server.';
+		case 'BadStatus':
+			var statusCode = httpError.a;
+			return 'Request failed with status code: ' + $elm$core$String$fromInt(statusCode);
+		default:
+			var message = httpError.a;
+			return message;
+	}
+};
 var $elm$core$Debug$log = _Debug_log;
 var $elm$core$Debug$toString = _Debug_toString;
 var $author$project$Pages$DestinationPage$update = F2(
@@ -11125,20 +11152,24 @@ var $author$project$Pages$DestinationPage$update = F2(
 		var result = msg.a;
 		if (result.$ === 'Ok') {
 			var data = result.a;
-			return A2(
-				$elm$core$Debug$log,
-				$elm$core$Debug$toString(data),
-				_Utils_Tuple2(
-					_Utils_update(
-						model,
-						{planetData: data}),
-					$elm$core$Platform$Cmd$none));
+			return _Utils_Tuple2(
+				_Utils_update(
+					model,
+					{planetData: data}),
+				$elm$core$Platform$Cmd$none);
 		} else {
 			var error = result.a;
 			return A2(
 				$elm$core$Debug$log,
 				$elm$core$Debug$toString(error),
-				_Utils_Tuple2(model, $elm$core$Platform$Cmd$none));
+				_Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							errorMessages: $elm$core$Maybe$Just(
+								$author$project$ErrorHandling$buildErrorMessage(error))
+						}),
+					$elm$core$Platform$Cmd$none));
 		}
 	});
 var $author$project$Partials$Header$toggleImage = function (model) {
@@ -11475,7 +11506,7 @@ var $author$project$Partials$Header$view = function (model) {
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
 var $elm$html$Html$h2 = _VirtualDom_node('h2');
 var $elm$html$Html$main_ = _VirtualDom_node('main');
-var $author$project$Pages$DestinationPage$view = function (_v0) {
+var $author$project$Pages$DestinationPage$view = function (model) {
 	return A2(
 		$elm$html$Html$main_,
 		_List_fromArray(
@@ -11783,4 +11814,4 @@ var $author$project$Main$view = function (model) {
 var $author$project$Main$main = $elm$browser$Browser$application(
 	{init: $author$project$Main$init, onUrlChange: $author$project$Main$UrlChanged, onUrlRequest: $author$project$Main$UrlRequested, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
-	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"},"Pages.DestinationPage.Images":{"args":[],"type":"{ png : String.String, webp : String.String }"},"Pages.DestinationPage.Planet":{"args":[],"type":"{ name : String.String, images : Pages.DestinationPage.Images, description : String.String, distance : String.String, travel : String.String }"}},"unions":{"Main.Msg":{"args":[],"tags":{"HeaderMsg":["Partials.Header.Msg"],"HomePageMsg":["Pages.HomePage.Msg"],"DestinationPageMsg":["Pages.DestinationPage.Msg"],"UrlRequested":["Browser.UrlRequest"],"UrlChanged":["Url.Url"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Pages.DestinationPage.Msg":{"args":[],"tags":{"GotData":["Result.Result Http.Error (List.List Pages.DestinationPage.Planet)"]}},"Pages.HomePage.Msg":{"args":[],"tags":{"NoOp":[]}},"Partials.Header.Msg":{"args":[],"tags":{"HamburgerMenuClicked":[],"HomePageClicked":[],"DestinationPageClicked":[],"CrewPageClicked":[],"TechnologyPageClicked":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String.String"],"Timeout":[],"NetworkError":[],"BadStatus":["Basics.Int"],"BadBody":["String.String"]}},"List.List":{"args":["a"],"tags":{}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}}}})}});}(this));
+	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"},"Pages.DestinationPage.Data":{"args":[],"type":"{ destinations : List.List Pages.DestinationPage.Planet }"},"Pages.DestinationPage.Images":{"args":[],"type":"{ png : String.String, webp : String.String }"},"Pages.DestinationPage.Planet":{"args":[],"type":"{ name : String.String, images : Pages.DestinationPage.Images, description : String.String, distance : String.String, travel : String.String }"}},"unions":{"Main.Msg":{"args":[],"tags":{"HeaderMsg":["Partials.Header.Msg"],"HomePageMsg":["Pages.HomePage.Msg"],"DestinationPageMsg":["Pages.DestinationPage.Msg"],"UrlRequested":["Browser.UrlRequest"],"UrlChanged":["Url.Url"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Pages.DestinationPage.Msg":{"args":[],"tags":{"GotData":["Result.Result Http.Error Pages.DestinationPage.Data"]}},"Pages.HomePage.Msg":{"args":[],"tags":{"NoOp":[]}},"Partials.Header.Msg":{"args":[],"tags":{"HamburgerMenuClicked":[],"HomePageClicked":[],"DestinationPageClicked":[],"CrewPageClicked":[],"TechnologyPageClicked":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String.String"],"Timeout":[],"NetworkError":[],"BadStatus":["Basics.Int"],"BadBody":["String.String"]}},"List.List":{"args":["a"],"tags":{}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}}}})}});}(this));
