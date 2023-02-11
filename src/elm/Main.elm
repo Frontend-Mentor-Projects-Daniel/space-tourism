@@ -44,23 +44,38 @@ subscriptions model =
 type alias Model =
     { key : Nav.Key
     , url : Url.Url
-    , bgImage : String
     , headerModel : Header.Model
     , homePageModel : HomePage.Model
     , destinationPageModel : Destination.Model
     }
 
 
+
+-- init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
+-- init _ url key =
+--     ( { key = key
+--       , url = url
+--       , headerModel = Header.init
+--       , homePageModel = HomePage.init
+--       , destinationPageModel = Destination.init
+--       }
+--     , Destination.getPlanetData |> Cmd.map DestinationPageMsg
+--     )
+
+
 init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
 init _ url key =
+    let
+        ( destModel, destCmds ) =
+            Destination.init
+    in
     ( { key = key
       , url = url
-      , bgImage = "homepage-bg"
       , headerModel = Header.init
       , homePageModel = HomePage.init
-      , destinationPageModel = Destination.init
+      , destinationPageModel = destModel
       }
-    , Cmd.none
+    , Cmd.batch ([ Destination.getPlanetData, destCmds ] |> List.map (Cmd.map DestinationPageMsg))
     )
 
 
@@ -89,8 +104,12 @@ update msg model =
         HomePageMsg _ ->
             ( model, Cmd.none )
 
-        DestinationPageMsg _ ->
-            ( model, Cmd.none )
+        DestinationPageMsg destinationPageMsg ->
+            let
+                ( newDestinationpageModel, cmdHeader ) =
+                    Destination.update destinationPageMsg model.destinationPageModel
+            in
+            ( { model | destinationPageModel = newDestinationpageModel }, Cmd.map DestinationPageMsg cmdHeader )
 
         UrlRequested urlRequest ->
             case urlRequest of
@@ -121,9 +140,7 @@ view model =
 viewPage : Model -> Html Msg
 viewPage model =
     if model.url.path == "/" then
-        -- TODO: Change this back
         Html.map HomePageMsg (HomePage.view model.homePageModel)
-        -- Html.map DestinationPageMsg (Destination.view model.destinationPageModel)
 
     else if model.url.path == "/destination" then
         Html.map DestinationPageMsg (Destination.view model.destinationPageModel)
@@ -171,14 +188,9 @@ viewRootDivClass model =
 
             else if String.startsWith "/" model.url.path then
                 "homepage-bg"
-                -- TODO: Change this back
-                -- "destination-bg"
 
             else
                 "homepage-bg"
-
-        -- TODO: Change this back
-        -- "destination-bg"
     in
     rootClass
 

@@ -1,9 +1,11 @@
-module Pages.DestinationPage exposing (Model, Msg, init, subscriptions, update, view)
+module Pages.DestinationPage exposing (Model, Msg, getPlanetData, init, subscriptions, update, view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Attributes.Aria exposing (..)
 import Html.Events exposing (..)
+import Http
+import Json.Decode as D
 
 
 
@@ -11,12 +13,15 @@ import Html.Events exposing (..)
 
 
 type alias Model =
-    {}
+    { planetData : List Planet }
 
 
-init : Model
+init : ( Model, Cmd Msg )
 init =
-    {}
+    ( { planetData = []
+      }
+    , getPlanetData
+    )
 
 
 
@@ -24,14 +29,21 @@ init =
 
 
 type Msg
-    = NoOp
+    = GotData (Result Http.Error (List Planet))
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
+update : Msg -> Model -> ( Model, Cmd.Cmd Msg )
 update msg model =
     case msg of
-        NoOp ->
-            ( model, Cmd.none )
+        GotData result ->
+            case result of
+                Ok data ->
+                    Debug.log (Debug.toString data)
+                        ( { model | planetData = data }, Cmd.none )
+
+                Err error ->
+                    Debug.log (Debug.toString error)
+                        ( model, Cmd.none )
 
 
 
@@ -73,9 +85,57 @@ view _ =
 
 
 
+-- HTTP REQUESTS
+
+
+getPlanetData : Cmd Msg
+getPlanetData =
+    Http.get
+        { url = "./data.json"
+        , expect = Http.expectJson GotData (D.list planetDecoder)
+        }
+
+
+
 -- SUBSCRIPTIONS
 
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
     Sub.none
+
+
+
+-- DESTINATION DATA DECODERS
+
+
+type alias Planet =
+    { name : String
+    , images : Images
+    , description : String
+    , distance : String
+    , travel : String
+    }
+
+
+type alias Images =
+    { png : String
+    , webp : String
+    }
+
+
+imagesDecoder : D.Decoder Images
+imagesDecoder =
+    D.map2 Images
+        (D.field "png" D.string)
+        (D.field "webp" D.string)
+
+
+planetDecoder : D.Decoder Planet
+planetDecoder =
+    D.map5 Planet
+        (D.field "name" D.string)
+        (D.field "images" imagesDecoder)
+        (D.field "description" D.string)
+        (D.field "distance" D.string)
+        (D.field "travel" D.string)
