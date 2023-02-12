@@ -17,6 +17,10 @@ type alias Model =
     { planetData : List Planet
     , errorMessages : Maybe String
     , currentPlanet : Planet
+    , isMoon : Bool
+    , isMars : Bool
+    , isEuropa : Bool
+    , isTitan : Bool
     }
 
 
@@ -25,6 +29,10 @@ init =
     ( { planetData = []
       , errorMessages = Nothing
       , currentPlanet = loadingPlanet
+      , isMoon = True
+      , isMars = False
+      , isEuropa = False
+      , isTitan = False
       }
     , getPlanetData
     )
@@ -68,7 +76,7 @@ update msg model =
                         Nothing ->
                             loadingPlanet
             in
-            ( { model | currentPlanet = planetHead }, Cmd.none )
+            ( { model | currentPlanet = planetHead, isMoon = True, isMars = False, isEuropa = False, isTitan = False }, Cmd.none )
 
         GetMars ->
             let
@@ -85,7 +93,7 @@ update msg model =
                         Nothing ->
                             loadingPlanet
             in
-            ( { model | currentPlanet = planetHead }, Cmd.none )
+            ( { model | currentPlanet = planetHead, isMoon = False, isMars = True, isEuropa = False, isTitan = False }, Cmd.none )
 
         GetEuropa ->
             let
@@ -102,7 +110,7 @@ update msg model =
                         Nothing ->
                             loadingPlanet
             in
-            ( { model | currentPlanet = planetHead }, Cmd.none )
+            ( { model | currentPlanet = planetHead, isMoon = False, isMars = False, isEuropa = True, isTitan = False }, Cmd.none )
 
         GetTitan ->
             let
@@ -119,7 +127,7 @@ update msg model =
                         Nothing ->
                             loadingPlanet
             in
-            ( { model | currentPlanet = planetHead }, Cmd.none )
+            ( { model | currentPlanet = planetHead, isMoon = False, isMars = False, isEuropa = False, isTitan = True }, Cmd.none )
 
 
 
@@ -134,7 +142,7 @@ view model =
             defaultPlanet
 
           else
-            viewPlanet model.currentPlanet
+            viewPlanet model model.currentPlanet
         ]
 
 
@@ -155,7 +163,7 @@ defaultPlanet =
             [ img [ src "./src/assets/destination/image-moon.png", alt "Moon" ] []
             ]
         , ul [ class "planets-list" ]
-            [ li [ class "planet" ]
+            [ li [ class "planet active" ]
                 [ button [ onClick GetMoon ] [ text "moon" ]
                 ]
             , li [ class "planet" ]
@@ -179,23 +187,23 @@ defaultPlanet =
         ]
 
 
-viewPlanet : Planet -> Html Msg
-viewPlanet planet =
+viewPlanet : Model -> Planet -> Html Msg
+viewPlanet model planet =
     div [ class "destination" ]
         [ div [ class "planet-image" ]
             [ img [ src ("./src/assets/destination/image-" ++ planet.name ++ ".png"), alt planet.name ] []
             ]
         , ul [ class "planets-list" ]
-            [ li [ class "planet active" ]
+            [ li [ class "planet", class (isMoon model) ]
                 [ button [ onClick GetMoon ] [ text "moon" ]
                 ]
-            , li [ class "planet" ]
+            , li [ class "planet", class (isMars model) ]
                 [ button [ onClick GetMars ] [ text "mars" ]
                 ]
-            , li [ class "planet" ]
+            , li [ class "planet", class (isEuropa model) ]
                 [ button [ onClick GetEuropa ] [ text "europa" ]
                 ]
-            , li [ class "planet" ]
+            , li [ class "planet", class (isTitan model) ]
                 [ button [ onClick GetTitan ] [ text "titan" ]
                 ]
             ]
@@ -229,6 +237,46 @@ getPlanetData =
 subscriptions : Model -> Sub Msg
 subscriptions _ =
     Sub.none
+
+
+
+-- SET ACTIVE CLASS
+
+
+isMoon : Model -> String
+isMoon model =
+    if model.isMoon == True then
+        "active"
+
+    else
+        ""
+
+
+isMars : Model -> String
+isMars model =
+    if model.isMars == True then
+        "active"
+
+    else
+        ""
+
+
+isEuropa : Model -> String
+isEuropa model =
+    if model.isEuropa == True then
+        "active"
+
+    else
+        ""
+
+
+isTitan : Model -> String
+isTitan model =
+    if model.isTitan == True then
+        "active"
+
+    else
+        ""
 
 
 

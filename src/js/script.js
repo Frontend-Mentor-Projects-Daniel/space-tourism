@@ -11033,7 +11033,7 @@ var $author$project$Pages$DestinationPage$loadingPlanet = {
 	travel: 'Loading...'
 };
 var $author$project$Pages$DestinationPage$init = _Utils_Tuple2(
-	{currentPlanet: $author$project$Pages$DestinationPage$loadingPlanet, errorMessages: $elm$core$Maybe$Nothing, planetData: _List_Nil},
+	{currentPlanet: $author$project$Pages$DestinationPage$loadingPlanet, errorMessages: $elm$core$Maybe$Nothing, isEuropa: false, isMars: false, isMoon: true, isTitan: false, planetData: _List_Nil},
 	$author$project$Pages$DestinationPage$getPlanetData);
 var $author$project$Pages$HomePage$init = {};
 var $author$project$Partials$Header$init = {imageSrc: './src/assets/shared/icon-hamburger.svg', isCrewPage: false, isDestinationPage: false, isHomePage: true, isTechnologyPage: false, menuIsExpanded: 'false'};
@@ -11211,7 +11211,7 @@ var $author$project$Pages$DestinationPage$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{currentPlanet: planetHead}),
+						{currentPlanet: planetHead, isEuropa: false, isMars: false, isMoon: true, isTitan: false}),
 					$elm$core$Platform$Cmd$none);
 			case 'GetMars':
 				var filteredPlanet = A2(
@@ -11232,7 +11232,7 @@ var $author$project$Pages$DestinationPage$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{currentPlanet: planetHead}),
+						{currentPlanet: planetHead, isEuropa: false, isMars: true, isMoon: false, isTitan: false}),
 					$elm$core$Platform$Cmd$none);
 			case 'GetEuropa':
 				var filteredPlanet = A2(
@@ -11253,7 +11253,7 @@ var $author$project$Pages$DestinationPage$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{currentPlanet: planetHead}),
+						{currentPlanet: planetHead, isEuropa: true, isMars: false, isMoon: false, isTitan: false}),
 					$elm$core$Platform$Cmd$none);
 			default:
 				var filteredPlanet = A2(
@@ -11274,7 +11274,7 @@ var $author$project$Pages$DestinationPage$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{currentPlanet: planetHead}),
+						{currentPlanet: planetHead, isEuropa: false, isMars: false, isMoon: false, isTitan: true}),
 					$elm$core$Platform$Cmd$none);
 		}
 	});
@@ -11651,7 +11651,7 @@ var $author$project$Pages$DestinationPage$defaultPlanet = A2(
 					$elm$html$Html$li,
 					_List_fromArray(
 						[
-							$elm$html$Html$Attributes$class('planet')
+							$elm$html$Html$Attributes$class('planet active')
 						]),
 					_List_fromArray(
 						[
@@ -11799,191 +11799,212 @@ var $author$project$Pages$DestinationPage$defaultPlanet = A2(
 		]));
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
 var $elm$html$Html$main_ = _VirtualDom_node('main');
-var $author$project$Pages$DestinationPage$viewPlanet = function (planet) {
-	return A2(
-		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('destination')
-			]),
-		_List_fromArray(
-			[
-				A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('planet-image')
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$elm$html$Html$img,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$src('./src/assets/destination/image-' + (planet.name + '.png')),
-								$elm$html$Html$Attributes$alt(planet.name)
-							]),
-						_List_Nil)
-					])),
-				A2(
-				$elm$html$Html$ul,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('planets-list')
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$elm$html$Html$li,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('planet active')
-							]),
-						_List_fromArray(
-							[
-								A2(
-								$elm$html$Html$button,
-								_List_fromArray(
-									[
-										$elm$html$Html$Events$onClick($author$project$Pages$DestinationPage$GetMoon)
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text('moon')
-									]))
-							])),
-						A2(
-						$elm$html$Html$li,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('planet')
-							]),
-						_List_fromArray(
-							[
-								A2(
-								$elm$html$Html$button,
-								_List_fromArray(
-									[
-										$elm$html$Html$Events$onClick($author$project$Pages$DestinationPage$GetMars)
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text('mars')
-									]))
-							])),
-						A2(
-						$elm$html$Html$li,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('planet')
-							]),
-						_List_fromArray(
-							[
-								A2(
-								$elm$html$Html$button,
-								_List_fromArray(
-									[
-										$elm$html$Html$Events$onClick($author$project$Pages$DestinationPage$GetEuropa)
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text('europa')
-									]))
-							])),
-						A2(
-						$elm$html$Html$li,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('planet')
-							]),
-						_List_fromArray(
-							[
-								A2(
-								$elm$html$Html$button,
-								_List_fromArray(
-									[
-										$elm$html$Html$Events$onClick($author$project$Pages$DestinationPage$GetTitan)
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text('titan')
-									]))
-							]))
-					])),
-				A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('planet-info')
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$elm$html$Html$h2,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('chosen-planet')
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text(planet.name)
-							])),
-						A2(
-						$elm$html$Html$p,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('planet-description')
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text(planet.description)
-							]))
-					])),
-				A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('planet-stats')
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$elm$html$Html$p,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('distance')
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('avg. distance'),
-								A2(
-								$elm$html$Html$span,
-								_List_Nil,
-								_List_fromArray(
-									[
-										$elm$html$Html$text(planet.distance)
-									]))
-							])),
-						A2(
-						$elm$html$Html$p,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('travel-time')
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('est. travel time'),
-								A2(
-								$elm$html$Html$span,
-								_List_Nil,
-								_List_fromArray(
-									[
-										$elm$html$Html$text(planet.travel)
-									]))
-							]))
-					]))
-			]));
+var $author$project$Pages$DestinationPage$isEuropa = function (model) {
+	return model.isEuropa ? 'active' : '';
 };
+var $author$project$Pages$DestinationPage$isMars = function (model) {
+	return model.isMars ? 'active' : '';
+};
+var $author$project$Pages$DestinationPage$isMoon = function (model) {
+	return model.isMoon ? 'active' : '';
+};
+var $author$project$Pages$DestinationPage$isTitan = function (model) {
+	return model.isTitan ? 'active' : '';
+};
+var $author$project$Pages$DestinationPage$viewPlanet = F2(
+	function (model, planet) {
+		return A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('destination')
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('planet-image')
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$img,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$src('./src/assets/destination/image-' + (planet.name + '.png')),
+									$elm$html$Html$Attributes$alt(planet.name)
+								]),
+							_List_Nil)
+						])),
+					A2(
+					$elm$html$Html$ul,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('planets-list')
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$li,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('planet'),
+									$elm$html$Html$Attributes$class(
+									$author$project$Pages$DestinationPage$isMoon(model))
+								]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$button,
+									_List_fromArray(
+										[
+											$elm$html$Html$Events$onClick($author$project$Pages$DestinationPage$GetMoon)
+										]),
+									_List_fromArray(
+										[
+											$elm$html$Html$text('moon')
+										]))
+								])),
+							A2(
+							$elm$html$Html$li,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('planet'),
+									$elm$html$Html$Attributes$class(
+									$author$project$Pages$DestinationPage$isMars(model))
+								]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$button,
+									_List_fromArray(
+										[
+											$elm$html$Html$Events$onClick($author$project$Pages$DestinationPage$GetMars)
+										]),
+									_List_fromArray(
+										[
+											$elm$html$Html$text('mars')
+										]))
+								])),
+							A2(
+							$elm$html$Html$li,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('planet'),
+									$elm$html$Html$Attributes$class(
+									$author$project$Pages$DestinationPage$isEuropa(model))
+								]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$button,
+									_List_fromArray(
+										[
+											$elm$html$Html$Events$onClick($author$project$Pages$DestinationPage$GetEuropa)
+										]),
+									_List_fromArray(
+										[
+											$elm$html$Html$text('europa')
+										]))
+								])),
+							A2(
+							$elm$html$Html$li,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('planet'),
+									$elm$html$Html$Attributes$class(
+									$author$project$Pages$DestinationPage$isTitan(model))
+								]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$button,
+									_List_fromArray(
+										[
+											$elm$html$Html$Events$onClick($author$project$Pages$DestinationPage$GetTitan)
+										]),
+									_List_fromArray(
+										[
+											$elm$html$Html$text('titan')
+										]))
+								]))
+						])),
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('planet-info')
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$h2,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('chosen-planet')
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text(planet.name)
+								])),
+							A2(
+							$elm$html$Html$p,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('planet-description')
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text(planet.description)
+								]))
+						])),
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('planet-stats')
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$p,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('distance')
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text('avg. distance'),
+									A2(
+									$elm$html$Html$span,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$elm$html$Html$text(planet.distance)
+										]))
+								])),
+							A2(
+							$elm$html$Html$p,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('travel-time')
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text('est. travel time'),
+									A2(
+									$elm$html$Html$span,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$elm$html$Html$text(planet.travel)
+										]))
+								]))
+						]))
+				]));
+	});
 var $author$project$Pages$DestinationPage$view = function (model) {
 	return A2(
 		$elm$html$Html$main_,
@@ -12010,7 +12031,7 @@ var $author$project$Pages$DestinationPage$view = function (model) {
 							])),
 						$elm$html$Html$text('Pick your destination')
 					])),
-				(model.currentPlanet.name === 'Loading...') ? $author$project$Pages$DestinationPage$defaultPlanet : $author$project$Pages$DestinationPage$viewPlanet(model.currentPlanet)
+				(model.currentPlanet.name === 'Loading...') ? $author$project$Pages$DestinationPage$defaultPlanet : A2($author$project$Pages$DestinationPage$viewPlanet, model, model.currentPlanet)
 			]));
 };
 var $author$project$Pages$HomePage$view = function (_v0) {
