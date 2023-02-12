@@ -6,6 +6,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Attributes.Aria exposing (..)
 import Html.Events exposing (..)
+import Pages.CrewPage as CrewPage
 import Pages.DestinationPage as Destination
 import Pages.HomePage as HomePage
 import Partials.Header as Header
@@ -47,20 +48,8 @@ type alias Model =
     , headerModel : Header.Model
     , homePageModel : HomePage.Model
     , destinationPageModel : Destination.Model
+    , crewPageModel : CrewPage.Model
     }
-
-
-
--- init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
--- init _ url key =
---     ( { key = key
---       , url = url
---       , headerModel = Header.init
---       , homePageModel = HomePage.init
---       , destinationPageModel = Destination.init
---       }
---     , Destination.getPlanetData |> Cmd.map DestinationPageMsg
---     )
 
 
 init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
@@ -68,12 +57,16 @@ init _ url key =
     let
         ( destModel, destCmds ) =
             Destination.init
+
+        ( crewModel, _ ) =
+            CrewPage.init
     in
     ( { key = key
       , url = url
       , headerModel = Header.init
       , homePageModel = HomePage.init
       , destinationPageModel = destModel
+      , crewPageModel = crewModel
       }
     , Cmd.batch ([ Destination.getPlanetData, destCmds ] |> List.map (Cmd.map DestinationPageMsg))
     )
@@ -87,6 +80,7 @@ type Msg
     = HeaderMsg Header.Msg
     | HomePageMsg HomePage.Msg
     | DestinationPageMsg Destination.Msg
+    | CrewPageMsg CrewPage.Msg
     | UrlRequested Browser.UrlRequest
     | UrlChanged Url.Url
 
@@ -106,10 +100,17 @@ update msg model =
 
         DestinationPageMsg destinationPageMsg ->
             let
-                ( newDestinationpageModel, cmdHeader ) =
+                ( newDestinationpageModel, cmdDest ) =
                     Destination.update destinationPageMsg model.destinationPageModel
             in
-            ( { model | destinationPageModel = newDestinationpageModel }, Cmd.map DestinationPageMsg cmdHeader )
+            ( { model | destinationPageModel = newDestinationpageModel }, Cmd.map DestinationPageMsg cmdDest )
+
+        CrewPageMsg crewPageMsg ->
+            let
+                ( newCrewPageModel, cmdCrew ) =
+                    CrewPage.update crewPageMsg model.crewPageModel
+            in
+            ( { model | crewPageModel = newCrewPageModel }, Cmd.map CrewPageMsg cmdCrew )
 
         UrlRequested urlRequest ->
             case urlRequest of
@@ -140,13 +141,14 @@ view model =
 viewPage : Model -> Html Msg
 viewPage model =
     if model.url.path == "/" then
-        Html.map HomePageMsg (HomePage.view model.homePageModel)
+        -- Html.map HomePageMsg (HomePage.view model.homePageModel)
+        Html.map CrewPageMsg (CrewPage.view model.crewPageModel)
 
     else if model.url.path == "/destination" then
         Html.map DestinationPageMsg (Destination.view model.destinationPageModel)
 
     else if model.url.path == "/crew" then
-        text "Crew Page"
+        Html.map CrewPageMsg (CrewPage.view model.crewPageModel)
 
     else if model.url.path == "/technology" then
         text "Technology Page"

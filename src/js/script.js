@@ -10741,37 +10741,37 @@ var $author$project$Main$DestinationPageMsg = function (a) {
 var $author$project$Pages$DestinationPage$GotData = function (a) {
 	return {$: 'GotData', a: a};
 };
-var $author$project$Pages$DestinationPage$Data = function (destinations) {
+var $author$project$Decoders$Data = function (destinations) {
 	return {destinations: destinations};
 };
-var $author$project$Pages$DestinationPage$Planet = F5(
+var $author$project$Decoders$Planet = F5(
 	function (name, images, description, distance, travel) {
 		return {description: description, distance: distance, images: images, name: name, travel: travel};
 	});
-var $author$project$Pages$DestinationPage$Images = F2(
+var $author$project$Decoders$Images = F2(
 	function (png, webp) {
 		return {png: png, webp: webp};
 	});
-var $author$project$Pages$DestinationPage$imagesDecoder = A3(
+var $author$project$Decoders$imagesDecoder = A3(
 	$elm$json$Json$Decode$map2,
-	$author$project$Pages$DestinationPage$Images,
+	$author$project$Decoders$Images,
 	A2($elm$json$Json$Decode$field, 'png', $elm$json$Json$Decode$string),
 	A2($elm$json$Json$Decode$field, 'webp', $elm$json$Json$Decode$string));
-var $author$project$Pages$DestinationPage$planetDecoder = A6(
+var $author$project$Decoders$planetDecoder = A6(
 	$elm$json$Json$Decode$map5,
-	$author$project$Pages$DestinationPage$Planet,
+	$author$project$Decoders$Planet,
 	A2($elm$json$Json$Decode$field, 'name', $elm$json$Json$Decode$string),
-	A2($elm$json$Json$Decode$field, 'images', $author$project$Pages$DestinationPage$imagesDecoder),
+	A2($elm$json$Json$Decode$field, 'images', $author$project$Decoders$imagesDecoder),
 	A2($elm$json$Json$Decode$field, 'description', $elm$json$Json$Decode$string),
 	A2($elm$json$Json$Decode$field, 'distance', $elm$json$Json$Decode$string),
 	A2($elm$json$Json$Decode$field, 'travel', $elm$json$Json$Decode$string));
-var $author$project$Pages$DestinationPage$dataDecoder = A2(
+var $author$project$Decoders$dataDecoder = A2(
 	$elm$json$Json$Decode$map,
-	$author$project$Pages$DestinationPage$Data,
+	$author$project$Decoders$Data,
 	A2(
 		$elm$json$Json$Decode$field,
 		'destinations',
-		$elm$json$Json$Decode$list($author$project$Pages$DestinationPage$planetDecoder)));
+		$elm$json$Json$Decode$list($author$project$Decoders$planetDecoder)));
 var $elm$http$Http$BadStatus_ = F2(
 	function (a, b) {
 		return {$: 'BadStatus_', a: a, b: b};
@@ -11022,9 +11022,12 @@ var $elm$http$Http$get = function (r) {
 };
 var $author$project$Pages$DestinationPage$getPlanetData = $elm$http$Http$get(
 	{
-		expect: A2($elm$http$Http$expectJson, $author$project$Pages$DestinationPage$GotData, $author$project$Pages$DestinationPage$dataDecoder),
+		expect: A2($elm$http$Http$expectJson, $author$project$Pages$DestinationPage$GotData, $author$project$Decoders$dataDecoder),
 		url: './data.json'
 	});
+var $author$project$Pages$CrewPage$init = _Utils_Tuple2(
+	{},
+	$elm$core$Platform$Cmd$none);
 var $author$project$Pages$DestinationPage$loadingPlanet = {
 	description: 'Loading...',
 	distance: 'Loading...',
@@ -11042,8 +11045,10 @@ var $author$project$Main$init = F3(
 		var _v1 = $author$project$Pages$DestinationPage$init;
 		var destModel = _v1.a;
 		var destCmds = _v1.b;
+		var _v2 = $author$project$Pages$CrewPage$init;
+		var crewModel = _v2.a;
 		return _Utils_Tuple2(
-			{destinationPageModel: destModel, headerModel: $author$project$Partials$Header$init, homePageModel: $author$project$Pages$HomePage$init, key: key, url: url},
+			{crewPageModel: crewModel, destinationPageModel: destModel, headerModel: $author$project$Partials$Header$init, homePageModel: $author$project$Pages$HomePage$init, key: key, url: url},
 			$elm$core$Platform$Cmd$batch(
 				A2(
 					$elm$core$List$map,
@@ -11085,6 +11090,9 @@ var $author$project$Main$subscriptions = function (model) {
 				$author$project$Main$DestinationPageMsg,
 				$author$project$Pages$DestinationPage$subscriptions(model.destinationPageModel))
 			]));
+};
+var $author$project$Main$CrewPageMsg = function (a) {
+	return {$: 'CrewPageMsg', a: a};
 };
 var $elm$browser$Browser$Navigation$load = _Browser_load;
 var $elm$browser$Browser$Navigation$pushUrl = _Browser_pushUrl;
@@ -11132,6 +11140,10 @@ var $elm$url$Url$toString = function (url) {
 					_Utils_ap(http, url.host)),
 				url.path)));
 };
+var $author$project$Pages$CrewPage$update = F2(
+	function (msg, model) {
+		return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+	});
 var $author$project$ErrorHandling$buildErrorMessage = function (httpError) {
 	switch (httpError.$) {
 		case 'BadUrl':
@@ -11341,12 +11353,22 @@ var $author$project$Main$update = F2(
 				var destinationPageMsg = msg.a;
 				var _v2 = A2($author$project$Pages$DestinationPage$update, destinationPageMsg, model.destinationPageModel);
 				var newDestinationpageModel = _v2.a;
-				var cmdHeader = _v2.b;
+				var cmdDest = _v2.b;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{destinationPageModel: newDestinationpageModel}),
-					A2($elm$core$Platform$Cmd$map, $author$project$Main$DestinationPageMsg, cmdHeader));
+					A2($elm$core$Platform$Cmd$map, $author$project$Main$DestinationPageMsg, cmdDest));
+			case 'CrewPageMsg':
+				var crewPageMsg = msg.a;
+				var _v3 = A2($author$project$Pages$CrewPage$update, crewPageMsg, model.crewPageModel);
+				var newCrewPageModel = _v3.a;
+				var cmdCrew = _v3.b;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{crewPageModel: newCrewPageModel}),
+					A2($elm$core$Platform$Cmd$map, $author$project$Main$CrewPageMsg, cmdCrew));
 			case 'UrlRequested':
 				var urlRequest = msg.a;
 				if (urlRequest.$ === 'Internal') {
@@ -11609,11 +11631,230 @@ var $author$project$Partials$Header$view = function (model) {
 					]))
 			]));
 };
+var $elm$html$Html$h1 = _VirtualDom_node('h1');
+var $elm$html$Html$main_ = _VirtualDom_node('main');
+var $elm$html$Html$h2 = _VirtualDom_node('h2');
+var $author$project$Pages$CrewPage$viewCrewMember = function (_v0) {
+	return A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('crew-page')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('crew-image')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$img,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$src('./src/assets/crew/image-douglas-hurley.png'),
+								$elm$html$Html$Attributes$alt('crew member')
+							]),
+						_List_Nil)
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('crew-member-list')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$li,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('crew-member')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$button,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('dot')
+									]),
+								_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$span,
+										_List_fromArray(
+											[
+												$elm$html$Html$Attributes$class('sr-only')
+											]),
+										_List_fromArray(
+											[
+												$elm$html$Html$text('commander')
+											]))
+									]))
+							])),
+						A2(
+						$elm$html$Html$li,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('crew-member')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$button,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('dot')
+									]),
+								_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$span,
+										_List_fromArray(
+											[
+												$elm$html$Html$Attributes$class('sr-only')
+											]),
+										_List_fromArray(
+											[
+												$elm$html$Html$text('Mission Specialist')
+											]))
+									]))
+							])),
+						A2(
+						$elm$html$Html$li,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('crew-member')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$button,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('dot')
+									]),
+								_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$span,
+										_List_fromArray(
+											[
+												$elm$html$Html$Attributes$class('sr-only')
+											]),
+										_List_fromArray(
+											[
+												$elm$html$Html$text('pilot')
+											]))
+									]))
+							])),
+						A2(
+						$elm$html$Html$li,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('crew-member')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$button,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('dot')
+									]),
+								_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$span,
+										_List_fromArray(
+											[
+												$elm$html$Html$Attributes$class('sr-only')
+											]),
+										_List_fromArray(
+											[
+												$elm$html$Html$text('Flight Engineer')
+											]))
+									]))
+							]))
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('crew-member-info')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$h2,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('title is-cap')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('commander')
+							])),
+						A2(
+						$elm$html$Html$p,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('name')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Douglas Hurley')
+							])),
+						A2(
+						$elm$html$Html$p,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('description')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Douglas Gerald Hurley is an American engineer, former Marine Corps pilot and former NASA astronaut. He launched into space for the third time as commander of Crew Dragon Demo-2.')
+							]))
+					]))
+			]));
+};
+var $author$project$Pages$CrewPage$view = function (model) {
+	return A2(
+		$elm$html$Html$main_,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('main main--crew')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$h1,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('secondary-heading')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$span,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('02')
+							])),
+						$elm$html$Html$text('meet your crew')
+					])),
+				$author$project$Pages$CrewPage$viewCrewMember(model)
+			]));
+};
 var $author$project$Pages$DestinationPage$GetEuropa = {$: 'GetEuropa'};
 var $author$project$Pages$DestinationPage$GetMars = {$: 'GetMars'};
 var $author$project$Pages$DestinationPage$GetMoon = {$: 'GetMoon'};
 var $author$project$Pages$DestinationPage$GetTitan = {$: 'GetTitan'};
-var $elm$html$Html$h2 = _VirtualDom_node('h2');
 var $author$project$Pages$DestinationPage$defaultPlanet = A2(
 	$elm$html$Html$div,
 	_List_fromArray(
@@ -11797,8 +12038,6 @@ var $author$project$Pages$DestinationPage$defaultPlanet = A2(
 						]))
 				]))
 		]));
-var $elm$html$Html$h1 = _VirtualDom_node('h1');
-var $elm$html$Html$main_ = _VirtualDom_node('main');
 var $author$project$Pages$DestinationPage$isEuropa = function (model) {
 	return model.isEuropa ? 'active' : '';
 };
@@ -12034,80 +12273,17 @@ var $author$project$Pages$DestinationPage$view = function (model) {
 				(model.currentPlanet.name === 'Loading...') ? $author$project$Pages$DestinationPage$defaultPlanet : A2($author$project$Pages$DestinationPage$viewPlanet, model, model.currentPlanet)
 			]));
 };
-var $author$project$Pages$HomePage$view = function (_v0) {
-	return A2(
-		$elm$html$Html$main_,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('main main--homepage')
-			]),
-		_List_fromArray(
-			[
-				A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('homepage')
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$elm$html$Html$div,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('text-content')
-							]),
-						_List_fromArray(
-							[
-								A2(
-								$elm$html$Html$h1,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$class('primary-heading')
-									]),
-								_List_fromArray(
-									[
-										A2(
-										$elm$html$Html$span,
-										_List_Nil,
-										_List_fromArray(
-											[
-												$elm$html$Html$text('so, you want to travel to')
-											])),
-										$elm$html$Html$text('space')
-									])),
-								A2(
-								$elm$html$Html$p,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$class('primary-text')
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text('Let\'s face it; if you want to go to space, you might as well genuinely go to outer space and not hover kind of on the edge of it. Well sit back, and relax because we’ll give you a truly out of this world experience!')
-									]))
-							])),
-						A2(
-						$elm$html$Html$button,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('homepage-button')
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('explore')
-							]))
-					]))
-			]));
-};
 var $author$project$Main$viewPage = function (model) {
 	return (model.url.path === '/') ? A2(
 		$elm$html$Html$map,
-		$author$project$Main$HomePageMsg,
-		$author$project$Pages$HomePage$view(model.homePageModel)) : ((model.url.path === '/destination') ? A2(
+		$author$project$Main$CrewPageMsg,
+		$author$project$Pages$CrewPage$view(model.crewPageModel)) : ((model.url.path === '/destination') ? A2(
 		$elm$html$Html$map,
 		$author$project$Main$DestinationPageMsg,
-		$author$project$Pages$DestinationPage$view(model.destinationPageModel)) : ((model.url.path === '/crew') ? $elm$html$Html$text('Crew Page') : ((model.url.path === '/technology') ? $elm$html$Html$text('Technology Page') : $elm$html$Html$text('Not Found Page'))));
+		$author$project$Pages$DestinationPage$view(model.destinationPageModel)) : ((model.url.path === '/crew') ? A2(
+		$elm$html$Html$map,
+		$author$project$Main$CrewPageMsg,
+		$author$project$Pages$CrewPage$view(model.crewPageModel)) : ((model.url.path === '/technology') ? $elm$html$Html$text('Technology Page') : $elm$html$Html$text('Not Found Page'))));
 };
 var $author$project$Main$viewRootDivClass = function (model) {
 	var rootClass = A2($elm$core$String$startsWith, '/destination', model.url.path) ? 'destination-bg' : (A2($elm$core$String$startsWith, '/crew', model.url.path) ? 'crew-bg' : (A2($elm$core$String$startsWith, '/technology', model.url.path) ? 'technology-bg' : (A2($elm$core$String$startsWith, '/', model.url.path) ? 'homepage-bg' : 'homepage-bg')));
@@ -12143,4 +12319,4 @@ var $author$project$Main$view = function (model) {
 var $author$project$Main$main = $elm$browser$Browser$application(
 	{init: $author$project$Main$init, onUrlChange: $author$project$Main$UrlChanged, onUrlRequest: $author$project$Main$UrlRequested, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
-	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"},"Pages.DestinationPage.Data":{"args":[],"type":"{ destinations : List.List Pages.DestinationPage.Planet }"},"Pages.DestinationPage.Images":{"args":[],"type":"{ png : String.String, webp : String.String }"},"Pages.DestinationPage.Planet":{"args":[],"type":"{ name : String.String, images : Pages.DestinationPage.Images, description : String.String, distance : String.String, travel : String.String }"}},"unions":{"Main.Msg":{"args":[],"tags":{"HeaderMsg":["Partials.Header.Msg"],"HomePageMsg":["Pages.HomePage.Msg"],"DestinationPageMsg":["Pages.DestinationPage.Msg"],"UrlRequested":["Browser.UrlRequest"],"UrlChanged":["Url.Url"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Pages.DestinationPage.Msg":{"args":[],"tags":{"GotData":["Result.Result Http.Error Pages.DestinationPage.Data"],"GetMoon":[],"GetMars":[],"GetEuropa":[],"GetTitan":[]}},"Pages.HomePage.Msg":{"args":[],"tags":{"NoOp":[]}},"Partials.Header.Msg":{"args":[],"tags":{"HamburgerMenuClicked":[],"HomePageClicked":[],"DestinationPageClicked":[],"CrewPageClicked":[],"TechnologyPageClicked":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String.String"],"Timeout":[],"NetworkError":[],"BadStatus":["Basics.Int"],"BadBody":["String.String"]}},"List.List":{"args":["a"],"tags":{}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}}}})}});}(this));
+	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"},"Decoders.Data":{"args":[],"type":"{ destinations : List.List Decoders.Planet }"},"Decoders.Images":{"args":[],"type":"{ png : String.String, webp : String.String }"},"Decoders.Planet":{"args":[],"type":"{ name : String.String, images : Decoders.Images, description : String.String, distance : String.String, travel : String.String }"}},"unions":{"Main.Msg":{"args":[],"tags":{"HeaderMsg":["Partials.Header.Msg"],"HomePageMsg":["Pages.HomePage.Msg"],"DestinationPageMsg":["Pages.DestinationPage.Msg"],"CrewPageMsg":["Pages.CrewPage.Msg"],"UrlRequested":["Browser.UrlRequest"],"UrlChanged":["Url.Url"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Pages.CrewPage.Msg":{"args":[],"tags":{"NoOp":[]}},"Pages.DestinationPage.Msg":{"args":[],"tags":{"GotData":["Result.Result Http.Error Decoders.Data"],"GetMoon":[],"GetMars":[],"GetEuropa":[],"GetTitan":[]}},"Pages.HomePage.Msg":{"args":[],"tags":{"NoOp":[]}},"Partials.Header.Msg":{"args":[],"tags":{"HamburgerMenuClicked":[],"HomePageClicked":[],"DestinationPageClicked":[],"CrewPageClicked":[],"TechnologyPageClicked":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String.String"],"Timeout":[],"NetworkError":[],"BadStatus":["Basics.Int"],"BadBody":["String.String"]}},"List.List":{"args":["a"],"tags":{}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}}}})}});}(this));
