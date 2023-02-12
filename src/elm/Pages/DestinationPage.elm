@@ -14,17 +14,17 @@ import Json.Decode as D
 
 
 type alias Model =
-    { planetData : Data
+    { planetData : List Planet
     , errorMessages : Maybe String
+    , currentPlanet : Planet
     }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( { planetData =
-            { destinations = []
-            }
+    ( { planetData = []
       , errorMessages = Nothing
+      , currentPlanet = loadingPlanet
       }
     , getPlanetData
     )
@@ -36,6 +36,10 @@ init =
 
 type Msg
     = GotData (Result Http.Error Data)
+    | GetMoon
+    | GetMars
+    | GetEuropa
+    | GetTitan
 
 
 update : Msg -> Model -> ( Model, Cmd.Cmd Msg )
@@ -44,11 +48,78 @@ update msg model =
         GotData result ->
             case result of
                 Ok data ->
-                    ( { model | planetData = data }, Cmd.none )
+                    ( { model | planetData = data.destinations }, Cmd.none )
 
                 Err error ->
-                    Debug.log (Debug.toString error)
-                        ( { model | errorMessages = Just (buildErrorMessage error) }, Cmd.none )
+                    ( { model | errorMessages = Just (buildErrorMessage error) }, Cmd.none )
+
+        GetMoon ->
+            let
+                filteredPlanet =
+                    List.filter
+                        (\planet -> planet.name == "Moon")
+                        model.planetData
+
+                planetHead =
+                    case List.head filteredPlanet of
+                        Just planet ->
+                            planet
+
+                        Nothing ->
+                            loadingPlanet
+            in
+            ( { model | currentPlanet = planetHead }, Cmd.none )
+
+        GetMars ->
+            let
+                filteredPlanet =
+                    List.filter
+                        (\planet -> planet.name == "Mars")
+                        model.planetData
+
+                planetHead =
+                    case List.head filteredPlanet of
+                        Just planet ->
+                            planet
+
+                        Nothing ->
+                            loadingPlanet
+            in
+            ( { model | currentPlanet = planetHead }, Cmd.none )
+
+        GetEuropa ->
+            let
+                filteredPlanet =
+                    List.filter
+                        (\planet -> planet.name == "Europa")
+                        model.planetData
+
+                planetHead =
+                    case List.head filteredPlanet of
+                        Just planet ->
+                            planet
+
+                        Nothing ->
+                            loadingPlanet
+            in
+            ( { model | currentPlanet = planetHead }, Cmd.none )
+
+        GetTitan ->
+            let
+                filteredPlanet =
+                    List.filter
+                        (\planet -> planet.name == "Titan")
+                        model.planetData
+
+                planetHead =
+                    case List.head filteredPlanet of
+                        Just planet ->
+                            planet
+
+                        Nothing ->
+                            loadingPlanet
+            in
+            ( { model | currentPlanet = planetHead }, Cmd.none )
 
 
 
@@ -59,60 +130,84 @@ view : Model -> Html Msg
 view model =
     main_ [ class "main main--destination" ]
         [ h1 [ class "secondary-heading" ] [ span [] [ text "01" ], text "Pick your destination" ]
-        , div [ class "destination" ]
-            [ div [ class "planet-image" ]
-                [ img [ src "./src/assets/destination/image-moon.png", alt "The moon" ] []
-                ]
-            , ul [ class "planets-list" ]
-                [ li [ class "planet active" ]
-                    [ button [] [ text "moon" ]
-                    ]
-                , li [ class "planet" ]
-                    [ button [] [ text "mars" ]
-                    ]
-                , li [ class "planet" ]
-                    [ button [] [ text "europa" ]
-                    ]
-                , li [ class "planet" ]
-                    [ button [] [ text "titan" ]
-                    ]
-                ]
-            , div [ class "planet-info" ]
-                [ h2 [ class "chosen-planet" ] [ text "moon" ]
-                , p [ class "planet-description" ] [ text "See our planet as you've never seen it before. A perfect relaxing trip away to help regain perspective and come back refreshed. While you're there, take in some history by visiting the Luna 2 and Apollo 11 landing sites." ]
-                ]
-            , div [ class "planet-stats" ]
-                [ p [ class "distance" ] [ text "avg. distance", span [] [ text "384,400 KM" ] ]
-                , p [ class "travel-time" ] [ text "est. travel time", span [] [ text "3 days" ] ]
-                ]
-            ]
+        , if model.currentPlanet.name == "Loading..." then
+            defaultPlanet
 
-        -- , case model.errorMessages of
-        --     Just error ->
-        --         p [] [ text error ]
-        --     Nothing ->
-        --         div [] []
+          else
+            viewPlanet model.currentPlanet
         ]
 
 
-defaultPlanet : Planet
-defaultPlanet =
-    { name = "Error"
-    , images = { png = "Error", webp = "Error" }
-    , description = "Error"
-    , distance = "Error"
-    , travel = "Error"
+loadingPlanet : Planet
+loadingPlanet =
+    { name = "Loading..."
+    , images = { png = "Loading...", webp = "Loading..." }
+    , description = "Loading..."
+    , distance = "Loading..."
+    , travel = "Loading..."
     }
 
 
-getDestinationsData : Model -> Planet
-getDestinationsData model =
-    case List.head model.planetData.destinations of
-        Just data ->
-            data
+defaultPlanet : Html Msg
+defaultPlanet =
+    div [ class "destination" ]
+        [ div [ class "planet-image" ]
+            [ img [ src "./src/assets/destination/image-moon.png", alt "Moon" ] []
+            ]
+        , ul [ class "planets-list" ]
+            [ li [ class "planet" ]
+                [ button [ onClick GetMoon ] [ text "moon" ]
+                ]
+            , li [ class "planet" ]
+                [ button [ onClick GetMars ] [ text "mars" ]
+                ]
+            , li [ class "planet" ]
+                [ button [ onClick GetEuropa ] [ text "europa" ]
+                ]
+            , li [ class "planet" ]
+                [ button [ onClick GetTitan ] [ text "titan" ]
+                ]
+            ]
+        , div [ class "planet-info" ]
+            [ h2 [ class "chosen-planet" ] [ text "Moon" ]
+            , p [ class "planet-description" ] [ text "See our planet as you’ve never seen it before. A perfect relaxing trip away to help regain perspective and come back refreshed. While you’re there, take in some history by visiting the Luna 2 and Apollo 11 landing sites." ]
+            ]
+        , div [ class "planet-stats" ]
+            [ p [ class "distance" ] [ text "avg. distance", span [] [ text "384,400 km" ] ]
+            , p [ class "travel-time" ] [ text "est. travel time", span [] [ text "3 days" ] ]
+            ]
+        ]
 
-        Nothing ->
-            defaultPlanet
+
+viewPlanet : Planet -> Html Msg
+viewPlanet planet =
+    div [ class "destination" ]
+        [ div [ class "planet-image" ]
+            [ img [ src ("./src/assets/destination/image-" ++ planet.name ++ ".png"), alt planet.name ] []
+            ]
+        , ul [ class "planets-list" ]
+            [ li [ class "planet active" ]
+                [ button [ onClick GetMoon ] [ text "moon" ]
+                ]
+            , li [ class "planet" ]
+                [ button [ onClick GetMars ] [ text "mars" ]
+                ]
+            , li [ class "planet" ]
+                [ button [ onClick GetEuropa ] [ text "europa" ]
+                ]
+            , li [ class "planet" ]
+                [ button [ onClick GetTitan ] [ text "titan" ]
+                ]
+            ]
+        , div [ class "planet-info" ]
+            [ h2 [ class "chosen-planet" ] [ text planet.name ]
+            , p [ class "planet-description" ] [ text planet.description ]
+            ]
+        , div [ class "planet-stats" ]
+            [ p [ class "distance" ] [ text "avg. distance", span [] [ text planet.distance ] ]
+            , p [ class "travel-time" ] [ text "est. travel time", span [] [ text planet.travel ] ]
+            ]
+        ]
 
 
 
