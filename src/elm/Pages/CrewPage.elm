@@ -16,7 +16,10 @@ import Http
 type alias Model =
     { crewData : List CrewMember
     , currentCrewMember : String
-    , errorMessages : Maybe String
+    , isDouglas : Bool
+    , isMark : Bool
+    , isVictor : Bool
+    , isAnousheh : Bool
     }
 
 
@@ -24,7 +27,10 @@ init : ( Model, Cmd Msg )
 init =
     ( { crewData = []
       , currentCrewMember = "Douglas Hurley"
-      , errorMessages = Nothing
+      , isDouglas = True
+      , isMark = False
+      , isVictor = False
+      , isAnousheh = False
       }
     , Cmd.none
     )
@@ -35,8 +41,7 @@ init =
 
 
 type Msg
-    = GotData (Result Http.Error Data)
-    | GetDouglas
+    = GetDouglas
     | GetMark
     | GetVictor
     | GetAnousheh
@@ -45,25 +50,17 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        GotData result ->
-            case result of
-                Ok data ->
-                    ( { model | crewData = data.crew }, Cmd.none )
-
-                Err error ->
-                    ( { model | errorMessages = Just (buildErrorMessage error) }, Cmd.none )
-
         GetDouglas ->
-            ( { model | currentCrewMember = "Douglas Hurley" }, Cmd.none )
+            ( { model | currentCrewMember = "Douglas Hurley", isDouglas = True, isMark = False, isVictor = False, isAnousheh = False }, Cmd.none )
 
         GetMark ->
-            ( { model | currentCrewMember = "Mark Shuttleworth" }, Cmd.none )
+            ( { model | currentCrewMember = "Mark Shuttleworth", isDouglas = False, isMark = True, isVictor = False, isAnousheh = False }, Cmd.none )
 
         GetVictor ->
-            ( { model | currentCrewMember = "Victor Glover" }, Cmd.none )
+            ( { model | currentCrewMember = "Victor Glover", isDouglas = False, isMark = False, isVictor = True, isAnousheh = False }, Cmd.none )
 
         GetAnousheh ->
-            ( { model | currentCrewMember = "Anousheh Ansari" }, Cmd.none )
+            ( { model | currentCrewMember = "Anousheh Ansari", isDouglas = False, isMark = False, isVictor = False, isAnousheh = True }, Cmd.none )
 
 
 
@@ -138,22 +135,22 @@ viewCrewMember model member =
             [ img [ src ("./src/assets/crew" ++ "/image-" ++ toSlug member.name ++ ".png"), alt "crew member", width 597, height 645 ] []
             ]
         , div [ class "crew-member-list" ]
-            [ li [ class "crew-member active" ]
+            [ li [ class "crew-member", class (isDouglas model) ]
                 [ button [ class "dot", onClick GetDouglas ]
                     [ span [ class "sr-only" ] [ text member.role ]
                     ]
                 ]
-            , li [ class "crew-member" ]
+            , li [ class "crew-member", class (isMark model) ]
                 [ button [ class "dot", onClick GetMark ]
                     [ span [ class "sr-only" ] [ text member.role ]
                     ]
                 ]
-            , li [ class "crew-member" ]
+            , li [ class "crew-member", class (isVictor model) ]
                 [ button [ class "dot", onClick GetVictor ]
                     [ span [ class "sr-only" ] [ text member.role ]
                     ]
                 ]
-            , li [ class "crew-member" ]
+            , li [ class "crew-member", class (isAnousheh model) ]
                 [ button [ class "dot", onClick GetAnousheh ]
                     [ span [ class "sr-only" ] [ text member.role ]
                     ]
@@ -189,3 +186,39 @@ toSlug input =
 
 
 -- SET ACTIVE CLASS
+
+
+isDouglas : Model -> String
+isDouglas model =
+    if model.isDouglas == True then
+        "active"
+
+    else
+        ""
+
+
+isMark : Model -> String
+isMark model =
+    if model.isMark == True then
+        "active"
+
+    else
+        ""
+
+
+isVictor : Model -> String
+isVictor model =
+    if model.isVictor == True then
+        "active"
+
+    else
+        ""
+
+
+isAnousheh : Model -> String
+isAnousheh model =
+    if model.isAnousheh == True then
+        "active"
+
+    else
+        ""

@@ -11040,7 +11040,7 @@ var $author$project$Main$getData = $elm$http$Http$get(
 		url: './data.json'
 	});
 var $author$project$Pages$CrewPage$init = _Utils_Tuple2(
-	{crewData: _List_Nil, currentCrewMember: 'Douglas Hurley', errorMessages: $elm$core$Maybe$Nothing},
+	{crewData: _List_Nil, currentCrewMember: 'Douglas Hurley', isAnousheh: false, isDouglas: true, isMark: false, isVictor: false},
 	$elm$core$Platform$Cmd$none);
 var $author$project$Pages$DestinationPage$init = _Utils_Tuple2(
 	{currentPlanetString: 'Moon', errorMessages: $elm$core$Maybe$Nothing, isEuropa: false, isMars: false, isMoon: true, isTitan: false, planetData: _List_Nil},
@@ -11154,95 +11154,38 @@ var $elm$url$Url$toString = function (url) {
 					_Utils_ap(http, url.host)),
 				url.path)));
 };
-var $author$project$ErrorHandling$buildErrorMessage = function (httpError) {
-	switch (httpError.$) {
-		case 'BadUrl':
-			var message = httpError.a;
-			return message;
-		case 'Timeout':
-			return 'Server is taking too long to respond. Please try again later.';
-		case 'NetworkError':
-			return 'Unable to reach server.';
-		case 'BadStatus':
-			var statusCode = httpError.a;
-			return 'Request failed with status code: ' + $elm$core$String$fromInt(statusCode);
-		default:
-			var message = httpError.a;
-			return message;
-	}
-};
 var $author$project$Pages$CrewPage$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
-			case 'GotData':
-				var result = msg.a;
-				if (result.$ === 'Ok') {
-					var data = result.a;
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{crewData: data.crew}),
-						$elm$core$Platform$Cmd$none);
-				} else {
-					var error = result.a;
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{
-								errorMessages: $elm$core$Maybe$Just(
-									$author$project$ErrorHandling$buildErrorMessage(error))
-							}),
-						$elm$core$Platform$Cmd$none);
-				}
 			case 'GetDouglas':
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{currentCrewMember: 'Douglas Hurley'}),
+						{currentCrewMember: 'Douglas Hurley', isAnousheh: false, isDouglas: true, isMark: false, isVictor: false}),
 					$elm$core$Platform$Cmd$none);
 			case 'GetMark':
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{currentCrewMember: 'Mark Shuttleworth'}),
+						{currentCrewMember: 'Mark Shuttleworth', isAnousheh: false, isDouglas: false, isMark: true, isVictor: false}),
 					$elm$core$Platform$Cmd$none);
 			case 'GetVictor':
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{currentCrewMember: 'Victor Glover'}),
+						{currentCrewMember: 'Victor Glover', isAnousheh: false, isDouglas: false, isMark: false, isVictor: true}),
 					$elm$core$Platform$Cmd$none);
 			default:
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{currentCrewMember: 'Anousheh Ansari'}),
+						{currentCrewMember: 'Anousheh Ansari', isAnousheh: true, isDouglas: false, isMark: false, isVictor: false}),
 					$elm$core$Platform$Cmd$none);
 		}
 	});
 var $author$project$Pages$DestinationPage$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
-			case 'GotData':
-				var result = msg.a;
-				if (result.$ === 'Ok') {
-					var data = result.a;
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{planetData: data.destinations}),
-						$elm$core$Platform$Cmd$none);
-				} else {
-					var error = result.a;
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{
-								errorMessages: $elm$core$Maybe$Just(
-									$author$project$ErrorHandling$buildErrorMessage(error))
-							}),
-						$elm$core$Platform$Cmd$none);
-				}
 			case 'GetMoon':
 				return _Utils_Tuple2(
 					_Utils_update(
@@ -11682,6 +11625,18 @@ var $elm$html$Html$Attributes$height = function (n) {
 		'height',
 		$elm$core$String$fromInt(n));
 };
+var $author$project$Pages$CrewPage$isAnousheh = function (model) {
+	return model.isAnousheh ? 'active' : '';
+};
+var $author$project$Pages$CrewPage$isDouglas = function (model) {
+	return model.isDouglas ? 'active' : '';
+};
+var $author$project$Pages$CrewPage$isMark = function (model) {
+	return model.isMark ? 'active' : '';
+};
+var $author$project$Pages$CrewPage$isVictor = function (model) {
+	return model.isVictor ? 'active' : '';
+};
 var $elm$core$String$replace = F3(
 	function (before, after, string) {
 		return A2(
@@ -11745,7 +11700,9 @@ var $author$project$Pages$CrewPage$viewCrewMember = F2(
 							$elm$html$Html$li,
 							_List_fromArray(
 								[
-									$elm$html$Html$Attributes$class('crew-member active')
+									$elm$html$Html$Attributes$class('crew-member'),
+									$elm$html$Html$Attributes$class(
+									$author$project$Pages$CrewPage$isDouglas(model))
 								]),
 							_List_fromArray(
 								[
@@ -11774,7 +11731,9 @@ var $author$project$Pages$CrewPage$viewCrewMember = F2(
 							$elm$html$Html$li,
 							_List_fromArray(
 								[
-									$elm$html$Html$Attributes$class('crew-member')
+									$elm$html$Html$Attributes$class('crew-member'),
+									$elm$html$Html$Attributes$class(
+									$author$project$Pages$CrewPage$isMark(model))
 								]),
 							_List_fromArray(
 								[
@@ -11803,7 +11762,9 @@ var $author$project$Pages$CrewPage$viewCrewMember = F2(
 							$elm$html$Html$li,
 							_List_fromArray(
 								[
-									$elm$html$Html$Attributes$class('crew-member')
+									$elm$html$Html$Attributes$class('crew-member'),
+									$elm$html$Html$Attributes$class(
+									$author$project$Pages$CrewPage$isVictor(model))
 								]),
 							_List_fromArray(
 								[
@@ -11832,7 +11793,9 @@ var $author$project$Pages$CrewPage$viewCrewMember = F2(
 							$elm$html$Html$li,
 							_List_fromArray(
 								[
-									$elm$html$Html$Attributes$class('crew-member')
+									$elm$html$Html$Attributes$class('crew-member'),
+									$elm$html$Html$Attributes$class(
+									$author$project$Pages$CrewPage$isAnousheh(model))
 								]),
 							_List_fromArray(
 								[
@@ -12340,4 +12303,4 @@ var $author$project$Main$view = function (model) {
 var $author$project$Main$main = $elm$browser$Browser$application(
 	{init: $author$project$Main$init, onUrlChange: $author$project$Main$UrlChanged, onUrlRequest: $author$project$Main$UrlRequested, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
-	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Decoders.CrewMember":{"args":[],"type":"{ name : String.String, images : Decoders.Images, role : String.String, bio : String.String }"},"Decoders.Data":{"args":[],"type":"{ destinations : List.List Decoders.Planet, crew : List.List Decoders.CrewMember }"},"Decoders.Images":{"args":[],"type":"{ png : String.String, webp : String.String }"},"Decoders.Planet":{"args":[],"type":"{ name : String.String, images : Decoders.Images, description : String.String, distance : String.String, travel : String.String }"},"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"Main.Msg":{"args":[],"tags":{"HeaderMsg":["Partials.Header.Msg"],"HomePageMsg":["Pages.HomePage.Msg"],"DestinationPageMsg":["Pages.DestinationPage.Msg"],"CrewPageMsg":["Pages.CrewPage.Msg"],"UrlRequested":["Browser.UrlRequest"],"UrlChanged":["Url.Url"],"GotData":["Result.Result Http.Error Decoders.Data"]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String.String"],"Timeout":[],"NetworkError":[],"BadStatus":["Basics.Int"],"BadBody":["String.String"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"List.List":{"args":["a"],"tags":{}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Pages.CrewPage.Msg":{"args":[],"tags":{"GotData":["Result.Result Http.Error Decoders.Data"],"GetDouglas":[],"GetMark":[],"GetVictor":[],"GetAnousheh":[]}},"Pages.DestinationPage.Msg":{"args":[],"tags":{"GotData":["Result.Result Http.Error Decoders.Data"],"GetMoon":[],"GetMars":[],"GetEuropa":[],"GetTitan":[]}},"Pages.HomePage.Msg":{"args":[],"tags":{"NoOp":[]}},"Partials.Header.Msg":{"args":[],"tags":{"HamburgerMenuClicked":[],"HomePageClicked":[],"DestinationPageClicked":[],"CrewPageClicked":[],"TechnologyPageClicked":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));
+	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Decoders.CrewMember":{"args":[],"type":"{ name : String.String, images : Decoders.Images, role : String.String, bio : String.String }"},"Decoders.Data":{"args":[],"type":"{ destinations : List.List Decoders.Planet, crew : List.List Decoders.CrewMember }"},"Decoders.Images":{"args":[],"type":"{ png : String.String, webp : String.String }"},"Decoders.Planet":{"args":[],"type":"{ name : String.String, images : Decoders.Images, description : String.String, distance : String.String, travel : String.String }"},"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"Main.Msg":{"args":[],"tags":{"HeaderMsg":["Partials.Header.Msg"],"HomePageMsg":["Pages.HomePage.Msg"],"DestinationPageMsg":["Pages.DestinationPage.Msg"],"CrewPageMsg":["Pages.CrewPage.Msg"],"UrlRequested":["Browser.UrlRequest"],"UrlChanged":["Url.Url"],"GotData":["Result.Result Http.Error Decoders.Data"]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String.String"],"Timeout":[],"NetworkError":[],"BadStatus":["Basics.Int"],"BadBody":["String.String"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"List.List":{"args":["a"],"tags":{}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Pages.CrewPage.Msg":{"args":[],"tags":{"GetDouglas":[],"GetMark":[],"GetVictor":[],"GetAnousheh":[]}},"Pages.DestinationPage.Msg":{"args":[],"tags":{"GetMoon":[],"GetMars":[],"GetEuropa":[],"GetTitan":[]}},"Pages.HomePage.Msg":{"args":[],"tags":{"NoOp":[]}},"Partials.Header.Msg":{"args":[],"tags":{"HamburgerMenuClicked":[],"HomePageClicked":[],"DestinationPageClicked":[],"CrewPageClicked":[],"TechnologyPageClicked":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));

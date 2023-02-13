@@ -43,8 +43,7 @@ init =
 
 
 type Msg
-    = GotData (Result Http.Error Data)
-    | GetMoon
+    = GetMoon
     | GetMars
     | GetEuropa
     | GetTitan
@@ -53,14 +52,6 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd.Cmd Msg )
 update msg model =
     case msg of
-        GotData result ->
-            case result of
-                Ok data ->
-                    ( { model | planetData = data.destinations }, Cmd.none )
-
-                Err error ->
-                    ( { model | errorMessages = Just (buildErrorMessage error) }, Cmd.none )
-
         GetMoon ->
             ( { model | currentPlanetString = "Moon", isMoon = True, isMars = False, isEuropa = False, isTitan = False }, Cmd.none )
 
