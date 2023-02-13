@@ -112,6 +112,11 @@ select {
   --clr-destination-tab-underline-bg-hover: hsl(var(--clr-white) / 0.5);
   --clr-destination-distance-text: hsl(var(--clr-white));
   --clr-destination-time-text: hsl(var(--clr-white));
+  --clr-crew-dot-bg: hsl(var(--clr-white) / 0.17);
+  --clr-crew-dot-hover-bg: hsl(var(--clr-white) / 0.5);
+  --clr-crew-dot-active-bg: hsl(var(--clr-white));
+  --clr-crew-title-text: hsl(var(--clr-white) / 0.5);
+  --clr-crew-name-text: hsl(var(--clr-white));
   --fs-step--1: clamp(0.88rem, calc(0.83rem + 0.19vw), 1rem);
   --fs-step-0: clamp(0.94rem, calc(0.87rem + 0.28vw), 1.13rem);
   --fs-step-1: clamp(1rem, calc(0.74rem + 1.13vw), 1.75rem);
@@ -209,6 +214,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center bottom;
+  mix-blend-mode: difference;
 }
 @media (min-width: 550px) {
   #root.crew-bg {
@@ -568,6 +574,7 @@ body {
   display: flex;
   gap: 14px;
   color: var(--clr-destination-header-text);
+  font-family: var(--ff-barlow-condensed);
   font-size: var(--fs-step-1);
   letter-spacing: var(--ls-27);
   text-transform: uppercase;
@@ -732,6 +739,100 @@ body {
   }
   .destination .planet-stats {
     margin-block-end: 0;
+  }
+}
+
+.secondary-heading {
+  margin-block-start: 0;
+  margin-inline: auto;
+  width: max-content;
+}
+
+.crew-page {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: max-content max-content max-content;
+  justify-items: center;
+  grid-row-gap: 32px;
+}
+.crew-page .crew-image {
+  display: flex;
+  flex-direction: column;
+  padding-inline: 24px;
+  width: 100%;
+}
+.crew-page .crew-image img {
+  margin-inline: auto;
+  width: 177px;
+}
+@media (min-width: 550px) {
+  .crew-page .crew-image img {
+    width: 457px;
+  }
+}
+@media (min-width: 1100px) {
+  .crew-page .crew-image img {
+    width: 567px;
+  }
+}
+.crew-page .crew-image::after {
+  content: "";
+  background-color: hsl(var(--clr-white)/0.25);
+  height: 1px;
+  width: 100%;
+}
+.crew-page .crew-member-list {
+  display: flex;
+  gap: 16px;
+  list-style: none;
+}
+.crew-page .dot {
+  aspect-ratio: 1;
+  background-color: var(--clr-crew-dot-bg);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 10px;
+  transition: all 200ms ease;
+}
+.crew-page .crew-member:not(.active) .dot:hover {
+  background-color: var(--clr-crew-dot-hover-bg);
+}
+.crew-page .crew-member.active .dot {
+  background-color: var(--clr-crew-dot-active-bg);
+}
+.crew-page .crew-member-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.crew-page .title {
+  color: var(--clr-crew-title-text);
+  font-size: var(--fs-step-2);
+}
+.crew-page .title.is-cap {
+  text-transform: uppercase;
+}
+.crew-page .name {
+  color: var(--clr-crew-name-text);
+  font-family: var(--ff-bellefair);
+  font-size: var(--fs-step-4);
+  text-transform: uppercase;
+}
+.crew-page .description {
+  margin-block-start: 8px;
+  max-width: 36ch;
+  text-align: center;
+}
+@media (min-width: 550px) {
+  .crew-page .description {
+    max-width: 51ch;
+  }
+}
+@media (min-width: 1100px) {
+  .crew-page .description {
+    max-width: 43ch;
+    text-align: start;
   }
 }
 

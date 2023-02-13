@@ -37,6 +37,13 @@
   --clr-destination-distance-text: hsl(var(--clr-white));
   --clr-destination-time-text: hsl(var(--clr-white));
 
+  // crew page
+  --clr-crew-dot-bg: hsl(var(--clr-white) / 0.17);
+  --clr-crew-dot-hover-bg: hsl(var(--clr-white) / 0.5);
+  --clr-crew-dot-active-bg: hsl(var(--clr-white));
+  --clr-crew-title-text: hsl(var(--clr-white) / 0.5);
+  --clr-crew-name-text: hsl(var(--clr-white));
+
   // FONT SIZES
 
   --fs-step--1: clamp(0.88rem, calc(0.83rem + 0.19vw), 1rem);
@@ -128,6 +135,7 @@ body {
 
 #root.crew-bg {
   @include body-bg(crew);
+  mix-blend-mode: difference;
 }
 
 #root.technology-bg {

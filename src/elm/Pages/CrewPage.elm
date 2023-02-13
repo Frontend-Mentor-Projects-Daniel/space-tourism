@@ -68,7 +68,7 @@ viewCrewMember _ =
             [ img [ src "./src/assets/crew/image-douglas-hurley.png", alt "crew member" ] []
             ]
         , div [ class "crew-member-list" ]
-            [ li [ class "crew-member" ]
+            [ li [ class "crew-member active" ]
                 [ button [ class "dot" ]
                     [ span [ class "sr-only" ] [ text "commander" ]
                     ]

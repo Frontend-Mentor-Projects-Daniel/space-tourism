@@ -11672,7 +11672,7 @@ var $author$project$Pages$CrewPage$viewCrewMember = function (_v0) {
 						$elm$html$Html$li,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$class('crew-member')
+								$elm$html$Html$Attributes$class('crew-member active')
 							]),
 						_List_fromArray(
 							[
