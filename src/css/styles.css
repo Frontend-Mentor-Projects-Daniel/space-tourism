@@ -346,6 +346,7 @@ body {
   padding-inline: 24px;
   position: relative;
   width: 100%;
+  max-width: 1385px;
 }
 .header .logo {
   flex-shrink: 0;
@@ -745,7 +746,18 @@ body {
 .secondary-heading {
   margin-block-start: 0;
   margin-inline: auto;
+  max-width: 1137px;
   width: max-content;
+}
+@media (min-width: 550px) {
+  .secondary-heading {
+    margin-inline-start: 38px;
+  }
+}
+@media (min-width: 1100px) {
+  .secondary-heading {
+    margin-inline-start: 167px;
+  }
 }
 
 .crew-page {
@@ -754,6 +766,45 @@ body {
   grid-template-rows: max-content max-content max-content;
   justify-items: center;
   grid-row-gap: 32px;
+}
+@media (min-width: 550px) {
+  .crew-page :first-child {
+    grid-column: 1/2;
+    grid-row: 3/4;
+  }
+  .crew-page div:nth-child(2) {
+    grid-column: 1/2;
+    grid-row: 2/3;
+  }
+  .crew-page :last-child {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+}
+@media (min-width: 1100px) {
+  .crew-page {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: max-content max-content;
+    align-items: center;
+    justify-items: center;
+    margin-inline: auto;
+    width: max-content;
+  }
+  .crew-page :first-child {
+    grid-column: 2/3;
+    grid-row: 1/-1;
+  }
+  .crew-page div:nth-child(2) {
+    grid-column: 1/2;
+    grid-row: 2/3;
+    justify-self: start;
+  }
+  .crew-page :last-child {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    align-self: end;
+    justify-self: start;
+  }
 }
 .crew-page .crew-image {
   display: flex;
@@ -781,6 +832,11 @@ body {
   height: 1px;
   width: 100%;
 }
+@media (min-width: 550px) {
+  .crew-page .crew-image::after {
+    display: none;
+  }
+}
 .crew-page .crew-member-list {
   display: flex;
   gap: 16px;
@@ -795,6 +851,11 @@ body {
   height: 10px;
   transition: all 200ms ease;
 }
+@media (min-width: 1100px) {
+  .crew-page .dot {
+    height: 15px;
+  }
+}
 .crew-page .crew-member:not(.active) .dot:hover {
   background-color: var(--clr-crew-dot-hover-bg);
 }
@@ -805,6 +866,11 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+@media (min-width: 1100px) {
+  .crew-page .crew-member-info {
+    align-items: start;
+  }
 }
 .crew-page .title {
   color: var(--clr-crew-title-text);
@@ -831,6 +897,7 @@ body {
 }
 @media (min-width: 1100px) {
   .crew-page .description {
+    margin-right: auto;
     max-width: 43ch;
     text-align: start;
   }

@@ -3,7 +3,16 @@
 .secondary-heading {
   margin-block-start: 0;
   margin-inline: auto;
+  max-width: 1137px;
   width: max-content;
+
+  @include tablets() {
+    margin-inline-start: 38px;
+  }
+
+  @include laptops() {
+    margin-inline-start: 167px;
+  }
 }
 
 .crew-page {
@@ -12,6 +21,58 @@
   grid-template-rows: max-content max-content max-content;
   justify-items: center;
   grid-row-gap: 32px;
+
+  // layout
+  @include tablets() {
+    // image
+    & :first-child {
+      grid-column: 1/2;
+      grid-row: 3/4;
+    }
+
+    // dots
+    & div:nth-child(2) {
+      grid-column: 1/2;
+      grid-row: 2/3;
+    }
+
+    // text info
+    & :last-child {
+      grid-column: 1/2;
+      grid-row: 1/2;
+    }
+  }
+
+  @include laptops() {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: max-content max-content;
+    align-items: center;
+    justify-items: center;
+
+    margin-inline: auto;
+    width: max-content;
+
+    // image
+    & :first-child {
+      grid-column: 2/3;
+      grid-row: 1/-1;
+    }
+
+    // dots
+    & div:nth-child(2) {
+      grid-column: 1/2;
+      grid-row: 2/3;
+      justify-self: start;
+    }
+
+    // text info
+    & :last-child {
+      grid-column: 1/2;
+      grid-row: 1/2;
+      align-self: end;
+      justify-self: start;
+    }
+  }
 
   .crew-image {
     display: flex;
@@ -39,6 +100,12 @@
       height: 1px;
       width: 100%;
     }
+
+    @include tablets() {
+      &::after {
+        display: none;
+      }
+    }
   }
 
   .crew-member-list {
@@ -46,9 +113,6 @@
     gap: 16px;
 
     list-style: none;
-  }
-
-  .crew-member {
   }
 
   .dot {
@@ -59,6 +123,10 @@
     cursor: pointer;
     height: 10px;
     transition: all 200ms ease;
+
+    @include laptops() {
+      height: 15px;
+    }
   }
 
   .crew-member:not(.active) .dot:hover {
@@ -73,6 +141,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    @include laptops() {
+      align-items: start;
+    }
   }
 
   .title {
@@ -101,6 +173,7 @@
     }
 
     @include laptops() {
+      margin-right: auto;
       max-width: 43ch;
       text-align: start;
     }
