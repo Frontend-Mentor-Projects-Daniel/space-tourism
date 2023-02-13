@@ -50,7 +50,6 @@
     justify-items: center;
 
     margin-inline: auto;
-    width: max-content;
 
     // image
     & :first-child {
@@ -90,7 +89,7 @@
       }
 
       @include laptops() {
-        width: 567px;
+        width: auto;
       }
     }
 
@@ -113,6 +112,10 @@
     gap: 16px;
 
     list-style: none;
+
+    @include laptops() {
+      margin-inline-start: 167px;
+    }
   }
 
   .dot {
@@ -144,6 +147,8 @@
 
     @include laptops() {
       align-items: start;
+
+      margin-inline-start: 167px;
     }
   }
 
