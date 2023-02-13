@@ -9,17 +9,19 @@ import Json.Decode as D
 
 type alias Data =
     { destinations : List Planet
+    , crew : List CrewMember
     }
 
 
 dataDecoder : D.Decoder Data
 dataDecoder =
-    D.map Data
+    D.map2 Data
         (D.field "destinations" <| D.list <| planetDecoder)
+        (D.field "crew" <| D.list <| crewDecoder)
 
 
 
--- DESTINATION DATA DECODERS
+-- DESTINATION DECODERS
 
 
 type alias Planet =
@@ -52,3 +54,24 @@ planetDecoder =
         (D.field "description" D.string)
         (D.field "distance" D.string)
         (D.field "travel" D.string)
+
+
+
+-- CREW DECODERS
+
+
+type alias CrewMember =
+    { name : String
+    , images : Images
+    , role : String
+    , bio : String
+    }
+
+
+crewDecoder : D.Decoder CrewMember
+crewDecoder =
+    D.map4 CrewMember
+        (D.field "name" D.string)
+        (D.field "images" imagesDecoder)
+        (D.field "role" D.string)
+        (D.field "bio" D.string)

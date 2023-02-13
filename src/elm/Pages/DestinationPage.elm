@@ -1,4 +1,4 @@
-module Pages.DestinationPage exposing (Model, Msg, getPlanetData, init, subscriptions, update, view)
+module Pages.DestinationPage exposing (Model, Msg, init, subscriptions, update, view)
 
 import Decoders exposing (..)
 import ErrorHandling exposing (buildErrorMessage)
@@ -16,7 +16,7 @@ import Http
 type alias Model =
     { planetData : List Planet
     , errorMessages : Maybe String
-    , currentPlanet : Planet
+    , currentPlanetString : String
     , isMoon : Bool
     , isMars : Bool
     , isEuropa : Bool
@@ -28,13 +28,13 @@ init : ( Model, Cmd Msg )
 init =
     ( { planetData = []
       , errorMessages = Nothing
-      , currentPlanet = loadingPlanet
+      , currentPlanetString = "Moon"
       , isMoon = True
       , isMars = False
       , isEuropa = False
       , isTitan = False
       }
-    , getPlanetData
+    , Cmd.none
     )
 
 
@@ -62,88 +62,69 @@ update msg model =
                     ( { model | errorMessages = Just (buildErrorMessage error) }, Cmd.none )
 
         GetMoon ->
-            let
-                filteredPlanet =
-                    List.filter
-                        (\planet -> planet.name == "Moon")
-                        model.planetData
-
-                planetHead =
-                    case List.head filteredPlanet of
-                        Just planet ->
-                            planet
-
-                        Nothing ->
-                            loadingPlanet
-            in
-            ( { model | currentPlanet = planetHead, isMoon = True, isMars = False, isEuropa = False, isTitan = False }, Cmd.none )
+            ( { model | currentPlanetString = "Moon", isMoon = True, isMars = False, isEuropa = False, isTitan = False }, Cmd.none )
 
         GetMars ->
-            let
-                filteredPlanet =
-                    List.filter
-                        (\planet -> planet.name == "Mars")
-                        model.planetData
-
-                planetHead =
-                    case List.head filteredPlanet of
-                        Just planet ->
-                            planet
-
-                        Nothing ->
-                            loadingPlanet
-            in
-            ( { model | currentPlanet = planetHead, isMoon = False, isMars = True, isEuropa = False, isTitan = False }, Cmd.none )
+            ( { model | currentPlanetString = "Mars", isMoon = False, isMars = True, isEuropa = False, isTitan = False }, Cmd.none )
 
         GetEuropa ->
-            let
-                filteredPlanet =
-                    List.filter
-                        (\planet -> planet.name == "Europa")
-                        model.planetData
-
-                planetHead =
-                    case List.head filteredPlanet of
-                        Just planet ->
-                            planet
-
-                        Nothing ->
-                            loadingPlanet
-            in
-            ( { model | currentPlanet = planetHead, isMoon = False, isMars = False, isEuropa = True, isTitan = False }, Cmd.none )
+            ( { model | currentPlanetString = "Europa", isMoon = False, isMars = False, isEuropa = True, isTitan = False }, Cmd.none )
 
         GetTitan ->
-            let
-                filteredPlanet =
-                    List.filter
-                        (\planet -> planet.name == "Titan")
-                        model.planetData
-
-                planetHead =
-                    case List.head filteredPlanet of
-                        Just planet ->
-                            planet
-
-                        Nothing ->
-                            loadingPlanet
-            in
-            ( { model | currentPlanet = planetHead, isMoon = False, isMars = False, isEuropa = False, isTitan = True }, Cmd.none )
+            ( { model | currentPlanetString = "Titan", isMoon = False, isMars = False, isEuropa = False, isTitan = True }, Cmd.none )
 
 
 
 -- VIEW
 
 
-view : Model -> Html Msg
-view model =
-    main_ [ class "main main--destination" ]
+view : Model -> Data -> Html Msg
+view model data =
+    main_
+        [ class "main main--destination" ]
         [ h1 [ class "secondary-heading" ] [ span [] [ text "01" ], text "Pick your destination" ]
-        , if model.currentPlanet.name == "Loading..." then
-            defaultPlanet
-
-          else
-            viewPlanet model model.currentPlanet
+        , renderPlanet model data.destinations model.currentPlanetString
         ]
+
+
+renderPlanet : Model -> List Planet -> String -> Html Msg
+renderPlanet model planets planet =
+    if planet == "Moon" then
+        viewPlanet model (getSpecificPlanet planets "Moon")
+
+    else if planet == "Mars" then
+        viewPlanet model (getSpecificPlanet planets "Mars")
+
+    else if planet == "Europa" then
+        viewPlanet model (getSpecificPlanet planets "Europa")
+
+    else if planet == "Titan" then
+        viewPlanet model (getSpecificPlanet planets "Titan")
+
+    else
+        viewPlanet model loadingPlanet
+
+
+getFirstPlanet : List Planet -> Planet
+getFirstPlanet list =
+    case List.head list of
+        Just data ->
+            data
+
+        Nothing ->
+            loadingPlanet
+
+
+getSpecificPlanet : List Planet -> String -> Planet
+getSpecificPlanet planets keyWord =
+    let
+        currentPlanetList =
+            List.filter (\planet -> planet.name == keyWord) planets
+
+        currentPlanet =
+            getFirstPlanet currentPlanetList
+    in
+    currentPlanet
 
 
 loadingPlanet : Planet
@@ -154,37 +135,6 @@ loadingPlanet =
     , distance = "Loading..."
     , travel = "Loading..."
     }
-
-
-defaultPlanet : Html Msg
-defaultPlanet =
-    div [ class "destination" ]
-        [ div [ class "planet-image" ]
-            [ img [ src "./src/assets/destination/image-moon.png", alt "Moon" ] []
-            ]
-        , ul [ class "planets-list" ]
-            [ li [ class "planet active" ]
-                [ button [ onClick GetMoon ] [ text "moon" ]
-                ]
-            , li [ class "planet" ]
-                [ button [ onClick GetMars ] [ text "mars" ]
-                ]
-            , li [ class "planet" ]
-                [ button [ onClick GetEuropa ] [ text "europa" ]
-                ]
-            , li [ class "planet" ]
-                [ button [ onClick GetTitan ] [ text "titan" ]
-                ]
-            ]
-        , div [ class "planet-info" ]
-            [ h2 [ class "chosen-planet" ] [ text "Moon" ]
-            , p [ class "planet-description" ] [ text "See our planet as you’ve never seen it before. A perfect relaxing trip away to help regain perspective and come back refreshed. While you’re there, take in some history by visiting the Luna 2 and Apollo 11 landing sites." ]
-            ]
-        , div [ class "planet-stats" ]
-            [ p [ class "distance" ] [ text "avg. distance", span [] [ text "384,400 km" ] ]
-            , p [ class "travel-time" ] [ text "est. travel time", span [] [ text "3 days" ] ]
-            ]
-        ]
 
 
 viewPlanet : Model -> Planet -> Html Msg
@@ -216,18 +166,6 @@ viewPlanet model planet =
             , p [ class "travel-time" ] [ text "est. travel time", span [] [ text planet.travel ] ]
             ]
         ]
-
-
-
--- HTTP REQUESTS
-
-
-getPlanetData : Cmd Msg
-getPlanetData =
-    Http.get
-        { url = "./data.json"
-        , expect = Http.expectJson GotData dataDecoder
-        }
 
 
 

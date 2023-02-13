@@ -159,7 +159,6 @@ body {
 
 #root.crew-bg {
   @include body-bg(crew);
-  mix-blend-mode: difference;
 }
 
 #root.technology-bg {

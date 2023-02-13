@@ -14,12 +14,18 @@ import Http
 
 
 type alias Model =
-    {}
+    { crewData : List CrewMember
+    , currentCrewMember : String
+    , errorMessages : Maybe String
+    }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( {}
+    ( { crewData = []
+      , currentCrewMember = "Douglas Hurley"
+      , errorMessages = Nothing
+      }
     , Cmd.none
     )
 
@@ -29,82 +35,139 @@ init =
 
 
 type Msg
-    = NoOp
-
-
-
--- | GotData (Result Http.Error Data)
+    = GotData (Result Http.Error Data)
+    | GetDouglas
+    | GetMark
+    | GetVictor
+    | GetAnousheh
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        -- GotData result ->
-        --     case result of
-        --         Ok data ->
-        --             ( { model | planetData = data.destinations }, Cmd.none )
-        --         Err error ->
-        --             ( { model | errorMessages = Just (buildErrorMessage error) }, Cmd.none )
-        NoOp ->
-            ( model, Cmd.none )
+        GotData result ->
+            case result of
+                Ok data ->
+                    ( { model | crewData = data.crew }, Cmd.none )
+
+                Err error ->
+                    ( { model | errorMessages = Just (buildErrorMessage error) }, Cmd.none )
+
+        GetDouglas ->
+            ( { model | currentCrewMember = "Douglas Hurley" }, Cmd.none )
+
+        GetMark ->
+            ( { model | currentCrewMember = "Mark Shuttleworth" }, Cmd.none )
+
+        GetVictor ->
+            ( { model | currentCrewMember = "Victor Glover" }, Cmd.none )
+
+        GetAnousheh ->
+            ( { model | currentCrewMember = "Anousheh Ansari" }, Cmd.none )
 
 
 
 -- VIEW
 
 
-view : Model -> Html Msg
-view model =
+view : Model -> Data -> Html Msg
+view model data =
     main_ [ class "main main--crew" ]
         [ h1 [ class "secondary-heading" ] [ span [] [ text "02" ], text "meet your crew" ]
-        , viewCrewMember model
+        , renderCrewMember model data.crew model.currentCrewMember
         ]
 
 
-viewCrewMember : Model -> Html Msg
-viewCrewMember _ =
+
+-- VIEW FUNCTIONS
+
+
+renderCrewMember : Model -> List CrewMember -> String -> Html Msg
+renderCrewMember model members memberName =
+    if memberName == "Douglas Hurley" then
+        viewCrewMember model (getSpecificCrewMember members "Douglas Hurley")
+
+    else if memberName == "Mark Shuttleworth" then
+        viewCrewMember model (getSpecificCrewMember members "Mark Shuttleworth")
+
+    else if memberName == "Victor Glover" then
+        viewCrewMember model (getSpecificCrewMember members "Victor Glover")
+
+    else if memberName == "Anousheh Ansari" then
+        viewCrewMember model (getSpecificCrewMember members "Anousheh Ansari")
+
+    else
+        viewCrewMember model loadingCrewMember
+
+
+getSpecificCrewMember : List CrewMember -> String -> CrewMember
+getSpecificCrewMember crew memberName =
+    let
+        members =
+            List.filter (\member -> member.name == memberName) crew
+
+        crewMember =
+            getFirstMember members
+    in
+    crewMember
+
+
+getFirstMember : List CrewMember -> CrewMember
+getFirstMember list =
+    case List.head list of
+        Just data ->
+            data
+
+        Nothing ->
+            loadingCrewMember
+
+
+loadingCrewMember : CrewMember
+loadingCrewMember =
+    { name = "Loading..."
+    , images = { png = "Loading...", webp = "Loading..." }
+    , role = "Loading..."
+    , bio = "Loading..."
+    }
+
+
+viewCrewMember : Model -> CrewMember -> Html Msg
+viewCrewMember model member =
     div [ class "crew-page" ]
         [ div [ class "crew-image" ]
-            [ img [ src "./src/assets/crew/image-douglas-hurley.png", alt "crew member" ] []
+            [ img [ src ("./src/assets/crew" ++ "/image-" ++ toSlug member.name ++ ".png"), alt "crew member", width 597, height 645 ] []
             ]
         , div [ class "crew-member-list" ]
             [ li [ class "crew-member active" ]
-                [ button [ class "dot" ]
-                    [ span [ class "sr-only" ] [ text "commander" ]
+                [ button [ class "dot", onClick GetDouglas ]
+                    [ span [ class "sr-only" ] [ text member.role ]
                     ]
                 ]
             , li [ class "crew-member" ]
-                [ button [ class "dot" ]
-                    [ span [ class "sr-only" ] [ text "Mission Specialist" ]
+                [ button [ class "dot", onClick GetMark ]
+                    [ span [ class "sr-only" ] [ text member.role ]
                     ]
                 ]
             , li [ class "crew-member" ]
-                [ button [ class "dot" ]
-                    [ span [ class "sr-only" ] [ text "pilot" ]
+                [ button [ class "dot", onClick GetVictor ]
+                    [ span [ class "sr-only" ] [ text member.role ]
                     ]
                 ]
             , li [ class "crew-member" ]
-                [ button [ class "dot" ]
-                    [ span [ class "sr-only" ] [ text "Flight Engineer" ]
+                [ button [ class "dot", onClick GetAnousheh ]
+                    [ span [ class "sr-only" ] [ text member.role ]
                     ]
                 ]
             ]
         , div [ class "crew-member-info" ]
-            [ h2 [ class "title is-cap" ] [ text "commander" ]
-            , p [ class "name" ] [ text "Douglas Hurley" ]
-            , p [ class "description" ] [ text "Douglas Gerald Hurley is an American engineer, former Marine Corps pilot and former NASA astronaut. He launched into space for the third time as commander of Crew Dragon Demo-2." ]
+            [ h2 [ class "title is-cap" ] [ text member.role ]
+            , p [ class "name" ] [ text member.name ]
+            , p [ class "description" ] [ text member.bio ]
             ]
         ]
 
 
 
--- HTTP REQUESTS
--- getCrewData : Cmd Msg
--- getCrewData =
---     Http.get
---         { url = "./data.json"
---         , expect = Http.expectJson GotData dataDecoder
---         }
 -- SUBSCRIPTIONS
 
 
@@ -114,5 +177,15 @@ subscriptions _ =
 
 
 
+-- HELPER FUNCTIONS
+
+
+toSlug : String -> String
+toSlug input =
+    input
+        |> String.toLower
+        |> String.replace " " "-"
+
+
+
 -- SET ACTIVE CLASS
--- DECODERS

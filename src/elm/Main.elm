@@ -2,10 +2,12 @@ module Main exposing (main)
 
 import Browser
 import Browser.Navigation as Nav
+import Decoders exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Attributes.Aria exposing (..)
 import Html.Events exposing (..)
+import Http
 import Pages.CrewPage as CrewPage
 import Pages.DestinationPage as Destination
 import Pages.HomePage as HomePage
@@ -49,6 +51,7 @@ type alias Model =
     , homePageModel : HomePage.Model
     , destinationPageModel : Destination.Model
     , crewPageModel : CrewPage.Model
+    , data : Data
     }
 
 
@@ -58,7 +61,7 @@ init _ url key =
         ( destModel, destCmds ) =
             Destination.init
 
-        ( crewModel, _ ) =
+        ( crewModel, crewCmds ) =
             CrewPage.init
     in
     ( { key = key
@@ -67,12 +70,17 @@ init _ url key =
       , homePageModel = HomePage.init
       , destinationPageModel = destModel
       , crewPageModel = crewModel
+      , data =
+            { destinations = []
+            , crew = []
+            }
       }
-    , Cmd.batch ([ Destination.getPlanetData, destCmds ] |> List.map (Cmd.map DestinationPageMsg))
+    , getData
     )
 
 
 
+-- Cmd.batch ([ Destination.getPlanetData, destCmds ] |> List.map (Cmd.map DestinationPageMsg))
 -- UPDATE
 
 
@@ -83,11 +91,20 @@ type Msg
     | CrewPageMsg CrewPage.Msg
     | UrlRequested Browser.UrlRequest
     | UrlChanged Url.Url
+    | GotData (Result Http.Error Data)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        GotData result ->
+            case result of
+                Ok data ->
+                    ( { model | data = data }, Cmd.none )
+
+                Err error ->
+                    ( model, Cmd.none )
+
         HeaderMsg headerMsg ->
             let
                 ( newHeaderModel, cmdHeader ) =
@@ -141,14 +158,13 @@ view model =
 viewPage : Model -> Html Msg
 viewPage model =
     if model.url.path == "/" then
-        -- Html.map HomePageMsg (HomePage.view model.homePageModel)
-        Html.map CrewPageMsg (CrewPage.view model.crewPageModel)
+        Html.map HomePageMsg (HomePage.view model.homePageModel)
 
     else if model.url.path == "/destination" then
-        Html.map DestinationPageMsg (Destination.view model.destinationPageModel)
+        Html.map DestinationPageMsg (Destination.view model.destinationPageModel model.data)
 
     else if model.url.path == "/crew" then
-        Html.map CrewPageMsg (CrewPage.view model.crewPageModel)
+        Html.map CrewPageMsg (CrewPage.view model.crewPageModel model.data)
 
     else if model.url.path == "/technology" then
         text "Technology Page"
@@ -198,4 +214,12 @@ viewRootDivClass model =
 
 
 
---* HELPER FUNCTIONS
+-- HTTP REQUEST
+
+
+getData : Cmd Msg
+getData =
+    Http.get
+        { url = "./data.json"
+        , expect = Http.expectJson GotData dataDecoder
+        }
