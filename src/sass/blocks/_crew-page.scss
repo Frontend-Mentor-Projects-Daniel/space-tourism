@@ -77,14 +77,10 @@
     display: flex;
     flex-direction: column;
 
-    // padding-inline: 24px;
-    // aspect-ratio: 1;
+    padding-inline: 24px;
 
-    img {
-      // margin-inline: auto;
-
-      // max-width: 100%;
-    }
+    // img {
+    // }
 
     &::after {
       content: '';

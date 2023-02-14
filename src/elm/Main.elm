@@ -158,7 +158,8 @@ view model =
 viewPage : Model -> Html Msg
 viewPage model =
     if model.url.path == "/" then
-        Html.map HomePageMsg (HomePage.view model.homePageModel)
+        -- Html.map HomePageMsg (HomePage.view model.homePageModel)
+        Html.map CrewPageMsg (CrewPage.view model.crewPageModel model.data)
 
     else if model.url.path == "/destination" then
         Html.map DestinationPageMsg (Destination.view model.destinationPageModel model.data)
