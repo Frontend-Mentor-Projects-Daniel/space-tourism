@@ -11,6 +11,7 @@ import Http
 import Pages.CrewPage as CrewPage
 import Pages.DestinationPage as Destination
 import Pages.HomePage as HomePage
+import Pages.TechnologyPage as TechPage
 import Partials.Header as Header
 import Url
 
@@ -37,6 +38,8 @@ subscriptions model =
         [ Sub.map HeaderMsg (Header.subscriptions model.headerModel)
         , Sub.map HomePageMsg (HomePage.subscriptions model.homePageModel)
         , Sub.map DestinationPageMsg (Destination.subscriptions model.destinationPageModel)
+        , Sub.map CrewPageMsg (CrewPage.subscriptions model.crewPageModel)
+        , Sub.map TechPageMsg (TechPage.subscriptions model.techPageModel)
         ]
 
 
@@ -51,6 +54,7 @@ type alias Model =
     , homePageModel : HomePage.Model
     , destinationPageModel : Destination.Model
     , crewPageModel : CrewPage.Model
+    , techPageModel : TechPage.Model
     , data : Data
     }
 
@@ -63,6 +67,9 @@ init _ url key =
 
         ( crewModel, crewCmds ) =
             CrewPage.init
+
+        ( techModel, techCmds ) =
+            TechPage.init
     in
     ( { key = key
       , url = url
@@ -70,6 +77,7 @@ init _ url key =
       , homePageModel = HomePage.init
       , destinationPageModel = destModel
       , crewPageModel = crewModel
+      , techPageModel = techModel
       , data =
             { destinations = []
             , crew = []
@@ -89,6 +97,7 @@ type Msg
     | HomePageMsg HomePage.Msg
     | DestinationPageMsg Destination.Msg
     | CrewPageMsg CrewPage.Msg
+    | TechPageMsg TechPage.Msg
     | UrlRequested Browser.UrlRequest
     | UrlChanged Url.Url
     | GotData (Result Http.Error Data)
@@ -129,6 +138,13 @@ update msg model =
             in
             ( { model | crewPageModel = newCrewPageModel }, Cmd.map CrewPageMsg cmdCrew )
 
+        TechPageMsg techPageMsg ->
+            let
+                ( newTechPageModel, cmdTech ) =
+                    TechPage.update techPageMsg model.techPageModel
+            in
+            ( { model | techPageModel = newTechPageModel }, Cmd.map TechPageMsg cmdTech )
+
         UrlRequested urlRequest ->
             case urlRequest of
                 Browser.Internal url ->
@@ -158,7 +174,8 @@ view model =
 viewPage : Model -> Html Msg
 viewPage model =
     if model.url.path == "/" then
-        Html.map HomePageMsg (HomePage.view model.homePageModel)
+        -- Html.map HomePageMsg (HomePage.view model.homePageModel)
+        Html.map TechPageMsg (TechPage.view model.techPageModel model.data)
 
     else if model.url.path == "/destination" then
         Html.map DestinationPageMsg (Destination.view model.destinationPageModel model.data)
@@ -167,7 +184,7 @@ viewPage model =
         Html.map CrewPageMsg (CrewPage.view model.crewPageModel model.data)
 
     else if model.url.path == "/technology" then
-        text "Technology Page"
+        Html.map TechPageMsg (TechPage.view model.techPageModel model.data)
 
     else
         text "Not Found Page"

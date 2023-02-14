@@ -11046,15 +11046,21 @@ var $author$project$Pages$DestinationPage$init = _Utils_Tuple2(
 	{currentPlanetString: 'Moon', errorMessages: $elm$core$Maybe$Nothing, isEuropa: false, isMars: false, isMoon: true, isTitan: false, planetData: _List_Nil},
 	$elm$core$Platform$Cmd$none);
 var $author$project$Pages$HomePage$init = {};
+var $author$project$Pages$TechnologyPage$init = _Utils_Tuple2(
+	{},
+	$elm$core$Platform$Cmd$none);
 var $author$project$Partials$Header$init = {imageSrc: './src/assets/shared/icon-hamburger.svg', isCrewPage: false, isDestinationPage: false, isHomePage: true, isTechnologyPage: false, menuIsExpanded: 'false'};
 var $author$project$Main$init = F3(
 	function (_v0, url, key) {
-		var _v1 = $author$project$Pages$DestinationPage$init;
-		var destModel = _v1.a;
-		var destCmds = _v1.b;
-		var _v2 = $author$project$Pages$CrewPage$init;
-		var crewModel = _v2.a;
-		var crewCmds = _v2.b;
+		var _v1 = $author$project$Pages$TechnologyPage$init;
+		var techModel = _v1.a;
+		var techCmds = _v1.b;
+		var _v2 = $author$project$Pages$DestinationPage$init;
+		var destModel = _v2.a;
+		var destCmds = _v2.b;
+		var _v3 = $author$project$Pages$CrewPage$init;
+		var crewModel = _v3.a;
+		var crewCmds = _v3.b;
 		return _Utils_Tuple2(
 			{
 				crewPageModel: crewModel,
@@ -11063,10 +11069,14 @@ var $author$project$Main$init = F3(
 				headerModel: $author$project$Partials$Header$init,
 				homePageModel: $author$project$Pages$HomePage$init,
 				key: key,
+				techPageModel: techModel,
 				url: url
 			},
 			$author$project$Main$getData);
 	});
+var $author$project$Main$CrewPageMsg = function (a) {
+	return {$: 'CrewPageMsg', a: a};
+};
 var $author$project$Main$DestinationPageMsg = function (a) {
 	return {$: 'DestinationPageMsg', a: a};
 };
@@ -11076,12 +11086,21 @@ var $author$project$Main$HeaderMsg = function (a) {
 var $author$project$Main$HomePageMsg = function (a) {
 	return {$: 'HomePageMsg', a: a};
 };
+var $author$project$Main$TechPageMsg = function (a) {
+	return {$: 'TechPageMsg', a: a};
+};
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
+var $author$project$Pages$CrewPage$subscriptions = function (_v0) {
+	return $elm$core$Platform$Sub$none;
+};
 var $author$project$Pages$DestinationPage$subscriptions = function (_v0) {
 	return $elm$core$Platform$Sub$none;
 };
 var $author$project$Pages$HomePage$subscriptions = function (_v0) {
+	return $elm$core$Platform$Sub$none;
+};
+var $author$project$Pages$TechnologyPage$subscriptions = function (_v0) {
 	return $elm$core$Platform$Sub$none;
 };
 var $author$project$Partials$Header$subscriptions = function (_v0) {
@@ -11102,11 +11121,16 @@ var $author$project$Main$subscriptions = function (model) {
 				A2(
 				$elm$core$Platform$Sub$map,
 				$author$project$Main$DestinationPageMsg,
-				$author$project$Pages$DestinationPage$subscriptions(model.destinationPageModel))
+				$author$project$Pages$DestinationPage$subscriptions(model.destinationPageModel)),
+				A2(
+				$elm$core$Platform$Sub$map,
+				$author$project$Main$CrewPageMsg,
+				$author$project$Pages$CrewPage$subscriptions(model.crewPageModel)),
+				A2(
+				$elm$core$Platform$Sub$map,
+				$author$project$Main$TechPageMsg,
+				$author$project$Pages$TechnologyPage$subscriptions(model.techPageModel))
 			]));
-};
-var $author$project$Main$CrewPageMsg = function (a) {
-	return {$: 'CrewPageMsg', a: a};
 };
 var $elm$browser$Browser$Navigation$load = _Browser_load;
 var $elm$browser$Browser$Navigation$pushUrl = _Browser_pushUrl;
@@ -11212,6 +11236,10 @@ var $author$project$Pages$DestinationPage$update = F2(
 					$elm$core$Platform$Cmd$none);
 		}
 	});
+var $author$project$Pages$TechnologyPage$update = F2(
+	function (msg, model) {
+		return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+	});
 var $author$project$Partials$Header$toggleImage = function (model) {
 	return (model.imageSrc === './src/assets/shared/icon-hamburger.svg') ? './src/assets/shared/icon-close.svg' : './src/assets/shared/icon-hamburger.svg';
 };
@@ -11304,6 +11332,16 @@ var $author$project$Main$update = F2(
 						model,
 						{crewPageModel: newCrewPageModel}),
 					A2($elm$core$Platform$Cmd$map, $author$project$Main$CrewPageMsg, cmdCrew));
+			case 'TechPageMsg':
+				var techPageMsg = msg.a;
+				var _v5 = A2($author$project$Pages$TechnologyPage$update, techPageMsg, model.techPageModel);
+				var newTechPageModel = _v5.a;
+				var cmdTech = _v5.b;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{techPageModel: newTechPageModel}),
+					A2($elm$core$Platform$Cmd$map, $author$project$Main$TechPageMsg, cmdTech));
 			case 'UrlRequested':
 				var urlRequest = msg.a;
 				if (urlRequest.$ === 'Internal') {
@@ -12191,83 +12229,62 @@ var $author$project$Pages$DestinationPage$view = F2(
 					A3($author$project$Pages$DestinationPage$renderPlanet, model, data.destinations, model.currentPlanetString)
 				]));
 	});
-var $author$project$Pages$HomePage$view = function (_v0) {
+var $author$project$Pages$TechnologyPage$viewTech = function (_v0) {
 	return A2(
-		$elm$html$Html$main_,
+		$elm$html$Html$div,
 		_List_fromArray(
 			[
-				$elm$html$Html$Attributes$class('main main--homepage')
+				$elm$html$Html$Attributes$class('technology-page')
 			]),
 		_List_fromArray(
 			[
-				A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('homepage')
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$elm$html$Html$div,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('text-content')
-							]),
-						_List_fromArray(
-							[
-								A2(
-								$elm$html$Html$h1,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$class('primary-heading')
-									]),
-								_List_fromArray(
-									[
-										A2(
-										$elm$html$Html$span,
-										_List_Nil,
-										_List_fromArray(
-											[
-												$elm$html$Html$text('so, you want to travel to')
-											])),
-										$elm$html$Html$text('space')
-									])),
-								A2(
-								$elm$html$Html$p,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$class('primary-text')
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text('Let\'s face it; if you want to go to space, you might as well genuinely go to outer space and not hover kind of on the edge of it. Well sit back, and relax because we’ll give you a truly out of this world experience!')
-									]))
-							])),
-						A2(
-						$elm$html$Html$button,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('homepage-button')
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('explore')
-							]))
-					]))
+				$elm$html$Html$text('Hello Technology Page')
 			]));
 };
+var $author$project$Pages$TechnologyPage$view = F2(
+	function (model, data) {
+		return A2(
+			$elm$html$Html$main_,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('main main--crew')
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$h1,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('secondary-heading')
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$span,
+							_List_Nil,
+							_List_fromArray(
+								[
+									$elm$html$Html$text('02')
+								])),
+							$elm$html$Html$text('meet your crew')
+						])),
+					$author$project$Pages$TechnologyPage$viewTech(model)
+				]));
+	});
 var $author$project$Main$viewPage = function (model) {
 	return (model.url.path === '/') ? A2(
 		$elm$html$Html$map,
-		$author$project$Main$HomePageMsg,
-		$author$project$Pages$HomePage$view(model.homePageModel)) : ((model.url.path === '/destination') ? A2(
+		$author$project$Main$TechPageMsg,
+		A2($author$project$Pages$TechnologyPage$view, model.techPageModel, model.data)) : ((model.url.path === '/destination') ? A2(
 		$elm$html$Html$map,
 		$author$project$Main$DestinationPageMsg,
 		A2($author$project$Pages$DestinationPage$view, model.destinationPageModel, model.data)) : ((model.url.path === '/crew') ? A2(
 		$elm$html$Html$map,
 		$author$project$Main$CrewPageMsg,
-		A2($author$project$Pages$CrewPage$view, model.crewPageModel, model.data)) : ((model.url.path === '/technology') ? $elm$html$Html$text('Technology Page') : $elm$html$Html$text('Not Found Page'))));
+		A2($author$project$Pages$CrewPage$view, model.crewPageModel, model.data)) : ((model.url.path === '/technology') ? A2(
+		$elm$html$Html$map,
+		$author$project$Main$TechPageMsg,
+		A2($author$project$Pages$TechnologyPage$view, model.techPageModel, model.data)) : $elm$html$Html$text('Not Found Page'))));
 };
 var $author$project$Main$viewRootDivClass = function (model) {
 	var rootClass = A2($elm$core$String$startsWith, '/destination', model.url.path) ? 'destination-bg' : (A2($elm$core$String$startsWith, '/crew', model.url.path) ? 'crew-bg' : (A2($elm$core$String$startsWith, '/technology', model.url.path) ? 'technology-bg' : (A2($elm$core$String$startsWith, '/', model.url.path) ? 'homepage-bg' : 'homepage-bg')));
@@ -12303,4 +12320,4 @@ var $author$project$Main$view = function (model) {
 var $author$project$Main$main = $elm$browser$Browser$application(
 	{init: $author$project$Main$init, onUrlChange: $author$project$Main$UrlChanged, onUrlRequest: $author$project$Main$UrlRequested, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
-	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Decoders.CrewMember":{"args":[],"type":"{ name : String.String, images : Decoders.Images, role : String.String, bio : String.String }"},"Decoders.Data":{"args":[],"type":"{ destinations : List.List Decoders.Planet, crew : List.List Decoders.CrewMember }"},"Decoders.Images":{"args":[],"type":"{ png : String.String, webp : String.String }"},"Decoders.Planet":{"args":[],"type":"{ name : String.String, images : Decoders.Images, description : String.String, distance : String.String, travel : String.String }"},"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"Main.Msg":{"args":[],"tags":{"HeaderMsg":["Partials.Header.Msg"],"HomePageMsg":["Pages.HomePage.Msg"],"DestinationPageMsg":["Pages.DestinationPage.Msg"],"CrewPageMsg":["Pages.CrewPage.Msg"],"UrlRequested":["Browser.UrlRequest"],"UrlChanged":["Url.Url"],"GotData":["Result.Result Http.Error Decoders.Data"]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String.String"],"Timeout":[],"NetworkError":[],"BadStatus":["Basics.Int"],"BadBody":["String.String"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"List.List":{"args":["a"],"tags":{}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Pages.CrewPage.Msg":{"args":[],"tags":{"GetDouglas":[],"GetMark":[],"GetVictor":[],"GetAnousheh":[]}},"Pages.DestinationPage.Msg":{"args":[],"tags":{"GetMoon":[],"GetMars":[],"GetEuropa":[],"GetTitan":[]}},"Pages.HomePage.Msg":{"args":[],"tags":{"NoOp":[]}},"Partials.Header.Msg":{"args":[],"tags":{"HamburgerMenuClicked":[],"HomePageClicked":[],"DestinationPageClicked":[],"CrewPageClicked":[],"TechnologyPageClicked":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));
+	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Decoders.CrewMember":{"args":[],"type":"{ name : String.String, images : Decoders.Images, role : String.String, bio : String.String }"},"Decoders.Data":{"args":[],"type":"{ destinations : List.List Decoders.Planet, crew : List.List Decoders.CrewMember }"},"Decoders.Images":{"args":[],"type":"{ png : String.String, webp : String.String }"},"Decoders.Planet":{"args":[],"type":"{ name : String.String, images : Decoders.Images, description : String.String, distance : String.String, travel : String.String }"},"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"Main.Msg":{"args":[],"tags":{"HeaderMsg":["Partials.Header.Msg"],"HomePageMsg":["Pages.HomePage.Msg"],"DestinationPageMsg":["Pages.DestinationPage.Msg"],"CrewPageMsg":["Pages.CrewPage.Msg"],"TechPageMsg":["Pages.TechnologyPage.Msg"],"UrlRequested":["Browser.UrlRequest"],"UrlChanged":["Url.Url"],"GotData":["Result.Result Http.Error Decoders.Data"]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String.String"],"Timeout":[],"NetworkError":[],"BadStatus":["Basics.Int"],"BadBody":["String.String"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"List.List":{"args":["a"],"tags":{}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Pages.CrewPage.Msg":{"args":[],"tags":{"GetDouglas":[],"GetMark":[],"GetVictor":[],"GetAnousheh":[]}},"Pages.DestinationPage.Msg":{"args":[],"tags":{"GetMoon":[],"GetMars":[],"GetEuropa":[],"GetTitan":[]}},"Pages.HomePage.Msg":{"args":[],"tags":{"NoOp":[]}},"Pages.TechnologyPage.Msg":{"args":[],"tags":{"GetDouglas":[]}},"Partials.Header.Msg":{"args":[],"tags":{"HamburgerMenuClicked":[],"HomePageClicked":[],"DestinationPageClicked":[],"CrewPageClicked":[],"TechnologyPageClicked":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));

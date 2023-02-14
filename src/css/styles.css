@@ -166,14 +166,14 @@ body {
 }
 
 #root.homepage-bg {
-  background: url("../assets/home/background-home-mobile.jpg");
+  background: url("../assets/technology/background-technology-mobile.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center bottom;
 }
 @media (min-width: 550px) {
   #root.homepage-bg {
-    background: url("../assets/home/background-home-tablet.jpg");
+    background: url("../assets/technology/background-technology-tablet.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center bottom;
@@ -181,7 +181,7 @@ body {
 }
 @media (min-width: 1100px) {
   #root.homepage-bg {
-    background: url("../assets/home/background-home-desktop.jpg");
+    background: url("../assets/technology/background-technology-desktop.jpg");
     background-repeat: no-repeat;
     background-size: cover;
   }
