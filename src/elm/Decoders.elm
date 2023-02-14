@@ -10,14 +10,16 @@ import Json.Decode as D
 type alias Data =
     { destinations : List Planet
     , crew : List CrewMember
+    , tech : List Tech
     }
 
 
 dataDecoder : D.Decoder Data
 dataDecoder =
-    D.map2 Data
+    D.map3 Data
         (D.field "destinations" <| D.list <| planetDecoder)
         (D.field "crew" <| D.list <| crewDecoder)
+        (D.field "technology" <| D.list <| technologyDecoder)
 
 
 
@@ -75,3 +77,35 @@ crewDecoder =
         (D.field "images" imagesDecoder)
         (D.field "role" D.string)
         (D.field "bio" D.string)
+
+
+
+-- TECHNOLOGY DECODERS
+
+
+type alias TechImages =
+    { portrait : String
+    , landscape : String
+    }
+
+
+type alias Tech =
+    { name : String
+    , images : TechImages
+    , description : String
+    }
+
+
+techImagesDecoder : D.Decoder TechImages
+techImagesDecoder =
+    D.map2 TechImages
+        (D.field "portrait" D.string)
+        (D.field "landscape" D.string)
+
+
+technologyDecoder : D.Decoder Tech
+technologyDecoder =
+    D.map3 Tech
+        (D.field "name" D.string)
+        (D.field "images" techImagesDecoder)
+        (D.field "description" D.string)

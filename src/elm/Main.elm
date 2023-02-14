@@ -81,6 +81,7 @@ init _ url key =
       , data =
             { destinations = []
             , crew = []
+            , tech = []
             }
       }
     , getData

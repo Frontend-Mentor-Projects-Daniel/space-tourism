@@ -10738,9 +10738,9 @@ var $elm$browser$Browser$application = _Browser_application;
 var $author$project$Main$GotData = function (a) {
 	return {$: 'GotData', a: a};
 };
-var $author$project$Decoders$Data = F2(
-	function (destinations, crew) {
-		return {crew: crew, destinations: destinations};
+var $author$project$Decoders$Data = F3(
+	function (destinations, crew, tech) {
+		return {crew: crew, destinations: destinations, tech: tech};
 	});
 var $author$project$Decoders$CrewMember = F4(
 	function (name, images, role, bio) {
@@ -10775,8 +10775,27 @@ var $author$project$Decoders$planetDecoder = A6(
 	A2($elm$json$Json$Decode$field, 'description', $elm$json$Json$Decode$string),
 	A2($elm$json$Json$Decode$field, 'distance', $elm$json$Json$Decode$string),
 	A2($elm$json$Json$Decode$field, 'travel', $elm$json$Json$Decode$string));
-var $author$project$Decoders$dataDecoder = A3(
+var $author$project$Decoders$Tech = F3(
+	function (name, images, description) {
+		return {description: description, images: images, name: name};
+	});
+var $author$project$Decoders$TechImages = F2(
+	function (portrait, landscape) {
+		return {landscape: landscape, portrait: portrait};
+	});
+var $author$project$Decoders$techImagesDecoder = A3(
 	$elm$json$Json$Decode$map2,
+	$author$project$Decoders$TechImages,
+	A2($elm$json$Json$Decode$field, 'portrait', $elm$json$Json$Decode$string),
+	A2($elm$json$Json$Decode$field, 'landscape', $elm$json$Json$Decode$string));
+var $author$project$Decoders$technologyDecoder = A4(
+	$elm$json$Json$Decode$map3,
+	$author$project$Decoders$Tech,
+	A2($elm$json$Json$Decode$field, 'name', $elm$json$Json$Decode$string),
+	A2($elm$json$Json$Decode$field, 'images', $author$project$Decoders$techImagesDecoder),
+	A2($elm$json$Json$Decode$field, 'description', $elm$json$Json$Decode$string));
+var $author$project$Decoders$dataDecoder = A4(
+	$elm$json$Json$Decode$map3,
 	$author$project$Decoders$Data,
 	A2(
 		$elm$json$Json$Decode$field,
@@ -10785,7 +10804,11 @@ var $author$project$Decoders$dataDecoder = A3(
 	A2(
 		$elm$json$Json$Decode$field,
 		'crew',
-		$elm$json$Json$Decode$list($author$project$Decoders$crewDecoder)));
+		$elm$json$Json$Decode$list($author$project$Decoders$crewDecoder)),
+	A2(
+		$elm$json$Json$Decode$field,
+		'technology',
+		$elm$json$Json$Decode$list($author$project$Decoders$technologyDecoder)));
 var $elm$http$Http$BadStatus_ = F2(
 	function (a, b) {
 		return {$: 'BadStatus_', a: a, b: b};
@@ -11064,7 +11087,7 @@ var $author$project$Main$init = F3(
 		return _Utils_Tuple2(
 			{
 				crewPageModel: crewModel,
-				data: {crew: _List_Nil, destinations: _List_Nil},
+				data: {crew: _List_Nil, destinations: _List_Nil, tech: _List_Nil},
 				destinationPageModel: destModel,
 				headerModel: $author$project$Partials$Header$init,
 				homePageModel: $author$project$Pages$HomePage$init,
@@ -12320,4 +12343,4 @@ var $author$project$Main$view = function (model) {
 var $author$project$Main$main = $elm$browser$Browser$application(
 	{init: $author$project$Main$init, onUrlChange: $author$project$Main$UrlChanged, onUrlRequest: $author$project$Main$UrlRequested, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
-	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Decoders.CrewMember":{"args":[],"type":"{ name : String.String, images : Decoders.Images, role : String.String, bio : String.String }"},"Decoders.Data":{"args":[],"type":"{ destinations : List.List Decoders.Planet, crew : List.List Decoders.CrewMember }"},"Decoders.Images":{"args":[],"type":"{ png : String.String, webp : String.String }"},"Decoders.Planet":{"args":[],"type":"{ name : String.String, images : Decoders.Images, description : String.String, distance : String.String, travel : String.String }"},"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"Main.Msg":{"args":[],"tags":{"HeaderMsg":["Partials.Header.Msg"],"HomePageMsg":["Pages.HomePage.Msg"],"DestinationPageMsg":["Pages.DestinationPage.Msg"],"CrewPageMsg":["Pages.CrewPage.Msg"],"TechPageMsg":["Pages.TechnologyPage.Msg"],"UrlRequested":["Browser.UrlRequest"],"UrlChanged":["Url.Url"],"GotData":["Result.Result Http.Error Decoders.Data"]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String.String"],"Timeout":[],"NetworkError":[],"BadStatus":["Basics.Int"],"BadBody":["String.String"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"List.List":{"args":["a"],"tags":{}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Pages.CrewPage.Msg":{"args":[],"tags":{"GetDouglas":[],"GetMark":[],"GetVictor":[],"GetAnousheh":[]}},"Pages.DestinationPage.Msg":{"args":[],"tags":{"GetMoon":[],"GetMars":[],"GetEuropa":[],"GetTitan":[]}},"Pages.HomePage.Msg":{"args":[],"tags":{"NoOp":[]}},"Pages.TechnologyPage.Msg":{"args":[],"tags":{"GetDouglas":[]}},"Partials.Header.Msg":{"args":[],"tags":{"HamburgerMenuClicked":[],"HomePageClicked":[],"DestinationPageClicked":[],"CrewPageClicked":[],"TechnologyPageClicked":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));
+	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Decoders.CrewMember":{"args":[],"type":"{ name : String.String, images : Decoders.Images, role : String.String, bio : String.String }"},"Decoders.Data":{"args":[],"type":"{ destinations : List.List Decoders.Planet, crew : List.List Decoders.CrewMember, tech : List.List Decoders.Tech }"},"Decoders.Images":{"args":[],"type":"{ png : String.String, webp : String.String }"},"Decoders.Planet":{"args":[],"type":"{ name : String.String, images : Decoders.Images, description : String.String, distance : String.String, travel : String.String }"},"Decoders.Tech":{"args":[],"type":"{ name : String.String, images : Decoders.TechImages, description : String.String }"},"Decoders.TechImages":{"args":[],"type":"{ portrait : String.String, landscape : String.String }"},"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"Main.Msg":{"args":[],"tags":{"HeaderMsg":["Partials.Header.Msg"],"HomePageMsg":["Pages.HomePage.Msg"],"DestinationPageMsg":["Pages.DestinationPage.Msg"],"CrewPageMsg":["Pages.CrewPage.Msg"],"TechPageMsg":["Pages.TechnologyPage.Msg"],"UrlRequested":["Browser.UrlRequest"],"UrlChanged":["Url.Url"],"GotData":["Result.Result Http.Error Decoders.Data"]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String.String"],"Timeout":[],"NetworkError":[],"BadStatus":["Basics.Int"],"BadBody":["String.String"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"List.List":{"args":["a"],"tags":{}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Pages.CrewPage.Msg":{"args":[],"tags":{"GetDouglas":[],"GetMark":[],"GetVictor":[],"GetAnousheh":[]}},"Pages.DestinationPage.Msg":{"args":[],"tags":{"GetMoon":[],"GetMars":[],"GetEuropa":[],"GetTitan":[]}},"Pages.HomePage.Msg":{"args":[],"tags":{"NoOp":[]}},"Pages.TechnologyPage.Msg":{"args":[],"tags":{"GetDouglas":[]}},"Partials.Header.Msg":{"args":[],"tags":{"HamburgerMenuClicked":[],"HomePageClicked":[],"DestinationPageClicked":[],"CrewPageClicked":[],"TechnologyPageClicked":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));
