@@ -166,14 +166,14 @@ body {
 }
 
 #root.homepage-bg {
-  background: url("../assets/crew/background-crew-mobile.jpg");
+  background: url("../assets/home/background-home-mobile.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center bottom;
 }
 @media (min-width: 550px) {
   #root.homepage-bg {
-    background: url("../assets/crew/background-crew-tablet.jpg");
+    background: url("../assets/home/background-home-tablet.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center bottom;
@@ -181,7 +181,29 @@ body {
 }
 @media (min-width: 1100px) {
   #root.homepage-bg {
-    background: url("../assets/crew/background-crew-desktop.jpg");
+    background: url("../assets/home/background-home-desktop.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
+
+#root.destination-bg {
+  background: url("../assets/destination/background-destination-mobile.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center bottom;
+}
+@media (min-width: 550px) {
+  #root.destination-bg {
+    background: url("../assets/destination/background-destination-tablet.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center bottom;
+  }
+}
+@media (min-width: 1100px) {
+  #root.destination-bg {
+    background: url("../assets/destination/background-destination-desktop.jpg");
     background-repeat: no-repeat;
     background-size: cover;
   }

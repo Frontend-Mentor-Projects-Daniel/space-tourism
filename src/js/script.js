@@ -12191,11 +12191,77 @@ var $author$project$Pages$DestinationPage$view = F2(
 					A3($author$project$Pages$DestinationPage$renderPlanet, model, data.destinations, model.currentPlanetString)
 				]));
 	});
+var $author$project$Pages$HomePage$view = function (_v0) {
+	return A2(
+		$elm$html$Html$main_,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('main main--homepage')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('homepage')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('text-content')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$h1,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('primary-heading')
+									]),
+								_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$span,
+										_List_Nil,
+										_List_fromArray(
+											[
+												$elm$html$Html$text('so, you want to travel to')
+											])),
+										$elm$html$Html$text('space')
+									])),
+								A2(
+								$elm$html$Html$p,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('primary-text')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Let\'s face it; if you want to go to space, you might as well genuinely go to outer space and not hover kind of on the edge of it. Well sit back, and relax because we’ll give you a truly out of this world experience!')
+									]))
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('homepage-button')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('explore')
+							]))
+					]))
+			]));
+};
 var $author$project$Main$viewPage = function (model) {
 	return (model.url.path === '/') ? A2(
 		$elm$html$Html$map,
-		$author$project$Main$CrewPageMsg,
-		A2($author$project$Pages$CrewPage$view, model.crewPageModel, model.data)) : ((model.url.path === '/destination') ? A2(
+		$author$project$Main$HomePageMsg,
+		$author$project$Pages$HomePage$view(model.homePageModel)) : ((model.url.path === '/destination') ? A2(
 		$elm$html$Html$map,
 		$author$project$Main$DestinationPageMsg,
 		A2($author$project$Pages$DestinationPage$view, model.destinationPageModel, model.data)) : ((model.url.path === '/crew') ? A2(
