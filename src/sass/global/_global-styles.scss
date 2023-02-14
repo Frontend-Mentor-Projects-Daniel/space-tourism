@@ -125,33 +125,33 @@ body {
   }
 }
 
-// #root.homepage-bg {
-//   @include body-bg(home);
-// }
-
 #root.homepage-bg {
-  background: url('../assets/crew/background-crew-mobile.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center bottom;
-
-  @include tablets {
-    & {
-      background: url('../assets/crew/background-crew-tablet.jpg');
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center bottom;
-    }
-  }
-
-  @include laptops {
-    & {
-      background: url('../assets/crew/background-crew-desktop.jpg');
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
-  }
+  @include body-bg(home);
 }
+
+// #root.homepage-bg {
+//   background: url('../assets/crew/background-crew-mobile.jpg');
+//   background-repeat: no-repeat;
+//   background-size: cover;
+//   background-position: center bottom;
+
+//   @include tablets {
+//     & {
+//       background: url('../assets/crew/background-crew-tablet.jpg');
+//       background-repeat: no-repeat;
+//       background-size: cover;
+//       background-position: center bottom;
+//     }
+//   }
+
+//   @include laptops {
+//     & {
+//       background: url('../assets/crew/background-crew-desktop.jpg');
+//       background-repeat: no-repeat;
+//       background-size: cover;
+//     }
+//   }
+// }
 
 #root.destination-bg {
   @include body-bg(destination);
