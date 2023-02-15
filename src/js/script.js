@@ -11750,7 +11750,7 @@ var $author$project$Pages$CrewPage$viewCrewMember = F2(
 							_List_Nil)
 						])),
 					A2(
-					$elm$html$Html$div,
+					$elm$html$Html$ul,
 					_List_fromArray(
 						[
 							$elm$html$Html$Attributes$class('crew-member-list')
@@ -12252,6 +12252,8 @@ var $author$project$Pages$DestinationPage$view = F2(
 					A3($author$project$Pages$DestinationPage$renderPlanet, model, data.destinations, model.currentPlanetString)
 				]));
 	});
+var $elm$html$Html$Attributes$media = _VirtualDom_attribute('media');
+var $elm$html$Html$source = _VirtualDom_node('source');
 var $author$project$Pages$TechnologyPage$viewTech = function (_v0) {
 	return A2(
 		$elm$html$Html$div,
@@ -12261,7 +12263,157 @@ var $author$project$Pages$TechnologyPage$viewTech = function (_v0) {
 			]),
 		_List_fromArray(
 			[
-				$elm$html$Html$text('Hello Technology Page')
+				A2(
+				$elm$html$Html$h1,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('secondary-heading-alternative')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$span,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('03')
+							])),
+						$elm$html$Html$text('space launch 101')
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('tech-image')
+					]),
+				_List_fromArray(
+					[
+						A3(
+						$elm$html$Html$node,
+						'picture',
+						_List_Nil,
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$source,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$media('')
+									]),
+								_List_Nil),
+								A2(
+								$elm$html$Html$source,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$media('')
+									]),
+								_List_Nil),
+								A2(
+								$elm$html$Html$img,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$src('./src/assets/technology/image-launch-vehicle-landscape.jpg'),
+										$elm$html$Html$Attributes$alt('space ship launch')
+									]),
+								_List_Nil)
+							]))
+					])),
+				A2(
+				$elm$html$Html$ul,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('tech-list')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$li,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('tech')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$button,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text('1')
+									]))
+							])),
+						A2(
+						$elm$html$Html$li,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('tech')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$button,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text('2')
+									]))
+							])),
+						A2(
+						$elm$html$Html$li,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('tech')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$button,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text('3')
+									]))
+							]))
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('tech-info')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$h2,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('title')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('THE TERMINOLOGY…')
+							])),
+						A2(
+						$elm$html$Html$p,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('name')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('LAUNCH VEHICLE')
+							])),
+						A2(
+						$elm$html$Html$p,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('description')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('A launch vehicle or carrier rocket is a rocket-propelled vehicle used to carry a payload from Earth\'s surface to space, usually to Earth orbit or beyond. Our WEB-X carrier rocket is the most powerful in operation. Standing 150 metres tall, it\'s quite an awe-inspiring sight on the launch pad!')
+							]))
+					]))
 			]));
 };
 var $author$project$Pages$TechnologyPage$view = F2(
@@ -12270,27 +12422,10 @@ var $author$project$Pages$TechnologyPage$view = F2(
 			$elm$html$Html$main_,
 			_List_fromArray(
 				[
-					$elm$html$Html$Attributes$class('main main--crew')
+					$elm$html$Html$Attributes$class('main main--technology')
 				]),
 			_List_fromArray(
 				[
-					A2(
-					$elm$html$Html$h1,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$class('secondary-heading')
-						]),
-					_List_fromArray(
-						[
-							A2(
-							$elm$html$Html$span,
-							_List_Nil,
-							_List_fromArray(
-								[
-									$elm$html$Html$text('02')
-								])),
-							$elm$html$Html$text('meet your crew')
-						])),
 					$author$project$Pages$TechnologyPage$viewTech(model)
 				]));
 	});

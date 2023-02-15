@@ -1,0 +1,12 @@
+@use '../mixins/breakpoints' as *;
+@use '../mixins/_secondary-heading.scss' as *;
+
+.technology-page {
+  .secondary-heading-alternative {
+    @include secondary-heading;
+
+    span {
+      @include secondary-heading-span;
+    }
+  }
+}

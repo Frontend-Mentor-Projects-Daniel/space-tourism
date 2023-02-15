@@ -55,9 +55,8 @@ update msg model =
 
 view : Model -> Data -> Html Msg
 view model data =
-    main_ [ class "main main--crew" ]
-        [ h1 [ class "secondary-heading" ] [ span [] [ text "02" ], text "meet your crew" ]
-        , viewTech model
+    main_ [ class "main main--technology" ]
+        [ viewTech model
 
         -- , renderCrewMember model data.crew model.currentCrewMember
         ]
@@ -117,7 +116,32 @@ loadingCrewMember =
 viewTech : Model -> Html Msg
 viewTech _ =
     div [ class "technology-page" ]
-        [ text "Hello Technology Page"
+        -- Would like to try putting everything into a grid so the markup is a bit different, thus the -alternative else the secondary-heading rule I've created would apply to this
+        [ h1 [ class "secondary-heading-alternative" ] [ span [] [ text "03" ], text "space launch 101" ]
+        , div [ class "tech-image" ]
+            [ Html.node "picture"
+                []
+                [ source [ media "" ] []
+                , source [ media "" ] []
+                , img [ src "./src/assets/technology/image-launch-vehicle-landscape.jpg", alt "space ship launch" ] []
+                ]
+            ]
+        , ul [ class "tech-list" ]
+            [ li [ class "tech" ]
+                [ button [] [ text "1" ]
+                ]
+            , li [ class "tech" ]
+                [ button [] [ text "2" ]
+                ]
+            , li [ class "tech" ]
+                [ button [] [ text "3" ]
+                ]
+            ]
+        , div [ class "tech-info" ]
+            [ h2 [ class "title" ] [ text "THE TERMINOLOGY…" ]
+            , p [ class "name" ] [ text "LAUNCH VEHICLE" ]
+            , p [ class "description" ] [ text "A launch vehicle or carrier rocket is a rocket-propelled vehicle used to carry a payload from Earth's surface to space, usually to Earth orbit or beyond. Our WEB-X carrier rocket is the most powerful in operation. Standing 150 metres tall, it's quite an awe-inspiring sight on the launch pad!" ]
+            ]
         ]
 
 

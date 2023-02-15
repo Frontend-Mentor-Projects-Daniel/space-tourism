@@ -133,7 +133,7 @@ viewCrewMember model member =
         [ div [ class "crew-image" ]
             [ img [ src ("./src/assets/crew" ++ "/image-" ++ toSlug member.name ++ ".png"), alt "crew member", width 597, height 645 ] []
             ]
-        , div [ class "crew-member-list" ]
+        , ul [ class "crew-member-list" ]
             [ li [ class "crew-member", class (isDouglas model) ]
                 [ button [ class "dot", onClick GetDouglas ]
                     [ span [ class "sr-only" ] [ text member.role ]

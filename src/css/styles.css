@@ -917,4 +917,23 @@ body {
   }
 }
 
+.technology-page .secondary-heading-alternative {
+  display: flex;
+  gap: 14px;
+  color: var(--clr-destination-header-text);
+  font-family: var(--ff-barlow-condensed);
+  font-size: var(--fs-step-1);
+  letter-spacing: var(--ls-27);
+  text-transform: uppercase;
+}
+@media (min-width: 550px) {
+  .technology-page .secondary-heading-alternative {
+    gap: 20px;
+  }
+}
+.technology-page .secondary-heading-alternative span {
+  color: var(--clr-destination-header-span-text);
+  font-weight: var(--fw-bold);
+}
+
 /*# sourceMappingURL=styles.css.map */
