@@ -44,6 +44,16 @@
   --clr-crew-title-text: hsl(var(--clr-white) / 0.5);
   --clr-crew-name-text: hsl(var(--clr-white));
 
+  // technology page
+  --clr-tech-tabs-text: hsl(var(--clr-white));
+  --clr-tech-tabs-text-active: hsl(var(--clr-space-black));
+  --clr-tech-tabs-border: hsl(var(--clr-white) / 0.25);
+  --clr-tech-tabs-border-hover: hsl(var(--clr-white));
+  --clr-tech-tabs-bg-active: hsl(var(--clr-white));
+
+  --clr-tech-title-text: hsl(var(--clr-fog));
+  --clr-tech-name-text: hsl(var(--clr-white));
+
   // FONT SIZES
 
   --fs-step--1: clamp(0.88rem, calc(0.83rem + 0.19vw), 1rem);

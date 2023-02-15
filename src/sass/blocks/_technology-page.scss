@@ -2,11 +2,78 @@
 @use '../mixins/_secondary-heading.scss' as *;
 
 .technology-page {
+  row-gap: 32px;
+  justify-items: center;
+
   .secondary-heading-alternative {
     @include secondary-heading;
 
     span {
       @include secondary-heading-span;
     }
+  }
+
+  .tech-image {
+  }
+
+  .tech-image img {
+    width: 100%;
+  }
+
+  .tech-list {
+    list-style: none;
+  }
+
+  .tech-list-item {
+  }
+
+  .tech-list-item button {
+    aspect-ratio: 1;
+    background-color: transparent;
+    border: 1px solid var(--clr-tech-tabs-border);
+    border-radius: 50%;
+    cursor: pointer;
+    color: var(--clr-tech-tabs-text);
+    width: 40px;
+
+    transition: all 300ms ease;
+
+    @include tablets() {
+      width: 60px;
+    }
+
+    @include laptops() {
+      width: 80px;
+    }
+  }
+
+  .tech-list-item button:hover {
+    border-color: var(--clr-tech-tabs-border-hover);
+  }
+
+  .tech-list-item button.active {
+    background-color: var(--clr-tech-tabs-bg-active);
+    color: var(--clr-tech-tabs-text-active);
+  }
+
+  .tech-info {
+  }
+
+  .title {
+    color: var(--clr-tech-title-text);
+    font-size: var(--fs-step--1);
+    letter-spacing: 2.36px;
+
+    @include tablets() {
+      letter-spacing: 2.7px;
+    }
+  }
+
+  .name {
+    color: var(--clr-tech-name-text);
+    font-size: var(--fs-step-4);
+  }
+
+  .description {
   }
 }

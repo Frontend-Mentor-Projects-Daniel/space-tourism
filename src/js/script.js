@@ -12301,7 +12301,7 @@ var $author$project$Pages$TechnologyPage$viewTech = function (_v0) {
 		$elm$html$Html$div,
 		_List_fromArray(
 			[
-				$elm$html$Html$Attributes$class('technology-page')
+				$elm$html$Html$Attributes$class('technology-page wrapper')
 			]),
 		_List_fromArray(
 			[
@@ -12326,7 +12326,7 @@ var $author$project$Pages$TechnologyPage$viewTech = function (_v0) {
 				$elm$html$Html$div,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$class('tech-image')
+						$elm$html$Html$Attributes$class('tech-image full-bleed')
 					]),
 				_List_fromArray(
 					[
@@ -12369,7 +12369,7 @@ var $author$project$Pages$TechnologyPage$viewTech = function (_v0) {
 						$elm$html$Html$li,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$class('tech')
+								$elm$html$Html$Attributes$class('tech-list-item')
 							]),
 						_List_fromArray(
 							[
@@ -12385,7 +12385,7 @@ var $author$project$Pages$TechnologyPage$viewTech = function (_v0) {
 						$elm$html$Html$li,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$class('tech')
+								$elm$html$Html$Attributes$class('tech-list-item')
 							]),
 						_List_fromArray(
 							[
@@ -12401,7 +12401,7 @@ var $author$project$Pages$TechnologyPage$viewTech = function (_v0) {
 						$elm$html$Html$li,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$class('tech')
+								$elm$html$Html$Attributes$class('tech-list-item')
 							]),
 						_List_fromArray(
 							[

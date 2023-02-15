@@ -117,10 +117,10 @@ loadingCrewMember =
 
 viewTech : Model -> Html Msg
 viewTech _ =
-    div [ class "technology-page" ]
+    div [ class "technology-page wrapper" ]
         -- Would like to try putting everything into a grid so the markup is a bit different, thus the -alternative else the secondary-heading rule I've created would apply to this
         [ h1 [ class "secondary-heading-alternative" ] [ span [] [ text "03" ], text "space launch 101" ]
-        , div [ class "tech-image" ]
+        , div [ class "tech-image full-bleed" ]
             [ Html.node "picture"
                 []
                 [ source [ media "(min-width: 1100px)", toAttribute (srcset [ "./src/assets/technology/image-launch-vehicle-portrait.jpg" ]) ] []
@@ -128,13 +128,13 @@ viewTech _ =
                 ]
             ]
         , ul [ class "tech-list" ]
-            [ li [ class "tech" ]
+            [ li [ class "tech-list-item" ]
                 [ button [] [ text "1" ]
                 ]
-            , li [ class "tech" ]
+            , li [ class "tech-list-item" ]
                 [ button [] [ text "2" ]
                 ]
-            , li [ class "tech" ]
+            , li [ class "tech-list-item" ]
                 [ button [] [ text "3" ]
                 ]
             ]
