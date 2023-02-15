@@ -12254,6 +12254,48 @@ var $author$project$Pages$DestinationPage$view = F2(
 	});
 var $elm$html$Html$Attributes$media = _VirtualDom_attribute('media');
 var $elm$html$Html$source = _VirtualDom_node('source');
+var $austinshenk$elm_w3$W3$Html$Help$Property = F2(
+	function (a, b) {
+		return {$: 'Property', a: a, b: b};
+	});
+var $austinshenk$elm_w3$W3$Html$Help$property = $austinshenk$elm_w3$W3$Html$Help$Property;
+var $austinshenk$elm_w3$W3$Html$Help$stringProperty = function (name) {
+	return A2(
+		$elm$core$Basics$composeL,
+		$austinshenk$elm_w3$W3$Html$Help$property(name),
+		$elm$json$Json$Encode$string);
+};
+var $austinshenk$elm_w3$W3$Html$Attributes$srcset = A2(
+	$elm$core$Basics$composeL,
+	$austinshenk$elm_w3$W3$Html$Help$stringProperty('srcset'),
+	$elm$core$String$join(' '));
+var $elm$virtual_dom$VirtualDom$property = F2(
+	function (key, value) {
+		return A2(
+			_VirtualDom_property,
+			_VirtualDom_noInnerHtmlOrFormAction(key),
+			_VirtualDom_noJavaScriptOrHtmlJson(value));
+	});
+var $austinshenk$elm_w3$W3$Html$toAttribute = function (attribute) {
+	switch (attribute.$) {
+		case 'Attribute':
+			var name = attribute.a;
+			var value = attribute.b;
+			return A2($elm$virtual_dom$VirtualDom$attribute, name, value);
+		case 'Property':
+			var name = attribute.a;
+			var value = attribute.b;
+			return A2($elm$virtual_dom$VirtualDom$property, name, value);
+		case 'Event':
+			var event = attribute.a;
+			var handler = attribute.b;
+			return A2($elm$virtual_dom$VirtualDom$on, event, handler);
+		default:
+			var name = attribute.a;
+			var value = attribute.b;
+			return A2($elm$virtual_dom$VirtualDom$style, name, value);
+	}
+};
 var $author$project$Pages$TechnologyPage$viewTech = function (_v0) {
 	return A2(
 		$elm$html$Html$div,
@@ -12298,14 +12340,11 @@ var $author$project$Pages$TechnologyPage$viewTech = function (_v0) {
 								$elm$html$Html$source,
 								_List_fromArray(
 									[
-										$elm$html$Html$Attributes$media('')
-									]),
-								_List_Nil),
-								A2(
-								$elm$html$Html$source,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$media('')
+										$elm$html$Html$Attributes$media('(min-width: 1100px)'),
+										$austinshenk$elm_w3$W3$Html$toAttribute(
+										$austinshenk$elm_w3$W3$Html$Attributes$srcset(
+											_List_fromArray(
+												['./src/assets/technology/image-launch-vehicle-portrait.jpg'])))
 									]),
 								_List_Nil),
 								A2(

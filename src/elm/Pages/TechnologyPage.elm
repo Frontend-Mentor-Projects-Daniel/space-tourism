@@ -6,6 +6,8 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Attributes.Aria exposing (..)
 import Html.Events exposing (..)
+import W3.Html exposing (toAttribute)
+import W3.Html.Attributes exposing (srcset)
 
 
 
@@ -121,8 +123,7 @@ viewTech _ =
         , div [ class "tech-image" ]
             [ Html.node "picture"
                 []
-                [ source [ media "" ] []
-                , source [ media "" ] []
+                [ source [ media "(min-width: 1100px)", toAttribute (srcset [ "./src/assets/technology/image-launch-vehicle-portrait.jpg" ]) ] []
                 , img [ src "./src/assets/technology/image-launch-vehicle-landscape.jpg", alt "space ship launch" ] []
                 ]
             ]
