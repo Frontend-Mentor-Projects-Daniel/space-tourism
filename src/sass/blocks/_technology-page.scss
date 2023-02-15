@@ -5,6 +5,57 @@
   row-gap: 32px;
   justify-items: center;
 
+  @include tablets() {
+    row-gap: 44px;
+  }
+
+  @include laptops() {
+    // undo wrapper styles
+    &.wrapper {
+      .wrapper > * {
+        grid-column: auto;
+      }
+      .full-bleed {
+        width: auto;
+        grid-column: auto;
+      }
+    }
+
+    // change layout
+    grid-template-columns: max-content 1fr 1fr;
+    grid-template-rows: max-content 1fr;
+    justify-items: start;
+    align-items: center;
+    column-gap: 80px;
+
+    // header
+    & > h1:first-child {
+      grid-column: 1/2;
+      grid-row: 1/2;
+
+      transform: translateX(73%);
+    }
+
+    // image
+    & > div:nth-child(2) {
+      grid-column: 3/4;
+      grid-row: 2/3;
+    }
+
+    // tabs
+    & > ul:nth-child(3) {
+      grid-column: 1/2;
+      grid-row: 2/3;
+      justify-self: end;
+    }
+
+    // text-info
+    & > div:last-child {
+      grid-column: 2/3;
+      grid-row: 2/3;
+    }
+  }
+
   .secondary-heading-alternative {
     @include secondary-heading;
 
@@ -13,15 +64,19 @@
     }
   }
 
-  .tech-image {
-  }
-
   .tech-image img {
     width: 100%;
   }
 
   .tech-list {
+    display: flex;
+    gap: 16px;
+
     list-style: none;
+
+    @include laptops() {
+      flex-direction: column;
+    }
   }
 
   .tech-list-item {
@@ -57,6 +112,15 @@
   }
 
   .tech-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding-inline: 24px;
+
+    @include laptops() {
+      align-items: start;
+    }
   }
 
   .title {
@@ -75,5 +139,18 @@
   }
 
   .description {
+    line-height: 25px;
+    margin-block-start: 16px;
+    max-width: 34ch;
+    text-align: center;
+
+    @include tablets() {
+      max-width: 49ch;
+    }
+
+    @include laptops() {
+      text-align: start;
+      max-width: 43ch;
+    }
   }
 }

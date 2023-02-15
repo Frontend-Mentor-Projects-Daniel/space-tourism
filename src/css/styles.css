@@ -388,7 +388,6 @@ body {
   padding-inline: 24px;
   position: relative;
   width: 100%;
-  max-width: 1385px;
 }
 .header .logo {
   flex-shrink: 0;
@@ -524,6 +523,7 @@ body {
 }
 
 .main {
+  max-width: 1500px;
   overflow: hidden;
   position: relative;
   z-index: -10;
@@ -942,6 +942,45 @@ body {
   row-gap: 32px;
   justify-items: center;
 }
+@media (min-width: 550px) {
+  .technology-page {
+    row-gap: 44px;
+  }
+}
+@media (min-width: 1100px) {
+  .technology-page {
+    grid-template-columns: max-content 1fr 1fr;
+    grid-template-rows: max-content 1fr;
+    justify-items: start;
+    align-items: center;
+    column-gap: 80px;
+  }
+  .technology-page.wrapper .wrapper > * {
+    grid-column: auto;
+  }
+  .technology-page.wrapper .full-bleed {
+    width: auto;
+    grid-column: auto;
+  }
+  .technology-page > h1:first-child {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    transform: translateX(73%);
+  }
+  .technology-page > div:nth-child(2) {
+    grid-column: 3/4;
+    grid-row: 2/3;
+  }
+  .technology-page > ul:nth-child(3) {
+    grid-column: 1/2;
+    grid-row: 2/3;
+    justify-self: end;
+  }
+  .technology-page > div:last-child {
+    grid-column: 2/3;
+    grid-row: 2/3;
+  }
+}
 .technology-page .secondary-heading-alternative {
   display: flex;
   gap: 14px;
@@ -964,7 +1003,14 @@ body {
   width: 100%;
 }
 .technology-page .tech-list {
+  display: flex;
+  gap: 16px;
   list-style: none;
+}
+@media (min-width: 1100px) {
+  .technology-page .tech-list {
+    flex-direction: column;
+  }
 }
 .technology-page .tech-list-item button {
   aspect-ratio: 1;
@@ -993,6 +1039,17 @@ body {
   background-color: var(--clr-tech-tabs-bg-active);
   color: var(--clr-tech-tabs-text-active);
 }
+.technology-page .tech-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-inline: 24px;
+}
+@media (min-width: 1100px) {
+  .technology-page .tech-info {
+    align-items: start;
+  }
+}
 .technology-page .title {
   color: var(--clr-tech-title-text);
   font-size: var(--fs-step--1);
@@ -1006,6 +1063,23 @@ body {
 .technology-page .name {
   color: var(--clr-tech-name-text);
   font-size: var(--fs-step-4);
+}
+.technology-page .description {
+  line-height: 25px;
+  margin-block-start: 16px;
+  max-width: 34ch;
+  text-align: center;
+}
+@media (min-width: 550px) {
+  .technology-page .description {
+    max-width: 49ch;
+  }
+}
+@media (min-width: 1100px) {
+  .technology-page .description {
+    text-align: start;
+    max-width: 43ch;
+  }
 }
 
 /*# sourceMappingURL=styles.css.map */
