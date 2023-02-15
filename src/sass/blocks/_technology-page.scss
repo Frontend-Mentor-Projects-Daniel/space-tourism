@@ -79,9 +79,6 @@
     }
   }
 
-  .tech-list-item {
-  }
-
   .tech-list-item button {
     aspect-ratio: 1;
     background-color: transparent;
@@ -89,9 +86,10 @@
     border-radius: 50%;
     cursor: pointer;
     color: var(--clr-tech-tabs-text);
-    width: 40px;
-
+    font-family: var(--ff-bellefair);
+    font-size: var(--fs-step-2);
     transition: all 300ms ease;
+    width: 40px;
 
     @include tablets() {
       width: 60px;
@@ -116,6 +114,7 @@
     flex-direction: column;
     align-items: center;
 
+    margin-block-end: 24px;
     padding-inline: 24px;
 
     @include laptops() {
@@ -136,6 +135,7 @@
   .name {
     color: var(--clr-tech-name-text);
     font-size: var(--fs-step-4);
+    text-transform: uppercase;
   }
 
   .description {

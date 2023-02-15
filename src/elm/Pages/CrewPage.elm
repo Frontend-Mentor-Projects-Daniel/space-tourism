@@ -2,6 +2,7 @@ module Pages.CrewPage exposing (Model, Msg, init, subscriptions, update, view)
 
 import Decoders exposing (..)
 import ErrorHandling exposing (buildErrorMessage)
+import Helpers exposing (toSlug)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Attributes.Aria exposing (..)
@@ -174,16 +175,6 @@ subscriptions _ =
 
 
 -- HELPER FUNCTIONS
-
-
-toSlug : String -> String
-toSlug input =
-    input
-        |> String.toLower
-        |> String.replace " " "-"
-
-
-
 -- SET ACTIVE CLASS
 
 

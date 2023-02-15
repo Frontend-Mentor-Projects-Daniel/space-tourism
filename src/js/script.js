@@ -11070,7 +11070,7 @@ var $author$project$Pages$DestinationPage$init = _Utils_Tuple2(
 	$elm$core$Platform$Cmd$none);
 var $author$project$Pages$HomePage$init = {};
 var $author$project$Pages$TechnologyPage$init = _Utils_Tuple2(
-	{},
+	{currentTech: 'Launch vehicle', isLaunchVehicle: true, isSpaceCapsule: false, isSpacePort: false, techData: _List_Nil},
 	$elm$core$Platform$Cmd$none);
 var $author$project$Partials$Header$init = {imageSrc: './src/assets/shared/icon-hamburger.svg', isCrewPage: false, isDestinationPage: false, isHomePage: true, isTechnologyPage: false, menuIsExpanded: 'false'};
 var $author$project$Main$init = F3(
@@ -11261,7 +11261,26 @@ var $author$project$Pages$DestinationPage$update = F2(
 	});
 var $author$project$Pages$TechnologyPage$update = F2(
 	function (msg, model) {
-		return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+		switch (msg.$) {
+			case 'GetLaunchVehicle':
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{currentTech: 'Launch vehicle', isLaunchVehicle: true, isSpaceCapsule: false, isSpacePort: false}),
+					$elm$core$Platform$Cmd$none);
+			case 'GetSpacePort':
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{currentTech: 'Spaceport', isLaunchVehicle: false, isSpaceCapsule: false, isSpacePort: true}),
+					$elm$core$Platform$Cmd$none);
+			default:
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{currentTech: 'Space capsule', isLaunchVehicle: false, isSpaceCapsule: true, isSpacePort: false}),
+					$elm$core$Platform$Cmd$none);
+		}
 	});
 var $author$project$Partials$Header$toggleImage = function (model) {
 	return (model.imageSrc === './src/assets/shared/icon-hamburger.svg') ? './src/assets/shared/icon-close.svg' : './src/assets/shared/icon-hamburger.svg';
@@ -11706,7 +11725,7 @@ var $elm$core$String$replace = F3(
 			A2($elm$core$String$split, before, string));
 	});
 var $elm$core$String$toLower = _String_toLower;
-var $author$project$Pages$CrewPage$toSlug = function (input) {
+var $author$project$Helpers$toSlug = function (input) {
 	return A3(
 		$elm$core$String$replace,
 		' ',
@@ -11742,7 +11761,7 @@ var $author$project$Pages$CrewPage$viewCrewMember = F2(
 							_List_fromArray(
 								[
 									$elm$html$Html$Attributes$src(
-									'./src/assets/crew' + ('/image-' + ($author$project$Pages$CrewPage$toSlug(member.name) + '.png'))),
+									'./src/assets/crew' + ('/image-' + ($author$project$Helpers$toSlug(member.name) + '.png'))),
 									$elm$html$Html$Attributes$alt('crew member'),
 									$elm$html$Html$Attributes$width(597),
 									$elm$html$Html$Attributes$height(645)
@@ -12252,6 +12271,109 @@ var $author$project$Pages$DestinationPage$view = F2(
 					A3($author$project$Pages$DestinationPage$renderPlanet, model, data.destinations, model.currentPlanetString)
 				]));
 	});
+var $author$project$Pages$HomePage$view = function (_v0) {
+	return A2(
+		$elm$html$Html$main_,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('main main--homepage')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('homepage')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('text-content')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$h1,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('primary-heading')
+									]),
+								_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$span,
+										_List_Nil,
+										_List_fromArray(
+											[
+												$elm$html$Html$text('so, you want to travel to')
+											])),
+										$elm$html$Html$text('space')
+									])),
+								A2(
+								$elm$html$Html$p,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('primary-text')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Let\'s face it; if you want to go to space, you might as well genuinely go to outer space and not hover kind of on the edge of it. Well sit back, and relax because we’ll give you a truly out of this world experience!')
+									]))
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('homepage-button')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('explore')
+							]))
+					]))
+			]));
+};
+var $author$project$Pages$TechnologyPage$loadingTech = {
+	description: 'Loading...',
+	images: {landscape: 'Loading...', portrait: 'Loading...'},
+	name: 'Loading...'
+};
+var $author$project$Pages$TechnologyPage$getFirstMember = function (list) {
+	var _v0 = $elm$core$List$head(list);
+	if (_v0.$ === 'Just') {
+		var data = _v0.a;
+		return data;
+	} else {
+		return $author$project$Pages$TechnologyPage$loadingTech;
+	}
+};
+var $author$project$Pages$TechnologyPage$getSpecificTech = F2(
+	function (tech, techName) {
+		var members = A2(
+			$elm$core$List$filter,
+			function (member) {
+				return _Utils_eq(member.name, techName);
+			},
+			tech);
+		var crewMember = $author$project$Pages$TechnologyPage$getFirstMember(members);
+		return crewMember;
+	});
+var $author$project$Pages$TechnologyPage$GetLaunchVehicle = {$: 'GetLaunchVehicle'};
+var $author$project$Pages$TechnologyPage$GetSpaceCapsule = {$: 'GetSpaceCapsule'};
+var $author$project$Pages$TechnologyPage$GetSpacePort = {$: 'GetSpacePort'};
+var $author$project$Pages$TechnologyPage$isLaunchVehicle = function (model) {
+	return model.isLaunchVehicle ? 'active' : '';
+};
+var $author$project$Pages$TechnologyPage$isSpaceCapsule = function (model) {
+	return model.isSpaceCapsule ? 'active' : '';
+};
+var $author$project$Pages$TechnologyPage$isSpacePort = function (model) {
+	return model.isSpacePort ? 'active' : '';
+};
 var $elm$html$Html$Attributes$media = _VirtualDom_attribute('media');
 var $elm$html$Html$source = _VirtualDom_node('source');
 var $austinshenk$elm_w3$W3$Html$Help$Property = F2(
@@ -12296,165 +12418,204 @@ var $austinshenk$elm_w3$W3$Html$toAttribute = function (attribute) {
 			return A2($elm$virtual_dom$VirtualDom$style, name, value);
 	}
 };
-var $author$project$Pages$TechnologyPage$viewTech = function (_v0) {
-	return A2(
-		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('technology-page wrapper')
-			]),
-		_List_fromArray(
-			[
-				A2(
-				$elm$html$Html$h1,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('secondary-heading-alternative')
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$elm$html$Html$span,
-						_List_Nil,
-						_List_fromArray(
-							[
-								$elm$html$Html$text('03')
-							])),
-						$elm$html$Html$text('space launch 101')
-					])),
-				A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('tech-image full-bleed')
-					]),
-				_List_fromArray(
-					[
-						A3(
-						$elm$html$Html$node,
-						'picture',
-						_List_Nil,
-						_List_fromArray(
-							[
-								A2(
-								$elm$html$Html$source,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$media('(min-width: 1100px)'),
-										$austinshenk$elm_w3$W3$Html$toAttribute(
-										$austinshenk$elm_w3$W3$Html$Attributes$srcset(
-											_List_fromArray(
-												['./src/assets/technology/image-launch-vehicle-portrait.jpg'])))
-									]),
-								_List_Nil),
-								A2(
-								$elm$html$Html$img,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$src('./src/assets/technology/image-launch-vehicle-landscape.jpg'),
-										$elm$html$Html$Attributes$alt('space ship launch')
-									]),
-								_List_Nil)
-							]))
-					])),
-				A2(
-				$elm$html$Html$ul,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('tech-list')
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$elm$html$Html$li,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('tech-list-item')
-							]),
-						_List_fromArray(
-							[
-								A2(
-								$elm$html$Html$button,
-								_List_Nil,
-								_List_fromArray(
-									[
-										$elm$html$Html$text('1')
-									]))
-							])),
-						A2(
-						$elm$html$Html$li,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('tech-list-item')
-							]),
-						_List_fromArray(
-							[
-								A2(
-								$elm$html$Html$button,
-								_List_Nil,
-								_List_fromArray(
-									[
-										$elm$html$Html$text('2')
-									]))
-							])),
-						A2(
-						$elm$html$Html$li,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('tech-list-item')
-							]),
-						_List_fromArray(
-							[
-								A2(
-								$elm$html$Html$button,
-								_List_Nil,
-								_List_fromArray(
-									[
-										$elm$html$Html$text('3')
-									]))
-							]))
-					])),
-				A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('tech-info')
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$elm$html$Html$h2,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('title')
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('THE TERMINOLOGY…')
-							])),
-						A2(
-						$elm$html$Html$p,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('name')
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('LAUNCH VEHICLE')
-							])),
-						A2(
-						$elm$html$Html$p,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('description')
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('A launch vehicle or carrier rocket is a rocket-propelled vehicle used to carry a payload from Earth\'s surface to space, usually to Earth orbit or beyond. Our WEB-X carrier rocket is the most powerful in operation. Standing 150 metres tall, it\'s quite an awe-inspiring sight on the launch pad!')
-							]))
-					]))
-			]));
+var $author$project$Pages$TechnologyPage$toSlug = function (input) {
+	return A3(
+		$elm$core$String$replace,
+		' ',
+		'-',
+		$elm$core$String$toLower(input));
 };
+var $author$project$Pages$TechnologyPage$viewTech = F2(
+	function (model, data) {
+		return A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('technology-page wrapper')
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$h1,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('secondary-heading-alternative')
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$span,
+							_List_Nil,
+							_List_fromArray(
+								[
+									$elm$html$Html$text('03')
+								])),
+							$elm$html$Html$text('space launch 101')
+						])),
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('tech-image full-bleed')
+						]),
+					_List_fromArray(
+						[
+							A3(
+							$elm$html$Html$node,
+							'picture',
+							_List_Nil,
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$source,
+									_List_fromArray(
+										[
+											$elm$html$Html$Attributes$media('(min-width: 1100px)'),
+											$austinshenk$elm_w3$W3$Html$toAttribute(
+											$austinshenk$elm_w3$W3$Html$Attributes$srcset(
+												_List_fromArray(
+													[
+														'./src/assets/technology/image-' + ($author$project$Pages$TechnologyPage$toSlug(data.name) + '-portrait.jpg')
+													])))
+										]),
+									_List_Nil),
+									A2(
+									$elm$html$Html$img,
+									_List_fromArray(
+										[
+											$elm$html$Html$Attributes$src(
+											'./src/assets/technology/image-' + ($author$project$Pages$TechnologyPage$toSlug(data.name) + '-landscape.jpg')),
+											$elm$html$Html$Attributes$alt(data.name)
+										]),
+									_List_Nil)
+								]))
+						])),
+					A2(
+					$elm$html$Html$ul,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('tech-list')
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$li,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('tech-list-item'),
+									$elm$html$Html$Attributes$class(
+									$author$project$Pages$TechnologyPage$isLaunchVehicle(model))
+								]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$button,
+									_List_fromArray(
+										[
+											$elm$html$Html$Events$onClick($author$project$Pages$TechnologyPage$GetLaunchVehicle)
+										]),
+									_List_fromArray(
+										[
+											$elm$html$Html$text('1')
+										]))
+								])),
+							A2(
+							$elm$html$Html$li,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('tech-list-item'),
+									$elm$html$Html$Attributes$class(
+									$author$project$Pages$TechnologyPage$isSpacePort(model))
+								]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$button,
+									_List_fromArray(
+										[
+											$elm$html$Html$Events$onClick($author$project$Pages$TechnologyPage$GetSpacePort)
+										]),
+									_List_fromArray(
+										[
+											$elm$html$Html$text('2')
+										]))
+								])),
+							A2(
+							$elm$html$Html$li,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('tech-list-item'),
+									$elm$html$Html$Attributes$class(
+									$author$project$Pages$TechnologyPage$isSpaceCapsule(model))
+								]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$button,
+									_List_fromArray(
+										[
+											$elm$html$Html$Events$onClick($author$project$Pages$TechnologyPage$GetSpaceCapsule)
+										]),
+									_List_fromArray(
+										[
+											$elm$html$Html$text('3')
+										]))
+								]))
+						])),
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('tech-info')
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$h2,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('title')
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text('THE TERMINOLOGY…')
+								])),
+							A2(
+							$elm$html$Html$p,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('name')
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text(data.name)
+								])),
+							A2(
+							$elm$html$Html$p,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('description')
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text(data.description)
+								]))
+						]))
+				]));
+	});
+var $author$project$Pages$TechnologyPage$renderTech = F3(
+	function (model, tech, techName) {
+		return (techName === 'Launch vehicle') ? A2(
+			$author$project$Pages$TechnologyPage$viewTech,
+			model,
+			A2($author$project$Pages$TechnologyPage$getSpecificTech, tech, 'Launch vehicle')) : ((techName === 'Spaceport') ? A2(
+			$author$project$Pages$TechnologyPage$viewTech,
+			model,
+			A2($author$project$Pages$TechnologyPage$getSpecificTech, tech, 'Spaceport')) : ((techName === 'Space capsule') ? A2(
+			$author$project$Pages$TechnologyPage$viewTech,
+			model,
+			A2($author$project$Pages$TechnologyPage$getSpecificTech, tech, 'Space capsule')) : A2($author$project$Pages$TechnologyPage$viewTech, model, $author$project$Pages$TechnologyPage$loadingTech)));
+	});
 var $author$project$Pages$TechnologyPage$view = F2(
 	function (model, data) {
 		return A2(
@@ -12465,14 +12626,14 @@ var $author$project$Pages$TechnologyPage$view = F2(
 				]),
 			_List_fromArray(
 				[
-					$author$project$Pages$TechnologyPage$viewTech(model)
+					A3($author$project$Pages$TechnologyPage$renderTech, model, data.tech, model.currentTech)
 				]));
 	});
 var $author$project$Main$viewPage = function (model) {
 	return (model.url.path === '/') ? A2(
 		$elm$html$Html$map,
-		$author$project$Main$TechPageMsg,
-		A2($author$project$Pages$TechnologyPage$view, model.techPageModel, model.data)) : ((model.url.path === '/destination') ? A2(
+		$author$project$Main$HomePageMsg,
+		$author$project$Pages$HomePage$view(model.homePageModel)) : ((model.url.path === '/destination') ? A2(
 		$elm$html$Html$map,
 		$author$project$Main$DestinationPageMsg,
 		A2($author$project$Pages$DestinationPage$view, model.destinationPageModel, model.data)) : ((model.url.path === '/crew') ? A2(
@@ -12517,4 +12678,4 @@ var $author$project$Main$view = function (model) {
 var $author$project$Main$main = $elm$browser$Browser$application(
 	{init: $author$project$Main$init, onUrlChange: $author$project$Main$UrlChanged, onUrlRequest: $author$project$Main$UrlRequested, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
-	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Decoders.CrewMember":{"args":[],"type":"{ name : String.String, images : Decoders.Images, role : String.String, bio : String.String }"},"Decoders.Data":{"args":[],"type":"{ destinations : List.List Decoders.Planet, crew : List.List Decoders.CrewMember, tech : List.List Decoders.Tech }"},"Decoders.Images":{"args":[],"type":"{ png : String.String, webp : String.String }"},"Decoders.Planet":{"args":[],"type":"{ name : String.String, images : Decoders.Images, description : String.String, distance : String.String, travel : String.String }"},"Decoders.Tech":{"args":[],"type":"{ name : String.String, images : Decoders.TechImages, description : String.String }"},"Decoders.TechImages":{"args":[],"type":"{ portrait : String.String, landscape : String.String }"},"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"Main.Msg":{"args":[],"tags":{"HeaderMsg":["Partials.Header.Msg"],"HomePageMsg":["Pages.HomePage.Msg"],"DestinationPageMsg":["Pages.DestinationPage.Msg"],"CrewPageMsg":["Pages.CrewPage.Msg"],"TechPageMsg":["Pages.TechnologyPage.Msg"],"UrlRequested":["Browser.UrlRequest"],"UrlChanged":["Url.Url"],"GotData":["Result.Result Http.Error Decoders.Data"]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String.String"],"Timeout":[],"NetworkError":[],"BadStatus":["Basics.Int"],"BadBody":["String.String"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"List.List":{"args":["a"],"tags":{}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Pages.CrewPage.Msg":{"args":[],"tags":{"GetDouglas":[],"GetMark":[],"GetVictor":[],"GetAnousheh":[]}},"Pages.DestinationPage.Msg":{"args":[],"tags":{"GetMoon":[],"GetMars":[],"GetEuropa":[],"GetTitan":[]}},"Pages.HomePage.Msg":{"args":[],"tags":{"NoOp":[]}},"Pages.TechnologyPage.Msg":{"args":[],"tags":{"GetDouglas":[]}},"Partials.Header.Msg":{"args":[],"tags":{"HamburgerMenuClicked":[],"HomePageClicked":[],"DestinationPageClicked":[],"CrewPageClicked":[],"TechnologyPageClicked":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));
+	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{"Decoders.CrewMember":{"args":[],"type":"{ name : String.String, images : Decoders.Images, role : String.String, bio : String.String }"},"Decoders.Data":{"args":[],"type":"{ destinations : List.List Decoders.Planet, crew : List.List Decoders.CrewMember, tech : List.List Decoders.Tech }"},"Decoders.Images":{"args":[],"type":"{ png : String.String, webp : String.String }"},"Decoders.Planet":{"args":[],"type":"{ name : String.String, images : Decoders.Images, description : String.String, distance : String.String, travel : String.String }"},"Decoders.Tech":{"args":[],"type":"{ name : String.String, images : Decoders.TechImages, description : String.String }"},"Decoders.TechImages":{"args":[],"type":"{ portrait : String.String, landscape : String.String }"},"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"}},"unions":{"Main.Msg":{"args":[],"tags":{"HeaderMsg":["Partials.Header.Msg"],"HomePageMsg":["Pages.HomePage.Msg"],"DestinationPageMsg":["Pages.DestinationPage.Msg"],"CrewPageMsg":["Pages.CrewPage.Msg"],"TechPageMsg":["Pages.TechnologyPage.Msg"],"UrlRequested":["Browser.UrlRequest"],"UrlChanged":["Url.Url"],"GotData":["Result.Result Http.Error Decoders.Data"]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String.String"],"Timeout":[],"NetworkError":[],"BadStatus":["Basics.Int"],"BadBody":["String.String"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"List.List":{"args":["a"],"tags":{}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Pages.CrewPage.Msg":{"args":[],"tags":{"GetDouglas":[],"GetMark":[],"GetVictor":[],"GetAnousheh":[]}},"Pages.DestinationPage.Msg":{"args":[],"tags":{"GetMoon":[],"GetMars":[],"GetEuropa":[],"GetTitan":[]}},"Pages.HomePage.Msg":{"args":[],"tags":{"NoOp":[]}},"Pages.TechnologyPage.Msg":{"args":[],"tags":{"GetLaunchVehicle":[],"GetSpacePort":[],"GetSpaceCapsule":[]}},"Partials.Header.Msg":{"args":[],"tags":{"HamburgerMenuClicked":[],"HomePageClicked":[],"DestinationPageClicked":[],"CrewPageClicked":[],"TechnologyPageClicked":[]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}}}}})}});}(this));
